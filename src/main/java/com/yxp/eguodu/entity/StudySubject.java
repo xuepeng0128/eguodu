@@ -11,6 +11,6 @@ public class StudySubject {
 
     private String studySubjectId;
     private String studySubjectName;
-    private String  habitId;
+    private int  habitClass;
 
 }

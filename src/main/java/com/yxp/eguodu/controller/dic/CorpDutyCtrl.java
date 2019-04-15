@@ -23,25 +23,32 @@ public class CorpDutyCtrl {
 
 
     @PostMapping(value="/insertCorpDuty")
-    public CorpDuty insertCorpDuty(@RequestBody CorpDuty corpDuty){
-
-        return null;
+    public String insertCorpDuty(@RequestBody CorpDuty corpDuty){
+        int d = svr.insertCorpDuty(corpDuty);
+        if (d>0)
+            return "ok";
+        else
+            return "fail";
     }
 
     @PostMapping(value="/updateCorpDuty")
-    public int updateCorpDuty(@RequestBody CorpDuty corpDuty){
+    public String updateCorpDuty(@RequestBody CorpDuty corpDuty){
         int d = svr.updateCorpDuty(corpDuty);
-        return d;
+        if (d>=0)
+            return "ok";
+        else
+            return "fail";
     }
 
     @GetMapping(value="/deleteCorpDuty")
     public String deleteCorpDuty(String corpDutyId){
-        try{
-            svr.deleteCorpDuty(corpDutyId);
+
+         int d =   svr.deleteCorpDuty(corpDutyId);
+        if (d>=0)
             return "ok";
-        }catch (Exception ex){
-            return "fail" + ex.toString();
-        }
+        else
+            return "fail";
+
     }
 
 

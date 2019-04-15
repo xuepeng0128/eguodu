@@ -1,13 +1,13 @@
 package com.yxp.eguodu.dao.dic;
 
 import com.yxp.eguodu.entity.CorpDuty;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
+/**
+ * 公司职务
+ */
 @Mapper
 public interface CorpDutyMapper {
 
@@ -19,8 +19,11 @@ public interface CorpDutyMapper {
             "</script>")
     public int insertCorpDuty(CorpDuty corpDuty);
 
-    @Update("")
+    @Update("update dic_corpduty set corpDutyName='${corpDutyName}',master=${master} where corpDutyId='${corpDutyId}'")
     public int updateCorpDuty(CorpDuty corpDuty);
+    @Delete("<script>" +
+            " delete from dic_corpduty where corpDutyId='${corpDutyId}'" +
+            "</script>")
     public int deleteCorpDuty(String corpDutyId);
 
 
