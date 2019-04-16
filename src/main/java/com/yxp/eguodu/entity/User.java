@@ -18,8 +18,8 @@ public class User {
      private String  schoolId;
      private String  employeePaperId;
      private String   teacherPaperId;
-     private boolean supperAdmin;
-     private boolean schoolAdmin;
+     private int supperAdmin;
+     private int schoolAdmin;
      @DateTimeFormat(pattern = "yyyy-MM-dd")
      private Date addTime;
      private int  kind;

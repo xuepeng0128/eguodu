@@ -97,22 +97,22 @@ public abstract class XlsRead {
      * @param tablename
      * @return
      */
-    public  abstract boolean dealXlsFile(String path,String guidname,String tablename,String otherMsgJson);///xls
+    public  abstract boolean dealXlsFile(String path,String guidname,String tablename,String otherMsgJson) throws IOException;///xls
 
 
 
 
 
 
-
-    /**
-     * 处理xlsx
-     * @param path
-     * @param guidname
-     * @param tablename
-     * @return
-     */
-    public  abstract boolean dealXlsxFile(String path,String guidname,String tablename,String otherMsgJson);///xlsx
+//
+//    /**
+//     * 处理xlsx
+//     * @param path
+//     * @param guidname
+//     * @param tablename
+//     * @return
+//     */
+//    public  abstract boolean dealXlsxFile(String path,String guidname,String tablename,String otherMsgJson);///xlsx
 
 
 
