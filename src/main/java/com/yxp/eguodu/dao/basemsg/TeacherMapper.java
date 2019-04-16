@@ -71,7 +71,7 @@ public interface TeacherMapper {
     @Insert("<script>" +
             "  insert into teacher(paperId,teacherName,tel,address,teacherDutyId,schoolId,regTime) values" +
             " <foreach collection =\"list\" item=\"t\" separator =\",\" >" +
-            " ('${t.paperId}','${teacherName}','${tel}','${address}','${teacherDutyId}','${schoolId}',now()) " +
+            " ('${t.paperId}','${t.teacherName}','${t.tel}','${t.address}','${t.teacherDutyId}','${t.schoolId}',now()) " +
             "</foreach>" +
             "</script>")
     public int groupInsertTeacher(List<Teacher> teachers);

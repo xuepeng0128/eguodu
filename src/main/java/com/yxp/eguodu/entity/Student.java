@@ -12,13 +12,14 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Student {
-
+   private  int id;
    private String paperId;
+   private String studentId;
    private String studentName;
-   private Date birthday;
-   private String sex;
+    private String schoolId;
    private String address ; // 家庭住址
    private String tel;
-   private List<String> openIds; // 小程序openid
+   private Date regTime;
+   private String  wxCode; // 小程序openid
 
 }
