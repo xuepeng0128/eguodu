@@ -20,7 +20,7 @@ public interface EmployeeMapper {
             "  and employeeName like '%${employeeName}%' " +
             "</if> " +
             "</script>")
-    public List<Map<String,Object>> employeeList(Map<String,Object> paras);
+    public List<Employee> employeeList(Map<String,Object> paras);
     @Insert("<script>" +
             " insert into employee(employeeId,employeeName,tel,paperId, corpDutyId, " +
             " address,enterDate) values('${employeeId}','${employeeName}','${tel}','${paperId}', '${corpDutyId}'," +
@@ -30,7 +30,7 @@ public interface EmployeeMapper {
 
     @Update("<script>" +
             " update employee set employeeName='${employeeName}',tel='${tel}',paperId='${paperId}', corpDutyId='${corpDutyId}'," +
-            "address='${address}', enterDate='${enterDate}' where  employeeId='${employeeId}'  " +
+            "address='${address}', enterDate='${enterDate}' ,leaveDate='${leaveDate}',wxCode='${wxCode}' where  employeeId='${employeeId}'  " +
             " </script>"
           )
     public int updateEmployee(Employee employee);

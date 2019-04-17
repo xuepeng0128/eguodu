@@ -12,13 +12,15 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Employee {
+    private String employeeId;
     private String paperId;
     private String employeeName;
     private String tel;
     private String corpDutyId;
+    private String corpDutyName;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date   enterDate;
-    private Integer  onDutyState;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date  leaveDate;
+    private String wxcode;
 }

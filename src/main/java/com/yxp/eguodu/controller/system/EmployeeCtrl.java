@@ -17,7 +17,7 @@ public class EmployeeCtrl {
 
 
     @GetMapping(value="/employeeList")
-    public List<Map<String,Object>> employeeList(String employeeId,String employeeName){
+    public List<Employee> employeeList(String employeeId,String employeeName){
         Map<String,Object> paras = new HashMap<String,Object>();
         paras.put("employeeId",employeeId);
         paras.put("employeeName",employeeName);

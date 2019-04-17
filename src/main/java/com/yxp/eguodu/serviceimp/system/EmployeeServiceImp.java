@@ -14,7 +14,7 @@ public class EmployeeServiceImp implements EmployeeService {
     @Autowired
     private EmployeeMapper mapper;
     @Override
-    public List<Map<String, Object>> employeeList(Map<String,Object> paras) {
+    public List<Employee> employeeList(Map<String,Object> paras) {
         return mapper.employeeList(paras);
     }
 
