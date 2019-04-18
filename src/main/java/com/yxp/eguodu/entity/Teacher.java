@@ -17,6 +17,7 @@ public class Teacher {
     private String tel; // 电话
     private String teacherName; // 老师姓名
     private String teacherDutyId; // 当前职务
+    private String teacherDutyName;
     private String address;
     private String schoolId;
     private Date regTime;

@@ -18,6 +18,7 @@ public class MenuCtrl {
 
     @GetMapping(value = "/menuList")
     public List<Menu> menuList(String kind){
+
         return  svr.menuList(kind);
     }
 }

@@ -16,7 +16,7 @@ public class User {
      private String  account;
      private String  passWord;
      private String  schoolId;
-     private String  employeePaperId;
+     private String  employeeId;
      private String   teacherPaperId;
      private int supperAdmin;
      private int schoolAdmin;

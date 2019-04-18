@@ -11,7 +11,7 @@ import java.util.Map;
 @Mapper
 public interface StudentMapper {
     @Select("<script>" +
-            " select id, paperId,studentName,tel,s.address,s.schoolId,c.schoolName,l.grade,l.classes,l.classesName" +
+            " select id,studentId, paperId,studentName,tel,s.address,s.schoolId,c.schoolName,l.grade,l.classes,l.classesName ,c.schoolStyle,c.train " +
             " from student s inner join " +
             " school c on s.schoolId=c.schoolId inner JOIN classes l on s.schoolId=l.schoolId" +
             " where  1=1 " +

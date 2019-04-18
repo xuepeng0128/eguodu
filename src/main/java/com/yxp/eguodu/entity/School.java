@@ -20,8 +20,10 @@ public class School {
     private float longitude; // 经度坐标
     private float latitude ; // 纬度坐标
     private String address; // 地址
-    private String schoolStyle; // 1.小学，2.初中
+    private int schoolStyle; // 1.小学，2.初中
     private String saleManId; // 业务员
+    private String tel;
+    private String linkMan;
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private  Date regTime; // 注册时间
     private int train;

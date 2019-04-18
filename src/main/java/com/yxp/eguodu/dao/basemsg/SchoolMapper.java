@@ -15,7 +15,7 @@ public interface SchoolMapper {
 
     @Select("<script>" +
             "SELECT s.schoolId,s.schoolName , s.cityId,c.nationName as cityName , s.districtId ,d.nationName as districtName," +
-            " s.longitude,s.latitude,s.address,s.schoolStyle,s.saleManId, s.regTime,s.train," +
+            " s.longitude,s.latitude,s.address,s.schoolStyle,s.saleManId,e.employeeName as saleManName, s.regTime,s.train,s.tel,s.linkMan," +
             " ifnull(cla.classesNum,0) as classesNum , ifnull(cir.circleNum,0) as circleNum ,ifnull(sut.studentNum,0) as studentNum ," +
             "ifnull(tea.teacherNum,0) as teacherNum " +
             " from school s inner join dic_nation c on s.cityId=c.nationId" +

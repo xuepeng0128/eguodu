@@ -11,4 +11,6 @@ public class CircleClass {
     private String  circleClassId;
     private String  pareClassId;
     private String circleClassName;
+    private String icon;
+    private String memo;
 }

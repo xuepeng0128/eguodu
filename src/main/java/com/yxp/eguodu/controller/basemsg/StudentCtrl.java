@@ -26,25 +26,27 @@ public class StudentCtrl {
     @Autowired
     private StudentService svr;
 
+
+    private String paperId;
+    private String studentName;
+    private String schoolId ;
+    private String schoolName;
+    private String pageSize;
+    private String pageNo;
+    private String pageBegin;
+
+
     @GetMapping(value="/studentList")
-    public List<Map<String ,Object>> studentList(String paperId,
-                                                 String studentName,
-                                                 String schoolId,
-                                                 String schoolName,
-                                                 String studentDutyId,
-                                                 String pageSize,
-                                                 String pageNo,
-                                                 String pageBegin){
-//        StudentQueryParams queryParams=new StudentQueryParams(  paperId,
-//                studentName,
-//                schoolId,
-//                schoolName,
-//                studentDutyId,
-//                pageSize,
-//                pageNo,
-//                pageBegin);
-//        return svr.studentList(queryParams);
-        return null;
+    public List<Map<String ,Object>> studentList(String studentId,String paperId, String studentName, String schoolId, String schoolName,
+                                                  String pageSize, String pageNo, String pageBegin){
+        StudentQueryParams queryParams=new StudentQueryParams( studentId, paperId,
+                studentName,
+                schoolId,
+                schoolName,
+                pageSize,
+                pageNo,
+                pageBegin);
+        return svr.studentList(queryParams);
     }
 
 //    @GetMapping(value="/studentListTotal")
