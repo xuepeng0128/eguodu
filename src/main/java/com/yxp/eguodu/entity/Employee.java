@@ -23,5 +23,6 @@ public class Employee {
     private Date   enterDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date  leaveDate;
+    private String address;
     private String wxcode;
 }

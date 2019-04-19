@@ -66,7 +66,7 @@ public interface StudentMapper {
 
 
     @Update("update student set paperId='${paperId}',studentName='${studentName}',tel='${tel}'," +
-            " address='${address}',schoolId='${schoolId}',wxCode='${wxCode}' where id= ${id}")
+            " address='${address}',schoolId='${schoolId}',wxcode='${wxcode}' where id= ${id}")
     public int updateStudent(Student student);
 
     @Delete("delete from student where id =${id}")

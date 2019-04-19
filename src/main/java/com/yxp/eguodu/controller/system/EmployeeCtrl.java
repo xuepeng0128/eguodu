@@ -27,13 +27,22 @@ public class EmployeeCtrl {
 
 
     @PostMapping(value="/insertEmployee")
-    public String  insertEmployee(@RequestBody Employee employee){
+    public Map<String,Object>  insertEmployee(@RequestBody  Employee employee){
         int d = svr.insertEmployee(employee);
         if (d>=0)
-            return "ok";
+            return  new HashMap<String,Object>()
+                     {{
+                         put( "result","ok");
+                     }};
+
         else
-            return "fail";
+            return  new HashMap<String,Object>()
+            {{
+                put( "result","ok");
+            }};
     }
+
+
     @PostMapping(value="/updateEmployee")
     public String updateEmployee(@RequestBody Employee employee){
         int d = svr.updateEmployee(employee);

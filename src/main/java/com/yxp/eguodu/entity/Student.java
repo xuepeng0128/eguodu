@@ -20,6 +20,6 @@ public class Student {
    private String address ; // 家庭住址
    private String tel;
    private Date regTime;
-   private String  wxCode; // 小程序openid
+   private String  wxcode; // 小程序openid
 
 }
