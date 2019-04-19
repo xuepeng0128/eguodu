@@ -22,7 +22,7 @@ public interface UserMapper {
             "ifnull(u.teacherPaperId,'') as teacherPaperId , ifnull(t.teacherName,'') as teacherName, supperAdmin,schoolAdmin," +
             " addTime,kind  from user u" +
             " left outer join school s on  u.schoolId =s.schoolId" +
-            " left outer join employee e on u.employeePaperId =e.paperId " +
+            " left outer join employee e on u.employeeId =e.employeeId " +
             " left outer join teacher t on t.schoolId =u.schoolId and t.paperId=u.teacherPaperId" +
             " where supperAdmin !=1 " +
             " <if test ='schoolId !=null and schoolId != \"\" and schoolId !=0'>" +
@@ -52,7 +52,7 @@ public interface UserMapper {
     @Select("<script>" +
             "select count(*) as total  from user u" +
             " left outer join school s on  u.schoolId =s.schoolId" +
-            " left outer join employee e on u.employeePaperId =e.paperId " +
+            " left outer join employee e on u.employeeId =e.employeeId " +
             " left outer join teacher t on t.schoolId =u.schoolId and t.paperId=u.teacherPaperId" +
             " where supperAdmin !=1 " +
             " <if test ='schoolId !=null and schoolId != \"\" and schoolId !=0'>" +

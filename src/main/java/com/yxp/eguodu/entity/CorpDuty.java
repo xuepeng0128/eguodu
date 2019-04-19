@@ -13,5 +13,5 @@ public class CorpDuty {
 
     private String corpDutyId;
     private String corpDutyName;
-    private int master;
+    private boolean master;
 }
