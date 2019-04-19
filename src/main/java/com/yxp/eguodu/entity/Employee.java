@@ -18,6 +18,7 @@ public class Employee {
     private String tel;
     private String corpDutyId;
     private String corpDutyName;
+    private boolean master;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date   enterDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")

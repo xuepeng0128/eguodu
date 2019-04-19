@@ -18,6 +18,7 @@ public class UserServiceImp implements UserService {
     @Override
     public List<User> validateUser(User user) throws Exception {
         user.setPassWord(DesUtil.encrypt(user.getPassWord()));
+
         return mapper.validateUser(user);
     }
 
