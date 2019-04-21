@@ -48,22 +48,19 @@ public interface SchoolMapper {
             "   group by schoolId" +
             ")tea on s.schoolId=tea.schoolId" +
             " where 1=1 " +
-            "<if test='schoolId != null and schoolId !=\"\" and schoolId !=0'>" +
+            "<if test='schoolId != null and schoolId !=\"\" and schoolId !=\"0\"'>" +
             "  and s.schoolId like '%${schoolId}%' " +
             "</if>" +
             "<if test='schoolName != null and schoolName !=\"\" '>" +
             "  and s.schoolName like '%${schoolName}%' " +
             "</if>" +
-            "<if test='cityId != null and cityId !=\"\" and cityId !=0 '>" +
+            "<if test='cityId != null and cityId !=\"\" and cityId !=\"0\" '>" +
             "  and s.cityId= '%${cityId}%' " +
             "</if>" +
-            "<if test='districtId != null and districtId !=\"\" and districtId !=0 '>" +
+            "<if test='districtId != null and districtId !=\"\" and districtId !=\"0\"  '>" +
             "  and s.districtId= '${districtId}' " +
             "</if>" +
-            "<if test='schoolStyle != null and schoolStyle !=\"\" and schoolStyle !=0 '>" +
-            "  and s.schoolStyle= '${schoolStyle}' " +
-            "</if>" +
-            "<if test='schoolStyle != null and schoolStyle !=\"\" and schoolStyle !=0 '>" +
+            "<if test='schoolStyle != null and schoolStyle !=\"\" and schoolStyle !=\"0\"  '>" +
             "  and s.schoolStyle= ${schoolStyle} " +
             "</if>" +
             "<if test='regTimeBegin != null and regTimeBegin !=\"\" '>" +
@@ -72,10 +69,10 @@ public interface SchoolMapper {
             "<if test='regTimeEnd != null and regTimeEnd !=\"\" '>" +
             "<![CDATA[  and s.regTime <'${regTimeEnd}'  ]]>" +
             "</if>" +
-            "<if test='train != null and train !=\"\" and train !=0 '>" +
+            "<if test='train != null  and train !=0 '>" +
             "   and s.train=${train} " +
             "</if>" +
-            "<if test='saleManId != null and saleManId !=\"\" and saleManId !=0 '>" +
+            "<if test='saleManId != null and saleManId !=\"\" and saleManId !=\"0\"  '>" +
             "   and s.saleManId='${saleManId}' " +
             "</if>" +
             " limit ${pageBegin} ,${pageSize}" +
@@ -114,34 +111,32 @@ public interface SchoolMapper {
             "   group by schoolId" +
             ")tea on s.schoolId=tea.schoolId" +
             " where 1=1 " +
-            "<if test='schoolId != null and schoolId !=\"\" and schoolId !=0'>" +
+            "<if test='schoolId != null and schoolId !=\"\" and schoolId !=\"0\" '>" +
             "  and s.schoolId like '%${schoolId}%' " +
             "</if>" +
             "<if test='schoolName != null and schoolName !=\"\" '>" +
             "  and s.schoolName like '%${schoolName}%' " +
             "</if>" +
-            "<if test='cityId != null and cityId !=\"\" and cityId !=0 '>" +
+            "<if test='cityId != null and cityId !=\"\" and cityId !=\"0\"  '>" +
             "  and s.cityId= '%${cityId}%' " +
             "</if>" +
-            "<if test='districtId != null and districtId !=\"\" and districtId !=0 '>" +
+            "<if test='districtId != null and districtId !=\"\" and districtId !=\"0\"  '>" +
             "  and s.districtId= '${districtId}' " +
             "</if>" +
-            "<if test='schoolStyle != null and schoolStyle !=\"\" and schoolStyle !=0 '>" +
-            "  and s.schoolStyle= '${schoolStyle}' " +
-            "</if>" +
-            "<if test='schoolStyle != null and schoolStyle !=\"\" and schoolStyle !=0 '>" +
+
+            "<if test='schoolStyle != null and schoolStyle !=\"\" and schoolStyle !=\"0\"  '>" +
             "  and s.schoolStyle= ${schoolStyle} " +
             "</if>" +
-            "<if test='regTimeBegin != null and regTimeBegin !=\"\" '>" +
+            "<if test='regTimeBegin != null  '>" +
             "<![CDATA[  and s.regTime >= '${regTimeBegin}'  ]]>" +
             "</if>" +
-            "<if test='regTimeEnd != null and regTimeEnd !=\"\" '>" +
+            "<if test='regTimeEnd != null  '>" +
             "<![CDATA[  and s.regTime <'${regTimeEnd}'  ]]>" +
             "</if>" +
-            "<if test='train != null and train !=\"\" and train !=0 '>" +
+            "<if test='train != null and train !=\"\" and train !=\"0\"  '>" +
             "   and s.train=${train} " +
             "</if>" +
-            "<if test='saleManId != null and saleManId !=\"\" and saleManId !=0 '>" +
+            "<if test='saleManId != null and saleManId !=\"\" and saleManId !=\"0\"  '>" +
             "   and s.saleManId='${saleManId}' " +
             "</if>" +
             "</script>")

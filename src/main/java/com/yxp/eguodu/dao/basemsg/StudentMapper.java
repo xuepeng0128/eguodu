@@ -21,7 +21,7 @@ public interface StudentMapper {
             " <if test ='studentName != null and studentName !=\"\"'>" +
             "   and studentName like '%${studentName}%'" +
             " </if>" +
-            " <if test ='schoolId != null and schoolId !=\"\" and schoolId !=0'>" +
+            " <if test ='schoolId != null and schoolId !=\"\" and schoolId !=\"0\" '>" +
             "   and s.schoolId = '${schoolId}'" +
             " </if>" +
             " <if test ='schoolName != null and schoolName !=\"\" '>" +
@@ -42,7 +42,7 @@ public interface StudentMapper {
             " <if test ='studentName != null and studentName !=\"\"'>" +
             "   and studentName like '%${studentName}%'" +
             " </if>" +
-            " <if test ='schoolId != null and schoolId !=\"\" and schoolId !=0'>" +
+            " <if test ='schoolId != null and schoolId !=\"\" and schoolId !=\"0\" '>" +
             "   and s.schoolId = '${schoolId}'" +
             " </if>" +
             " <if test ='schoolName != null and schoolName !=\"\" '>" +

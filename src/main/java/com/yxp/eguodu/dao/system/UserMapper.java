@@ -25,7 +25,7 @@ public interface UserMapper {
             " left outer join employee e on u.employeeId =e.employeeId " +
             " left outer join teacher t on t.schoolId =u.schoolId and t.teacherPaperId=u.teacherPaperId" +
             " where supperAdmin !=1 " +
-            " <if test ='schoolId !=null and schoolId != \"\" and schoolId !=0'>" +
+            " <if test ='schoolId !=null and schoolId != \"\" and schoolId !=\"0\"'>" +
             "   and u.schoolId='${schoolId}'" +
             " </if>" +
             " <if test ='account !=null and account != \"\" '>" +
@@ -55,7 +55,7 @@ public interface UserMapper {
             " left outer join employee e on u.employeeId =e.employeeId " +
             " left outer join teacher t on t.schoolId =u.schoolId and t.teacherPaperId=u.teacherPaperId" +
             " where supperAdmin !=1 " +
-            " <if test ='schoolId !=null and schoolId != \"\" and schoolId !=0'>" +
+            " <if test ='schoolId !=null and schoolId != \"\" and schoolId !=\"0\" '>" +
             "   and u.schoolId='${schoolId}'" +
             " </if>" +
             " <if test ='account !=null and account != \"\" '>" +
@@ -81,7 +81,7 @@ public interface UserMapper {
 
     @Insert("<script>" +
             " insert into user(userId,account,passWord,schoolId,employeeId,teacherPaperId,supperAdmin,schoolAdmin,addTime,kind)" +
-            " values ('${userId}','${account}','${passWord}','${schoolId}','${employeeId}','${teacherPaperId}'," +
+            " values (func_makeDicId('user'),'${account}','${passWord}','${schoolId}','${employeeId}','${teacherPaperId}'," +
             " ${supperAdmin},${schoolAdmin},now(),${kind}) " +
             "</script>")
     public int insertUser(User user);
