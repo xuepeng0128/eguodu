@@ -11,12 +11,12 @@ import java.util.Map;
 @Mapper
 public interface StudentMapper {
     @Select("<script>" +
-            " select id,studentId, paperId,studentName,tel,s.address,s.schoolId,c.schoolName,l.grade,l.classes,l.classesName ,c.schoolStyle,c.train " +
+            " select id,studentId, studentPaperId,studentName,tel,s.address,s.schoolId,c.schoolName,l.grade,l.classes,l.classesName ,c.schoolStyle,c.train " +
             " from student s inner join " +
             " school c on s.schoolId=c.schoolId inner JOIN classes l on s.schoolId=l.schoolId" +
             " where  1=1 " +
-            " <if test ='paperId != null and paperId !=\"\"'>" +
-            "   and paperId like '%${paperId}%'" +
+            " <if test ='studentPaperId != null and studentPaperId !=\"\"'>" +
+            "   and paperId like '%${studentPaperId}%'" +
             " </if>" +
             " <if test ='studentName != null and studentName !=\"\"'>" +
             "   and studentName like '%${studentName}%'" +
@@ -36,8 +36,8 @@ public interface StudentMapper {
             " from student s inner join " +
             " school c on s.schoolId=c.schoolId inner JOIN classes l on s.schoolId=l.schoolId" +
             " where  1=1 " +
-            " <if test ='paperId != null and paperId !=\"\"'>" +
-            "   and paperId like '%${paperId}%'" +
+            " <if test ='studentPaperId != null and studentPaperId !=\"\"'>" +
+            "   and studentPaperId like '%${studentPaperId}%'" +
             " </if>" +
             " <if test ='studentName != null and studentName !=\"\"'>" +
             "   and studentName like '%${studentName}%'" +
@@ -51,21 +51,21 @@ public interface StudentMapper {
             " </script>")
     public List<Map<String,Object>> studentListTotal(StudentQueryParams queryParams);
 
-    @Insert("insert into student(paperId,studentName,tel,address,schoolId,regTime) " +
-            "values('${paperId}','${studentName}','${tel}','${address}','${schoolId}',now())")
+    @Insert("insert into student(studentPaperId,studentName,tel,address,schoolId,regTime) " +
+            "values('${studentPaperId}','${studentName}','${tel}','${address}','${schoolId}',now())")
     public int insertStudent(Student student);
 
 
     @Insert("<script>" +
-            "  insert into student(paperId,studentName,tel,address,schoolId,regTime)  values" +
+            "  insert into student(studentPaperId,studentName,tel,address,schoolId,regTime)  values" +
             " <foreach collection =\"list\" item=\"s\" separator =\",\" >" +
-            " ('${s.paperId}','${s.studentName}','${s.tel}','${s.address}','${s.schoolId}',now()) " +
+            " ('${s.studentPaperId}','${s.studentName}','${s.tel}','${s.address}','${s.schoolId}',now()) " +
             "</foreach>" +
             "</script>")
     public int groupInsertStudent(List<Student> students);
 
 
-    @Update("update student set paperId='${paperId}',studentName='${studentName}',tel='${tel}'," +
+    @Update("update student set studentPaperId='${studentPaperId}',studentName='${studentName}',tel='${tel}'," +
             " address='${address}',schoolId='${schoolId}',wxcode='${wxcode}' where id= ${id}")
     public int updateStudent(Student student);
 

@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CircleClassCtrl {
     @Autowired
@@ -24,12 +26,12 @@ public class CircleClassCtrl {
 
 
     @PostMapping(value="/insertCircleClass")
-    public String insertCircleClass(@RequestBody CircleClass circleClass){
+    public Map<String,Object> insertCircleClass(@RequestBody CircleClass circleClass){
         int d = svr.insertCircleClass(circleClass);
         if (d>0)
-            return "ok";
+            return new HashMap<String,Object>(){{put("result","ok") ;}} ;
         else
-            return "fail";
+            return new HashMap<String,Object>(){{put("result","fail") ;}} ;
     }
 
     @PostMapping(value="/updateCircleClass")

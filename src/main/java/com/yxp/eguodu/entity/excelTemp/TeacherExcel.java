@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class TeacherExcel  {
-    private String paperId; // 身份证
+    private String teacherPaperId; // 身份证
     private String tel; // 电话
     private String teacherName; // 老师姓名
     private String duty; // 职务
@@ -16,7 +16,7 @@ public class TeacherExcel  {
     public  ExcelToTableField[]  getExcelTableFeilds()
     {
         return  new ExcelToTableField[] {
-                new ExcelToTableField("身份证","paperId"),
+                new ExcelToTableField("身份证","teacherPaperId"),
                 new ExcelToTableField("联系电话","tel"),
                 new ExcelToTableField("名称","teacherName"),
                 new ExcelToTableField("职务","duty")

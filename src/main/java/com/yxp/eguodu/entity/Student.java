@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Student {
    private  int id;
-   private String paperId;
+   private String studentPaperId;
    private String studentId;
    private String studentName;
     private String schoolId;

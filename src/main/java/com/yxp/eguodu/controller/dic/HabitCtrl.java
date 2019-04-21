@@ -5,7 +5,9 @@ import com.yxp.eguodu.service.dic.HabitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/api/dic/habit", method = {RequestMethod.GET, RequestMethod.POST}, produces = "application/json;charset=UTF-8")
@@ -22,12 +24,12 @@ public class HabitCtrl {
 
 
     @PostMapping(value="/insertHabit")
-    public String insertHabit(@RequestBody Habit Habit){
+    public Map<String,Object> insertHabit(@RequestBody Habit Habit){
         int d = svr.insertHabit(Habit);
         if (d>0)
-            return "ok";
+            return new HashMap<String,Object>(){{put("result","ok") ;}} ;
         else
-            return "fail";
+            return new HashMap<String,Object>(){{put("result","fail") ;}} ;
     }
 
     @PostMapping(value="/updateHabit")

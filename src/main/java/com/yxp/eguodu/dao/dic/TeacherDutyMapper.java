@@ -9,7 +9,7 @@ import java.util.List;
 public interface TeacherDutyMapper {
 
 
-    @Select("select teacherDutyId ,teacherDutyName,master from dic_corpduty")
+    @Select("select teacherDutyId ,teacherDutyName,master from dic_teacherduty")
     public List<TeacherDuty> teacherDutyList();
     @Insert("<script>" +
             "  insert into dic_teacherduty(teacherDutyId ,teacherDutyName,master) " +

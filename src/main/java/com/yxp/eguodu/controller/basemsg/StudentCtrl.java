@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,20 +27,10 @@ public class StudentCtrl {
     @Autowired
     private StudentService svr;
 
-
-    private String paperId;
-    private String studentName;
-    private String schoolId ;
-    private String schoolName;
-    private String pageSize;
-    private String pageNo;
-    private String pageBegin;
-
-
     @GetMapping(value="/studentList")
-    public List<Map<String ,Object>> studentList(String studentId,String paperId, String studentName, String schoolId, String schoolName,
+    public List<Map<String ,Object>> studentList(String studentId,String studentPaperId, String studentName, String schoolId, String schoolName,
                                                   String pageSize, String pageNo, String pageBegin){
-        StudentQueryParams queryParams=new StudentQueryParams( studentId, paperId,
+        StudentQueryParams queryParams=new StudentQueryParams( studentId, studentPaperId,
                 studentName,
                 schoolId,
                 schoolName,
@@ -49,26 +40,29 @@ public class StudentCtrl {
         return svr.studentList(queryParams);
     }
 
-//    @GetMapping(value="/studentListTotal")
-//    public int studentListTotal( String paperId,
-//                                 String studentName,
-//                                 String schoolId,
-//                                 String schoolName,
-//                                 String studentDutyId,
-//                                 String pageSize,
-//                                 String pageNo,
-//                                 String pageBegin){
-//        StudentQueryParams queryParams=new StudentQueryParams(  paperId,
-//                studentName,
-//                schoolId,
-//                schoolName,
-//                studentDutyId,
-//                pageSize,
-//                pageNo,
-//                pageBegin);
-//        return Integer.parseInt( svr.studentList(queryParams).get(0).get("total").toString());
-//    }
-//
+    @GetMapping(value="/studentListTotal")
+    public Map<String,Object> studentListTotal( String studentPaperId,
+                                 String studentName,
+                                 String schoolId,
+                                 String schoolName,
+                                 String studentDutyId,
+                                 String pageSize,
+                                 String pageNo,
+                                 String pageBegin){
+        StudentQueryParams queryParams=new StudentQueryParams(  studentPaperId,
+                studentName,
+                schoolId,
+                schoolName,
+                studentDutyId,
+                pageSize,
+                pageNo,
+                pageBegin);
+        Map<String,Object> re = new HashMap<String,Object>();
+        re.put("total",Integer.parseInt( svr.studentList(queryParams).get(0).get("total").toString()));
+
+        return re;
+    }
+
 //    @GetMapping(value="/studentExcel")
 //    public String studentExcel(String paperId,
 //                               String studentName,

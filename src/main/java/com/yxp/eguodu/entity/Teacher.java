@@ -13,7 +13,7 @@ import java.util.Date;
 
 public class Teacher {
     private int id;
-    private String paperId; // 身份证
+    private String teacherPaperId; // 身份证
     private String tel; // 电话
     private String teacherName; // 老师姓名
     private String teacherDutyId; // 当前职务

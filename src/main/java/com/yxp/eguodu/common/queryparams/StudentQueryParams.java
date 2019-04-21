@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class StudentQueryParams {
     private String studentId;
-    private String paperId;
+    private String studentPaperId;
     private String studentName;
     private String schoolId ;
     private String schoolName;

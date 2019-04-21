@@ -8,6 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,24 +21,25 @@ public class SchoolCtrl {
      @GetMapping(value="/schoolList")
      public List<Map<String,Object>> schoolList(  String schoolId, String schoolName, String cityId,String districtId,
                                                   String schoolStyle,@DateTimeFormat(pattern="yyyy-MM-dd") Date regTimeBegin,
-                                                  @DateTimeFormat(pattern="yyyy-MM-dd") Date regTimeEnd, String train, String saleManId,
+                                                  @DateTimeFormat(pattern="yyyy-MM-dd") Date regTimeEnd, boolean train, String saleManId,
                                                   String pageSize,String pageNo,String pageBegin) {
          SchoolQueryParams params= new SchoolQueryParams(schoolId,  schoolName, cityId, districtId, schoolStyle,
                                                        regTimeBegin, regTimeEnd, train, saleManId, pageSize,pageNo,pageBegin);
 
-
-         return svr.schoolList(params);
+         List<Map<String,Object>> list = svr.schoolList(params);
+         return list;
      }
 
     @GetMapping(value="/schoolListTotal")
-    public int schoolListTotal(String schoolId, String schoolName, String cityId, String districtId,
+    public Map<String,Object> schoolListTotal(String schoolId, String schoolName, String cityId, String districtId,
                                String schoolStyle, @DateTimeFormat(pattern="yyyy-MM-dd") Date regTimeBegin,
-                               @DateTimeFormat(pattern="yyyy-MM-dd") Date regTimeEnd, String train, String saleManId, String pageSize, String pageNo) {
+                               @DateTimeFormat(pattern="yyyy-MM-dd") Date regTimeEnd, boolean train, String saleManId, String pageSize, String pageNo) {
         SchoolQueryParams params= new SchoolQueryParams(schoolId,  schoolName, cityId, districtId, schoolStyle,
                 regTimeBegin, regTimeEnd, train, saleManId, pageSize,pageNo,"");
 
-
-        return Integer.parseInt( svr.schoolListTotal(params).get(0).get("total").toString());
+        Map<String,Object> re= new HashMap<String,Object>();
+         re.put("total", Integer.parseInt( svr.schoolListTotal(params).get(0).get("total").toString()));
+         return re;
     }
 
 
@@ -46,22 +48,22 @@ public class SchoolCtrl {
 
 
      @PostMapping(value = "/insertSchool")
-     public String insertSchool(@RequestBody School school){
+     public Map<String,Object> insertSchool(@RequestBody School school){
          int d = svr.insertSchool(school);
          if (d>0)
-             return "ok";
+             return new HashMap<String,Object>(){{put("result","ok") ;}} ;
          else
-             return "fail";
+             return new HashMap<String,Object>(){{put("result","fail") ;}} ;
 
      }
 
     @PostMapping(value = "/updateSchool")
-    public String updateSchool(@RequestBody School school){
+    public Map<String,Object> updateSchool(@RequestBody School school){
         int d = svr.updateSchool(school);
         if (d>0)
-            return "ok";
+            return new HashMap<String,Object>(){{put("result","ok") ;}} ;
         else
-            return "fail";
+            return new HashMap<String,Object>(){{put("result","fail") ;}} ;
     }
 
 

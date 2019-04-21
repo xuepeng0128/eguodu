@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +28,7 @@ public class TeacherCtrl {
     private TeacherService svr;
 
     @GetMapping(value="/teacherList")
-    public List<Map<String ,Object>> teacherList( String paperId,
+    public List<Map<String ,Object>> teacherList( String teacherPaperId,
                                             String teacherName,
                                             String schoolId,
                                             String schoolName,
@@ -35,7 +36,7 @@ public class TeacherCtrl {
                                             String pageSize,
                                             String pageNo,
                                             String pageBegin){
-        TeacherQueryParams queryParams=new TeacherQueryParams(  paperId,
+        TeacherQueryParams queryParams=new TeacherQueryParams(  teacherPaperId,
          teacherName,
           schoolId,
           schoolName,
@@ -47,7 +48,7 @@ public class TeacherCtrl {
     }
 
     @GetMapping(value="/teacherListTotal")
-    public int teacherListTotal( String paperId,
+    public Map<String,Object> teacherListTotal( String teacherPaperId,
                                             String teacherName,
                                             String schoolId,
                                             String schoolName,
@@ -55,7 +56,7 @@ public class TeacherCtrl {
                                             String pageSize,
                                             String pageNo,
                                             String pageBegin){
-        TeacherQueryParams queryParams=new TeacherQueryParams(  paperId,
+        TeacherQueryParams queryParams=new TeacherQueryParams(  teacherPaperId,
                 teacherName,
                 schoolId,
                 schoolName,
@@ -63,11 +64,13 @@ public class TeacherCtrl {
                 pageSize,
                 pageNo,
                 pageBegin);
-        return Integer.parseInt( svr.teacherList(queryParams).get(0).get("total").toString());
+        Map<String,Object> re= new HashMap<String,Object>();
+        re.put("total",Integer.parseInt( svr.teacherList(queryParams).get(0).get("total").toString()));
+        return re;
     }
 
     @GetMapping(value="/teacherExcel")
-    public String teacherExcel(String paperId,
+    public String teacherExcel(String teacherPaperId,
                                String teacherName,
                                String schoolId,
                                String schoolName,
@@ -75,7 +78,7 @@ public class TeacherCtrl {
         String filePath = "/export/" + RandomUtil.randomString(20).toUpperCase() + ".xls";
         String tmpFile = URLDecoder.decode(ClassUtils.getDefaultClassLoader().getResource("").getPath(), "UTF-8") + "/static" + filePath;
         ExcelWriter bigWriter = ExcelUtil.getBigWriter(tmpFile);
-        TeacherQueryParams queryParams=new TeacherQueryParams(  paperId,
+        TeacherQueryParams queryParams=new TeacherQueryParams(  teacherPaperId,
                 teacherName,
                 schoolId,
                 schoolName,
@@ -93,7 +96,7 @@ public class TeacherCtrl {
             rows.add(title);
             for (Map<String,Object> teacher : teacherList) {
                 ArrayList<String> row = CollUtil.newArrayList(
-                        teacher.get("paperId").toString(),
+                        teacher.get("teacherPaperId").toString(),
                         teacher.get("teacherName").toString(),
                         teacher.get("tel").toString(),
                         teacher.get("address").toString(),
@@ -115,41 +118,41 @@ public class TeacherCtrl {
 
 
     @PostMapping(value="/insertTeacher")
-    public String insertTeacher(@RequestBody Teacher teacher){
+    public Map<String,Object> insertTeacher(@RequestBody Teacher teacher){
         int d = svr.insertTeacher(teacher);
         if (d>0)
-            return "ok";
+            return new HashMap<String,Object>(){{put("result","ok") ;}} ;
         else
-            return "fail";
+            return new HashMap<String,Object>(){{put("result","fail") ;}} ;
     }
 
 
     @PostMapping(value = "/groupInsertTeachers")
-    public String groupInsertTeachers(@RequestBody List<Teacher> teachers){
+    public Map<String,Object> groupInsertTeachers(@RequestBody List<Teacher> teachers){
         int d = svr.groupInsertTeachers(teachers);
         if (d>0)
-            return "ok";
+            return new HashMap<String,Object>(){{put("result","ok") ;}} ;
         else
-            return "fail";
+            return new HashMap<String,Object>(){{put("result","fail") ;}} ;
     }
 
 
     @PostMapping(value="/updateTeacher")
-    public String updateTeacher(@RequestBody Teacher teacher){
+    public Map<String,Object> updateTeacher(@RequestBody Teacher teacher){
         int d = svr.updateTeacher(teacher);
         if (d>0)
-            return "ok";
+            return new HashMap<String,Object>(){{put("result","ok") ;}} ;
         else
-            return "fail";
+            return new HashMap<String,Object>(){{put("result","fail") ;}} ;
     }
 
     @GetMapping(value="/deleteTeacher")
-    public String deleteTeacher(String id){
+    public Map<String,Object> deleteTeacher(String id){
         int d = svr.deleteTeacher(id);
         if (d>0)
-            return "ok";
+            return new HashMap<String,Object>(){{put("result","ok") ;}} ;
         else
-            return "fail";
+            return new HashMap<String,Object>(){{put("result","fail") ;}} ;
     }
 
 

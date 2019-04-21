@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TeacherQueryParams {
 
-   private String paperId;
+   private String teacherPaperId;
    private String teacherName;
    private String schoolId ;
    private String schoolName;

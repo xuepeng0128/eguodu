@@ -20,7 +20,7 @@ public class SchoolQueryParams {
        private        Date regTimeBegin;
        @DateTimeFormat(pattern="yyyy-MM-dd")
        private        Date regTimeEnd;
-       private String train;
+       private boolean train;
        private String  saleManId;
        private String pageSize;
        private String pageNo;

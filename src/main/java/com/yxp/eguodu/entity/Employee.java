@@ -13,7 +13,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class Employee {
     private String employeeId;
-    private String paperId;
+    private String employeePaperId;
     private String employeeName;
     private String tel;
     private String corpDutyId;

@@ -1,11 +1,13 @@
 package com.yxp.eguodu.controller.system;
 
+import com.yxp.eguodu.common.DesUtil;
 import com.yxp.eguodu.common.queryparams.UserQueryParams;
 import com.yxp.eguodu.entity.User;
 import com.yxp.eguodu.service.system.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,9 +28,12 @@ public class UserCtrl {
     }
 
     @GetMapping(value="/userListTotal")
-    public int userListTotal(String schoolId, String account, String employeeName, String teacherName, String schoolAdmin, String kind, String pageSize, String pageNo, String pageBegin){
+    public Map<String,Object> userListTotal(String schoolId, String account, String employeeName, String teacherName, String schoolAdmin, String kind, String pageSize, String pageNo, String pageBegin){
         UserQueryParams params= new UserQueryParams( schoolId,  account,  employeeName,  teacherName,  schoolAdmin,  kind,  pageSize,  pageNo,  pageBegin);
-        return Integer.parseInt( svr.userListTotal(params).get(0).get("total").toString());
+        Map<String,Object> re= new HashMap<String,Object>();
+        re.put("total", Integer.parseInt( svr.userListTotal(params).get(0).get("total").toString()));
+        return re;
+
     }
 
 
@@ -41,7 +46,8 @@ public class UserCtrl {
 
 
     @PostMapping(value="/insertUser")
-    public String insertUser(@RequestBody User user){
+    public String insertUser(@RequestBody User user) throws Exception {
+        user.setPassWord(DesUtil.encrypt("123456"));
         int d = svr.insertUser(user);
         if (d>=0)
             return "ok";

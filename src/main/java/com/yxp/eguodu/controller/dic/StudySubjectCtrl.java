@@ -5,7 +5,9 @@ import com.yxp.eguodu.service.dic.StudySubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/api/dic/studysubject", method = {RequestMethod.GET, RequestMethod.POST}, produces = "application/json;charset=UTF-8")
@@ -23,12 +25,12 @@ public class StudySubjectCtrl {
 
 
     @PostMapping(value="/insertStudySubject")
-    public String insertStudySubject(@RequestBody StudySubject studySubject){
+    public Map<String,Object> insertStudySubject(@RequestBody StudySubject studySubject){
         int d = svr.insertStudySubject(studySubject);
         if (d>0)
-            return "ok";
+            return new HashMap<String,Object>(){{put("result","ok") ;}} ;
         else
-            return "fail";
+            return new HashMap<String,Object>(){{put("result","fail") ;}} ;
     }
 
     @PostMapping(value="/updateStudySubject")

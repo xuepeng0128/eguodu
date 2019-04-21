@@ -12,5 +12,5 @@ public class TeacherDuty {
 
     public String teacherDutyId;
     public String teacherDutyName;
-    public int master;
+    public boolean master;
 }

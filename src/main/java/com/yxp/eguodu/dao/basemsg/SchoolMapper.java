@@ -18,29 +18,29 @@ public interface SchoolMapper {
             " s.longitude,s.latitude,s.address,s.schoolStyle,s.saleManId,e.employeeName as saleManName, s.regTime,s.train,s.tel,s.linkMan," +
             " ifnull(cla.classesNum,0) as classesNum , ifnull(cir.circleNum,0) as circleNum ,ifnull(sut.studentNum,0) as studentNum ," +
             "ifnull(tea.teacherNum,0) as teacherNum " +
-            " from school s inner join dic_nation c on s.cityId=c.nationId" +
-            "inner join dic_nation d on s.districtId=d.nationId" +
-            "inner join employee e on s.saleManId =e.employeeId" +
+            " from school s inner join dic_nation c on s.cityId=c.nationId " +
+            "inner join dic_nation d on s.districtId=d.nationId " +
+            "inner join employee e on s.saleManId =e.employeeId " +
             "left outer join " +
             "" +
             "(" +
-            "    select schoolId,  ifnull(count(*),0) as classesNum from   classes ca " +
-            "    group by schoolId" +
-            ")cla on s.schoolId=cla.schoolId" +
+            "    select schoolId,  ifnull(count(*),0) as classesNum from   classes " +
+            "    group by schoolId " +
+            ")cla on s.schoolId=cla.schoolId " +
             "" +
-            "left outer join" +
+            "left outer join " +
             " (" +
-            " select schoolId, ifnull(count(*),0) as circleNum from classes ca left outer join " +
-            " circle cr on ca.classesId=cr.classesId" +
-            " GROUP BY schoolId" +
-            ")cir on s.schoolId=cir.schoolId" +
+            " select ca.schoolId, ifnull(count(*),0) as circleNum from classes ca left outer join " +
+            " circle cr on ca.classesId=cr.classesId " +
+            " GROUP BY ca.schoolId" +
+            ")cir on s.schoolId=cir.schoolId " +
             "" +
             "left outer join " +
             "(" +
-            "    select schoolId,  ifnull(count(*),0) as studentNum from   classes ca  left outer join" +
+            "    select ca.schoolId,  ifnull(count(*),0) as studentNum from   classes ca  left outer join " +
             "     classesstudent sut on ca.classesId=sut.classesId" +
-            "    group by schoolId" +
-            ")sut on s.schoolId=sut.schoolId" +
+            "    group by ca.schoolId" +
+            ")sut on s.schoolId=sut.schoolId " +
             "" +
             "left outer join " +
             "(" +
@@ -84,29 +84,29 @@ public interface SchoolMapper {
 
     @Select("<script>" +
             "SELECT count(*) as total " +
-            " from school s inner join dic_nation c on s.cityId=c.nationId" +
-            "inner join dic_nation d on s.districtId=d.nationId" +
-            "inner join employee e on s.saleManId =e.employeeId" +
+            " from school s inner join dic_nation c on s.cityId=c.nationId " +
+            "inner join dic_nation d on s.districtId=d.nationId " +
+            "inner join employee e on s.saleManId =e.employeeId " +
             "left outer join " +
             "" +
             "(" +
-            "    select schoolId,  ifnull(count(*),0) as classesNum from   classes ca " +
-            "    group by schoolId" +
-            ")cla on s.schoolId=cla.schoolId" +
+            "    select schoolId,  ifnull(count(*),0) as classesNum from   classes " +
+            "    group by schoolId " +
+            ")cla on s.schoolId=cla.schoolId " +
             "" +
-            "left outer join" +
+            "left outer join " +
             " (" +
-            " select schoolId, ifnull(count(*),0) as circleNum from classes ca left outer join " +
-            " circle cr on ca.classesId=cr.classesId" +
-            " GROUP BY schoolId" +
-            ")cir on s.schoolId=cir.schoolId" +
+            " select ca.schoolId, ifnull(count(*),0) as circleNum from classes ca left outer join " +
+            " circle cr on ca.classesId=cr.classesId " +
+            " GROUP BY ca.schoolId" +
+            ")cir on s.schoolId=cir.schoolId " +
             "" +
             "left outer join " +
             "(" +
-            "    select schoolId,  ifnull(count(*),0) as studentNum from   classes ca  left outer join" +
+            "    select ca.schoolId,  ifnull(count(*),0) as studentNum from   classes ca  left outer join " +
             "     classesstudent sut on ca.classesId=sut.classesId" +
-            "    group by schoolId" +
-            ")sut on s.schoolId=sut.schoolId" +
+            "    group by ca.schoolId" +
+            ")sut on s.schoolId=sut.schoolId " +
             "" +
             "left outer join " +
             "(" +
@@ -150,14 +150,14 @@ public interface SchoolMapper {
 
     @Insert("<script>" +
             " insert into school(schoolId,schoolName,cityId,districtId,longitude,latitude,address,schoolStyle,saleManId,regTime,train)" +
-            " values ('${schoolId}','${schoolName}','${cityId}','${districtId}','${longitude},'${latitude},'${address}',${schoolStyle},'${saleManId}','${regTime}',${train})" +
+            " values (func_makeBusinessId('school', case when ${train}= false then  '0' else '1' end),'${schoolName}','${cityId}','${districtId}',${longitude},${latitude},'${address}',${schoolStyle},'${saleManId}',now(),${train})" +
             "</script>")
     public int insertSchool(School school);
 
     @Update("<script>" +
             " update school set schoolName='${schoolName}', cityId='${cityId}',districtId='${districtId}'," +
             " longitude=${longitude},latitude=${latitude},address='${address}',schoolStyle=${schoolStyle}}'," +
-            " saleManId='${saleManId}',regTime='${regTime}',train=${train} where schoolId='${schoolId}'" +
+            " saleManId='${saleManId}',train=${train} where schoolId='${schoolId}'" +
             "</script>")
     public int updateSchool(School school);
 

@@ -26,5 +26,5 @@ public class School {
     private String linkMan;
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private  Date regTime; // 注册时间
-    private int train;
+    private boolean train;
 }
