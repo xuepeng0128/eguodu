@@ -4,11 +4,9 @@ import com.yxp.eguodu.common.queryparams.ClassesQueryParams;
 import com.yxp.eguodu.entity.Classes;
 import com.yxp.eguodu.service.basemsg.ClassesService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,12 +18,28 @@ public class ClassesCtrl {
     private ClassesService svr;
 
     @GetMapping(value="/classesList")
-    public List<Map<String,Object>> classesList (String grade, String classes , String schoolId, String schoolName, String teacherPaperId, String studentName, String pageSize, String pageNo, String pageBegin)
+    public List<Map<String,Object>> classesList (String classesId,String grade, String classes , String schoolId, String schoolName, String pageSize, String pageNo, String pageBegin)
     {
-        ClassesQueryParams queryParams = new ClassesQueryParams(  grade, classes ,  schoolId,  schoolName,  teacherPaperId,  studentName,  pageSize,  pageNo,  pageBegin);
+        ClassesQueryParams queryParams = new ClassesQueryParams( classesId, grade, classes ,  schoolId,  schoolName,  pageSize,  pageNo,  pageBegin);
         return svr.classesList(queryParams);
     }
 
-    
+    @GetMapping(value="/classesListTotal")
+    public Map<String,Object> classesListTotal (String classesId, String grade, String classes , String schoolId, String schoolName, String pageSize, String pageNo, String pageBegin)
+    {
+        ClassesQueryParams queryParams = new ClassesQueryParams(classesId,  grade, classes ,  schoolId,  schoolName,  pageSize,  pageNo,  pageBegin);
+        return
+                new HashMap<String,Object>(){{
+                    put("total", svr.classesListTotal(queryParams));
+
+                }};
+    }
+
+    @PostMapping(value="/insertClasses")
+    public Map<String,Object> insertClasses(@RequestBody Classes classes){
+       return null;
+    }
+
+
 
 }

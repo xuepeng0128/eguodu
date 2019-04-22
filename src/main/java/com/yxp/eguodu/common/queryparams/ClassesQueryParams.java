@@ -8,12 +8,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ClassesQueryParams {
+    private String classesId;
    private String grade;
    private String classes ;
    private String schoolId;
    private String schoolName;
-   private String teacherPaperId;
-    private String studentName;
     private String pageSize;
     private String pageNo;
     private String pageBegin;

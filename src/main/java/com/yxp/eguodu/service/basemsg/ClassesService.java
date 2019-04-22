@@ -7,4 +7,5 @@ import java.util.Map;
 
 public interface ClassesService {
     public List<Map<String,Object>> classesList(ClassesQueryParams params);
+    public List<Map<String,Object>> classesListTotal(ClassesQueryParams params);
 }

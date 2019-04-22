@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class StudySubject {
 
-    private String studySubjectId;
+    private int studySubjectId;
     private String studySubjectName;
     private int  habitClass;
-
+    private int bSchool;
 }
