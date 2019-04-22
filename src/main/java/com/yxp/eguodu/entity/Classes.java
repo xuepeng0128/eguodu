@@ -21,6 +21,7 @@ public class Classes {
     private String  headMaster; // 班主任
     private String headMasterName;
     private String    schoolId; // 所属学校
+    private String    schoolName; // 所属学校
     private Date regTime;
     private Date endTime;
     private List<ClassesTeacher> teachers;

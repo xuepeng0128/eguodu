@@ -18,8 +18,10 @@ import java.util.Map;
 public interface ClassesMapper {
 
     @Select("<script> " +
-            " select c.classesId,c.classes,c.grade,s.schoolId,s.schoolName, ifnull(t.teacherNum,0) as teacherNum , ifnull(d.studentNum,0) as studentNum " +
+            " select c.classesId,c.classes,c.grade,c.classesName,c.headMaster,ifnull(dt.teacherName,'') as headMasterName," +
+            "   s.schoolId,s.schoolName, ifnull(t.teacherNum,0) as teacherNum , ifnull(d.studentNum,0) as studentNum " +
             "  from classes c inner join school s on c.schoolId=s.schoolId  " +
+            "  left outer join v_onDutyTeacher dt on c.headMaster=dt.teacherPaperId " +
             "left outer join " +
             "( " +
             "  select classesId, ifnull(count(*),0) as teacherNum  from  classesteacher  " +
@@ -57,6 +59,7 @@ public interface ClassesMapper {
     @Select("<script> " +
             " select count(*) as total " +
             "  from classes c inner join school s on c.schoolId=s.schoolId  " +
+            "  left outer join v_onDutyTeacher dt on c.headMaster=dt.teacherPaperId " +
             "left outer join " +
             "( " +
             "  select classesId, ifnull(count(*),0) as teacherNum  from  classesteacher  " +
@@ -87,6 +90,7 @@ public interface ClassesMapper {
             " </if>" +
             "</script>")
     public List<Map<String,Object>> classesListTotal(ClassesQueryParams params);
+
 
 
 
