@@ -65,7 +65,7 @@ public class TeacherCtrl {
                 pageNo,
                 pageBegin);
         Map<String,Object> re= new HashMap<String,Object>();
-        re.put("total",Integer.parseInt( svr.teacherList(queryParams).get(0).get("total").toString()));
+        re.put("total",Integer.parseInt( svr.teacherListTotal(queryParams).get(0).get("total").toString()));
         return re;
     }
 

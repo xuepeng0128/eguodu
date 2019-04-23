@@ -58,7 +58,7 @@ public class StudentCtrl {
                 pageNo,
                 pageBegin);
         Map<String,Object> re = new HashMap<String,Object>();
-        re.put("total",Integer.parseInt( svr.studentList(queryParams).get(0).get("total").toString()));
+        re.put("total",Integer.parseInt( svr.studentListTotal(queryParams).get(0).get("total").toString()));
 
         return re;
     }

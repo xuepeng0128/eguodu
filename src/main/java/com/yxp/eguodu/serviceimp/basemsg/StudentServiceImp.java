@@ -21,7 +21,8 @@ public class StudentServiceImp implements StudentService {
 
     @Override
     public List<Map<String, Object>> studentListTotal(StudentQueryParams paras) {
-        return mapper.studentListTotal(paras);
+        List<Map<String, Object>> list =mapper.studentListTotal(paras);
+        return list;
     }
 
     @Override
