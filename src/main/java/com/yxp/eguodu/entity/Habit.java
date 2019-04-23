@@ -16,5 +16,5 @@ public class Habit {
   private String memo ; // 文本描述
 //  private String videoUrl ; // 视频
 //  private String audioUrl ; // 音频
-//  private String picUrl; // 图片
+   private String picUrl; // 图片
 }

@@ -10,8 +10,12 @@ import java.util.List;
 public interface HabitMapper {
 
 
-    @Select("select habitId ,habitName,habitClass,memo from dic_habit")
+    @Select("select habitId ,habitName,habitClass,memo ,picUrl from dic_habit")
     public List<Habit> habitList();
+
+
+
+
     @Insert("<script>" +
             "  insert into dic_habit(habitId ,habitName,habitClass,memo) " +
             "  values (func_makeDicId('habit'),'${habitName}',${habitClass},'${memo}')" +

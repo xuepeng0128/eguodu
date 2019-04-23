@@ -151,7 +151,7 @@ public interface SchoolMapper {
 
     @Update("<script>" +
             " update school set schoolName='${schoolName}', cityId='${cityId}',districtId='${districtId}'," +
-            " longitude=${longitude},latitude=${latitude},address='${address}',schoolStyle=${schoolStyle}}'," +
+            " longitude=${longitude},latitude=${latitude},address='${address}',schoolStyle=${schoolStyle}," +
             " saleManId='${saleManId}',train=${train} where schoolId='${schoolId}'" +
             "</script>")
     public int updateSchool(School school);

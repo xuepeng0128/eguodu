@@ -13,7 +13,7 @@ import java.util.Map;
 @Mapper
 public interface TeacherMapper {
     @Select("<script> " +
-            "select id, teacherPaperId,teacherName,tel,address,ifnull(t.teacherDutyId,'') as teacherDutyId , ifnull(d.teacherDutyName,'') as teacherDutyName\n" +
+            "select id, teacherPaperId,teacherName,t.tel,t.address,ifnull(t.teacherDutyId,'') as teacherDutyId , ifnull(d.teacherDutyName,'') as teacherDutyName\n" +
             "     , t.schoolId , s.schoolName from teacher t " +
             "left outer join dic_teacherduty d on t.teacherDutyId=d.teacherDutyId\n" +
             "left outer join school s on t.schoolId=s.schoolId " +
