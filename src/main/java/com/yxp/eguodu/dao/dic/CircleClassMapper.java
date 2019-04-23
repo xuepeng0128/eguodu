@@ -13,7 +13,7 @@ public interface CircleClassMapper {
     public List<CircleClass> circleClassList();
     @Insert("<script>" +
             "  insert into dic_circleclass(circleClassId ,circleClassName,pareClassId,icon,memo ) " +
-            "  values (func_makeDicId('corpduty'),'${circleClassName}','${pareClassId}','${icon}','${memo}' )" +
+            "  values (func_makeDicId('corpduty',''),'${circleClassName}','${pareClassId}','${icon}','${memo}' )" +
             "</script>")
     public int insertCircleClass(CircleClass circleClass);
 

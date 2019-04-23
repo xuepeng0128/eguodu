@@ -13,7 +13,7 @@ public interface TeacherDutyMapper {
     public List<TeacherDuty> teacherDutyList();
     @Insert("<script>" +
             "  insert into dic_teacherduty(teacherDutyId ,teacherDutyName,master) " +
-            "  values (func_makeDicId('corpduty'),'${teacherDutyName}',${master})" +
+            "  values (func_makeDicId('corpduty',''),'${teacherDutyName}',${master})" +
             "</script>")
     public int insertTeacherDuty(TeacherDuty teacherDuty);
 

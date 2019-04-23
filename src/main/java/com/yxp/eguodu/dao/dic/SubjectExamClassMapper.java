@@ -14,7 +14,7 @@ public interface SubjectExamClassMapper {
     public List<SubjectExamClass> subjectExamClassList();
     @Insert("<script>" +
             "  insert into dic_subjectexamclass(subjectExamClassId ,subjectExamClassName,studySubjectId) " +
-            "  values (func_makeDicId('subjectexamclass'),'${subjectExamClassName}','${studySubjectId}')" +
+            "  values (func_makeDicId('subjectexamclass',''),'${subjectExamClassName}','${studySubjectId}')" +
             "</script>")
     public int insertSubjectExamClass(SubjectExamClass SubjectExamClass);
 

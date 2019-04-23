@@ -81,7 +81,7 @@ public interface UserMapper {
 
     @Insert("<script>" +
             " insert into user(userId,account,passWord,schoolId,employeeId,teacherPaperId,supperAdmin,schoolAdmin,addTime,kind)" +
-            " values (func_makeDicId('user'),'${account}','${passWord}','${schoolId}','${employeeId}','${teacherPaperId}'," +
+            " values (func_makeDicId('user',''),'${account}','${passWord}','${schoolId}','${employeeId}','${teacherPaperId}'," +
             " ${supperAdmin},${schoolAdmin},now(),${kind}) " +
             "</script>")
     public int insertUser(User user);

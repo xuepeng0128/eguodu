@@ -23,7 +23,7 @@ public interface EmployeeMapper {
     public List<Employee> employeeList(Map<String,Object> paras);
     @Insert("<script>" +
             " insert into employee(employeeId,employeeName,tel,employeePaperId, corpDutyId, " +
-            " address,enterDate) values(func_makeDicId('employee'),'${employeeName}','${tel}','${employeePaperId}', '${corpDutyId}'," +
+            " address,enterDate) values(func_makeDicId('employee',''),'${employeeName}','${tel}','${employeePaperId}', '${corpDutyId}'," +
             "  '${address}',now())" +
             " </script> ")
     public int insertEmployee(Employee employee);

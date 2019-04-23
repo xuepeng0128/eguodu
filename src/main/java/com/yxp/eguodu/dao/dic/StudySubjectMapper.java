@@ -12,7 +12,7 @@ public interface StudySubjectMapper {
     public List<StudySubject> studySubjectList();
     @Insert("<script>" +
             "  insert into dic_studysubject(studySubjectId ,studySubjectName,habitClass) " +
-            "  values (func_makeDicId('studysubject'),'${studySubjectName}',${habitClass})" +
+            "  values (func_makeDicId('studysubject',''),'${studySubjectName}',${habitClass})" +
             "</script>")
     public int insertStudySubject(StudySubject studySubject);
 
