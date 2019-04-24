@@ -10,7 +10,9 @@ import java.util.List;
 public interface HabitClassMapper {
 
 
-    @Select("select habitClassId ,habitClassName,pareHabitClassId from dic_habitclass")
+    @Select("select m.habitClassId ,m.habitClassName,m.pareHabitClassId, ifnull(p.habitClassName,'') as pareHabitClassName" +
+            "  from dic_habitclass m " +
+            " left outer join dic_habitclass p on m.pareHabitClassId=p.habitClassId")
     public List<HabitClass> habitClassList();
     @Insert("<script>" +
             "  insert into dic_habitclass(habitClassId ,habitClassName,pareHabitClassId) " +

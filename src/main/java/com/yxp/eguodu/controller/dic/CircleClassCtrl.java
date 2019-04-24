@@ -5,13 +5,13 @@ import com.yxp.eguodu.entity.CorpDuty;
 import com.yxp.eguodu.service.dic.CircleClassService;
 import com.yxp.eguodu.service.dic.CorpDutyService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+@RestController
+@RequestMapping(value = "/api/dic/circleclass", method = {RequestMethod.GET, RequestMethod.POST}, produces = "application/json;charset=UTF-8")
 
 public class CircleClassCtrl {
     @Autowired

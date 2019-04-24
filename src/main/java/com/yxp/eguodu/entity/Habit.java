@@ -12,7 +12,10 @@ import lombok.NoArgsConstructor;
 public class Habit {
   private String habitId;
   private String habitName;
-  private String habitClass ; // (1,德2.智3.体4.美5.劳)
+  private String habitClassId ;
+  private String habitClassName;
+  private String subHabitClassId;
+  private String subHabitClassName;
   private String memo ; // 文本描述
 //  private String videoUrl ; // 视频
 //  private String audioUrl ; // 音频

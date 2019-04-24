@@ -11,6 +11,10 @@ public class StudySubject {
 
     private int studySubjectId;
     private String studySubjectName;
-    private int  habitClass;
-    private int bSchool;
+    private String  habitClassId;
+    private String habitClassName;
+    private String subHabitClassId;
+    private String subHabitClassName;
+    private boolean primarySchool; // 是否小学课程
+    private boolean middleSchool; //是否中学课程
 }

@@ -10,7 +10,10 @@ import java.util.List;
 public interface HabitMapper {
 
 
-    @Select("select habitId ,habitName,habitClass,memo ,picUrl from dic_habit")
+    @Select("select h.habitId ,h.habitName,h.habitClassId,pc.habitClassName, h.subHabitClassId,c.habitClassName as subHabitClassName," +
+            " h.memo ,h.picUrl from dic_habit h inner join " +
+            " dic_habitclass pc on h.habitClassId=pc.habitClassId inner join dic_habitclass c on h.subHabitClassId=c.habitClassId" +
+            " ")
     public List<Habit> habitList();
 
 

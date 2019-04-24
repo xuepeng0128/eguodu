@@ -11,5 +11,5 @@ public class HabitClass {
    private String  habitClassId;
    private String habitClassName;
    private String  pareHabitClassId;
-
+   private String  pareHabitClassName;
 }
