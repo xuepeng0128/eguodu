@@ -69,7 +69,7 @@ public class TeacherCtrl {
         return re;
     }
 
-    @GetMapping(value="/teacherExcel")
+    @PostMapping(value="/teacherExcel")
     public String teacherExcel(String teacherPaperId,
                                String teacherName,
                                String schoolId,
@@ -91,7 +91,7 @@ public class TeacherCtrl {
         {
             return "nodata";
         }else {
-            ArrayList<String> title = CollUtil.newArrayList("身份证", "姓名",  "联系电话","住址","当前职务", "所在学校");
+            ArrayList<String> title = CollUtil.newArrayList("身份证",  "联系电话","姓名", "住址");
             List<List<String>> rows = CollUtil.newArrayList();
             rows.add(title);
             for (Map<String,Object> teacher : teacherList) {
