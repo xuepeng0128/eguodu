@@ -144,17 +144,17 @@ public interface SchoolMapper {
 
 
     @Insert("<script>" +
-            " insert into school(schoolId,schoolName,cityId,districtId,longitude,latitude,address,schoolStyle,saleManId,regTime,train)" +
-            " values (func_makeBusinessId('school', case when ${train}= false then  '0' else '1' end),'${schoolName}','${cityId}','${districtId}',${longitude},${latitude},'${address}',${schoolStyle},'${saleManId}',now(),${train})" +
+            " insert into school(schoolId,schoolName,cityId,districtId,longitude,latitude,tel,linkman,address,schoolStyle,saleManId,regTime,train)" +
+            " values (func_makeBusinessId('school', case when ${train}= false then  '0' else '1' end),#{schoolName},#{cityId}," +
+            " #{districtId},#{longitude},#{latitude},#{tel},#{linkman},#{address},#{schoolStyle},#{saleManId},now(),#{train})" +
             "</script>")
     public int insertSchool(School school);
 
     @Update("<script>" +
-            " update school set schoolName='${schoolName}', cityId='${cityId}',districtId='${districtId}'," +
-            " longitude=${longitude},latitude=${latitude},address='${address}',schoolStyle=${schoolStyle}," +
-            " saleManId='${saleManId}',train=${train} where schoolId='${schoolId}'" +
+            " update school set schoolName=#{schoolName}, cityId=#{cityId},districtId=#{districtId}," +
+            " longitude=#{longitude},latitude=#{latitude},tel=#{tel},linkman=#{linkMan},address=#{address},schoolStyle=#{schoolStyle}," +
+            " saleManId=#{saleManId},train=#{train} where schoolId=#{schoolId}" +
             "</script>")
     public int updateSchool(School school);
-
 
 }

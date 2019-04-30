@@ -16,7 +16,7 @@ public interface HabitClassMapper {
     public List<HabitClass> habitClassList();
     @Insert("<script>" +
             "  insert into dic_habitclass(habitClassId ,habitClassName,pareHabitClassId) " +
-            "  values (func_makeDicId('habitclass','${pareHabitClassId}'),'${habitClassName}','${pareHabitClassId}')" +
+            "  values (func_makeDicId('habitclass','${pareHabitClassId}'),#{habitClassName},#{pareHabitClassId})" +
             "</script>")
     public int insertHabitClass(HabitClass habitClass);
 

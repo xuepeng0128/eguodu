@@ -12,7 +12,7 @@ import java.util.Date;
 @AllArgsConstructor
 
 public class Teacher {
-    private int id;
+    private String teacherId;
     private String teacherPaperId; // 身份证
     private String tel; // 电话
     private String teacherName; // 老师姓名

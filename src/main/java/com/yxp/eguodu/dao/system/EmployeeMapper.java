@@ -23,14 +23,14 @@ public interface EmployeeMapper {
     public List<Employee> employeeList(Map<String,Object> paras);
     @Insert("<script>" +
             " insert into employee(employeeId,employeeName,tel,employeePaperId, corpDutyId, " +
-            " address,enterDate) values(func_makeDicId('employee',''),'${employeeName}','${tel}','${employeePaperId}', '${corpDutyId}'," +
-            "  '${address}',now())" +
+            " address,enterDate) values(func_makeDicId('employee',''),#{employeeName},#{tel},#{employeePaperId}, #{corpDutyId}," +
+            "  #{address},now())" +
             " </script> ")
     public int insertEmployee(Employee employee);
 
     @Update("<script>" +
-            " update employee set employeeName='${employeeName}',tel='${tel}',employeePaperId='${employeePaperId}', corpDutyId='${corpDutyId}'," +
-            "address='${address}', enterDate='${enterDate}' ,leaveDate='${leaveDate}',wxcode='${wxcode}' where  employeeId='${employeeId}'  " +
+            " update employee set employeeName=#{employeeName},tel=#{tel},employeePaperId=#{employeePaperId}, corpDutyId=#{corpDutyId}," +
+            "address=#{address}, enterDate=#{enterDate} ,leaveDate=#{leaveDate},wxcode=#{wxcode}' where  employeeId=#{employeeId}  " +
             " </script>"
           )
     public int updateEmployee(Employee employee);

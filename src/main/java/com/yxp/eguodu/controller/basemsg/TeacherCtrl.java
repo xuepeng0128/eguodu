@@ -28,7 +28,7 @@ public class TeacherCtrl {
     private TeacherService svr;
 
     @GetMapping(value="/teacherList")
-    public List<Map<String ,Object>> teacherList( String teacherPaperId,
+    public List<Map<String ,Object>> teacherList(String teacherId, String teacherPaperId,
                                             String teacherName,
                                             String schoolId,
                                             String schoolName,
@@ -36,7 +36,7 @@ public class TeacherCtrl {
                                             String pageSize,
                                             String pageNo,
                                             String pageBegin){
-        TeacherQueryParams queryParams=new TeacherQueryParams(  teacherPaperId,
+        TeacherQueryParams queryParams=new TeacherQueryParams(teacherId, teacherPaperId,
          teacherName,
           schoolId,
           schoolName,
@@ -48,7 +48,7 @@ public class TeacherCtrl {
     }
 
     @GetMapping(value="/teacherListTotal")
-    public Map<String,Object> teacherListTotal( String teacherPaperId,
+    public Map<String,Object> teacherListTotal(String teacherId, String teacherPaperId,
                                             String teacherName,
                                             String schoolId,
                                             String schoolName,
@@ -56,7 +56,7 @@ public class TeacherCtrl {
                                             String pageSize,
                                             String pageNo,
                                             String pageBegin){
-        TeacherQueryParams queryParams=new TeacherQueryParams(  teacherPaperId,
+        TeacherQueryParams queryParams=new TeacherQueryParams(teacherId,  teacherPaperId,
                 teacherName,
                 schoolId,
                 schoolName,
@@ -70,7 +70,7 @@ public class TeacherCtrl {
     }
 
     @PostMapping(value="/teacherExcel")
-    public String teacherExcel(String teacherPaperId,
+    public String teacherExcel(String teacherId,String teacherPaperId,
                                String teacherName,
                                String schoolId,
                                String schoolName,
@@ -78,7 +78,7 @@ public class TeacherCtrl {
         String filePath = "/export/" + RandomUtil.randomString(20).toUpperCase() + ".xls";
         String tmpFile = URLDecoder.decode(ClassUtils.getDefaultClassLoader().getResource("").getPath(), "UTF-8") + "/static" + filePath;
         ExcelWriter bigWriter = ExcelUtil.getBigWriter(tmpFile);
-        TeacherQueryParams queryParams=new TeacherQueryParams(  teacherPaperId,
+        TeacherQueryParams queryParams=new TeacherQueryParams(teacherId,  teacherPaperId,
                 teacherName,
                 schoolId,
                 schoolName,

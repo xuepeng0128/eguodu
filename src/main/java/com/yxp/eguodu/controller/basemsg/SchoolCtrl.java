@@ -60,7 +60,7 @@ public class SchoolCtrl {
     @PostMapping(value = "/updateSchool")
     public Map<String,Object> updateSchool(@RequestBody School school){
         int d = svr.updateSchool(school);
-        if (d>0)
+        if (d>=0)
             return new HashMap<String,Object>(){{put("result","ok") ;}} ;
         else
             return new HashMap<String,Object>(){{put("result","fail") ;}} ;

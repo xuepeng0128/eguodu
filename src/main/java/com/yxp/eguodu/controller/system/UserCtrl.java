@@ -46,21 +46,21 @@ public class UserCtrl {
 
 
     @PostMapping(value="/insertUser")
-    public String insertUser(@RequestBody User user) throws Exception {
+    public Map<String, Object> insertUser(@RequestBody User user) throws Exception {
         user.setPassWord(DesUtil.encrypt("123456"));
         int d = svr.insertUser(user);
         if (d>=0)
-            return "ok";
+            return new HashMap<String,Object>(){{put("result","ok") ;}} ;
         else
-            return "fail";
+            return new HashMap<String,Object>(){{put("result","fail") ;}} ;
     }
     @PostMapping(value="/updateUser")
-    public String updateUser(@RequestBody User user){
+    public Map<String, Object> updateUser(@RequestBody User user){
         int d = svr.updateUser(user);
         if (d>=0)
-            return "ok";
+            return new HashMap<String,Object>(){{put("result","ok") ;}} ;
         else
-            return "fail";
+            return new HashMap<String,Object>(){{put("result","fail") ;}} ;
     }
 
 //    @GetMapping(value="/deleteUser")

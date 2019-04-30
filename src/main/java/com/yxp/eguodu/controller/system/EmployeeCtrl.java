@@ -44,21 +44,21 @@ public class EmployeeCtrl {
 
 
     @PostMapping(value="/updateEmployee")
-    public String updateEmployee(@RequestBody Employee employee){
+    public Map<String, Object> updateEmployee(@RequestBody Employee employee){
         int d = svr.updateEmployee(employee);
         if (d>=0)
-            return "ok";
+            return new HashMap<String,Object>(){{put("result","ok") ;}} ;
         else
-            return "fail";
+            return new HashMap<String,Object>(){{put("result","fail") ;}} ;
     }
 
     @GetMapping(value="/deleteEmployee")
-    public String deleteEmployee(String employeeId){
+    public Map<String, Object> deleteEmployee(String employeeId){
         int d = svr.deleteEmployee(employeeId);
         if (d>=0)
-            return "ok";
+            return new HashMap<String,Object>(){{put("result","ok") ;}} ;
         else
-            return "fail";
+            return new HashMap<String,Object>(){{put("result","fail") ;}} ;
     }
 
 }

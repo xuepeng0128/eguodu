@@ -106,7 +106,7 @@ public class ImportantTeacherXlsRead extends XlsRead {
                     if (teachermList.get(0).toString().contains("身份证") ) {
                         continue;
                     }
-                    tlist.add( new Teacher(0,
+                    tlist.add( new Teacher("",
                             teachermList.get(0).toString(), // 身份证
                             teachermList.get(1).toString(),// 电话
                             teachermList.get(2).toString(), // 老师姓名

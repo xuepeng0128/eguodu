@@ -14,14 +14,14 @@ public interface StudySubjectMapper {
     public List<StudySubject> studySubjectList();
     @Insert("<script>" +
             "  insert into dic_studysubject(studySubjectId ,studySubjectName,habitClassId,subHabitClassId,primarySchool,middleSchool) " +
-            "  values (func_makeDicId('studysubject',''),'${studySubjectName}','${habitClassId}','${subHabitClassId}','${primarySchool},${middleSchool})" +
+            "  values (func_makeDicId('studysubject',''),#{studySubjectName},#{habitClassId},#{subHabitClassId},#{primarySchool},#{middleSchool})" +
             "</script>")
     public int insertStudySubject(StudySubject studySubject);
 
     @Update("<script>" +
-            "update dic_studysubject set studySubjectName='${studySubjectName}',habitClassId='${habitClassId}' ,subHabitClassId='${subHabitClassId}'," +
-            " primarySchool=${primarySchool},middleSchool=${middleSchool} " +
-            "where studySubjectId='${studySubjectId}'" +
+            "update dic_studysubject set studySubjectName=#{studySubjectName},habitClassId=#{habitClassId} ,subHabitClassId=#{subHabitClassId}," +
+            " primarySchool=#{primarySchool},middleSchool=#{middleSchool} " +
+            "where studySubjectId=#{studySubjectId}" +
             "</script>")
     public int updateStudySubject(StudySubject studySubject);
     @Delete("<script>" +

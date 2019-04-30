@@ -17,7 +17,7 @@ public class User {
      private String  passWord;
      private String  schoolId;
      private String  employeeId;
-     private String   teacherPaperId;
+     private String   teacherId;
      private boolean supperAdmin;
      private boolean schoolAdmin;
      @DateTimeFormat(pattern = "yyyy-MM-dd")

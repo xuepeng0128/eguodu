@@ -15,11 +15,11 @@ public interface CorpDutyMapper {
     public List<CorpDuty> corpDutyList();
     @Insert("<script>" +
             "  insert into dic_corpduty(corpDutyId ,corpDutyName,master) " +
-            "  values (func_makeDicId('corpduty',''),'${corpDutyName}',${master})" +
+            "  values (func_makeDicId('corpduty',''),#{corpDutyName},#{master})" +
             "</script>")
     public int insertCorpDuty(CorpDuty corpDuty);
 
-    @Update("update dic_corpduty set corpDutyName='${corpDutyName}',master=${master} where corpDutyId='${corpDutyId}'")
+    @Update("update dic_corpduty set corpDutyName=#{corpDutyName},master=#{master} where corpDutyId=#{corpDutyId}")
     public int updateCorpDuty(CorpDuty corpDuty);
     @Delete("<script>" +
             " delete from dic_corpduty where corpDutyId='${corpDutyId}'" +

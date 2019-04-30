@@ -35,22 +35,22 @@ public class CircleClassCtrl {
     }
 
     @PostMapping(value="/updateCircleClass")
-    public String updateCircleClass(@RequestBody CircleClass circleClass){
+    public Map<String,Object> updateCircleClass(@RequestBody CircleClass circleClass){
         int d = svr.updateCircleClass(circleClass);
         if (d>=0)
-            return "ok";
+            return new HashMap<String,Object>(){{put("result","ok") ;}} ;
         else
-            return "fail";
+            return new HashMap<String,Object>(){{put("result","fail") ;}} ;
     }
 
     @GetMapping(value="/deleteCircleClass")
-    public String deleteCircleClass(String circleClassId){
+    public Map<String,Object> deleteCircleClass(String circleClassId){
 
         int d =   svr.deleteCircleClass(circleClassId);
         if (d>=0)
-            return "ok";
+            return new HashMap<String,Object>(){{put("result","ok") ;}} ;
         else
-            return "fail";
+            return new HashMap<String,Object>(){{put("result","fail") ;}} ;
 
     }
 

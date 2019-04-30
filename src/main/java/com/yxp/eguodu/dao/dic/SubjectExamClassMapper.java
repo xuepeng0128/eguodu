@@ -14,11 +14,11 @@ public interface SubjectExamClassMapper {
     public List<SubjectExamClass> subjectExamClassList();
     @Insert("<script>" +
             "  insert into dic_subjectexamclass(subjectExamClassId ,subjectExamClassName,studySubjectId) " +
-            "  values (func_makeDicId('subjectexamclass',''),'${subjectExamClassName}','${studySubjectId}')" +
+            "  values (func_makeDicId('subjectexamclass',''),#{subjectExamClassName},#{studySubjectId})" +
             "</script>")
     public int insertSubjectExamClass(SubjectExamClass SubjectExamClass);
 
-    @Update("update dic_subjectexamclass set subjectExamClassName='${subjectExamClassName}',studySubjectId='${studySubjectId}' where subjectExamClassId='${subjectExamClassId}'")
+    @Update("update dic_subjectexamclass set subjectExamClassName=#{subjectExamClassName},studySubjectId=#{studySubjectId} where subjectExamClassId=#{subjectExamClassId}")
     public int updateSubjectExamClass(SubjectExamClass SubjectExamClass);
     @Delete("<script>" +
             " delete from dic_subjectexamclass where subjectExamClassId='${subjectExamClassId}'" +

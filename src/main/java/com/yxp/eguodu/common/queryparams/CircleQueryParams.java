@@ -10,7 +10,7 @@ public class CircleQueryParams {
     private String classesId; // 班级编号
     private String grade;
     private String classes;
-    private String buildTeacherPaperId; // 建圈老师id
+    private String buildTeacherId; // 建圈老师id
     private String buildTeacherName;
     private String existTeacherName; // 班级圈所在的老师
     private String existStudentPaperId; // 圈子所在学生id

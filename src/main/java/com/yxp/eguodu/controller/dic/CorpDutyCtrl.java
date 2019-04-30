@@ -34,22 +34,22 @@ public class CorpDutyCtrl {
     }
 
     @PostMapping(value="/updateCorpDuty")
-    public String updateCorpDuty(@RequestBody CorpDuty corpDuty){
+    public Map<String, Object> updateCorpDuty(@RequestBody CorpDuty corpDuty){
         int d = svr.updateCorpDuty(corpDuty);
         if (d>=0)
-            return "ok";
+            return new HashMap<String,Object>(){{put("result","ok") ;}} ;
         else
-            return "fail";
+            return new HashMap<String,Object>(){{put("result","fail") ;}} ;
     }
 
     @GetMapping(value="/deleteCorpDuty")
-    public String deleteCorpDuty(String corpDutyId){
+    public Map<String, Object> deleteCorpDuty(String corpDutyId){
 
          int d =   svr.deleteCorpDuty(corpDutyId);
         if (d>=0)
-            return "ok";
+            return new HashMap<String,Object>(){{put("result","ok") ;}} ;
         else
-            return "fail";
+            return new HashMap<String,Object>(){{put("result","fail") ;}} ;
 
     }
 

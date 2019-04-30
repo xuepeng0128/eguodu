@@ -51,15 +51,15 @@ public interface StudentMapper {
             " </script>")
     public List<Map<String,Object>> studentListTotal(StudentQueryParams queryParams);
 
-    @Insert("insert into student(studentPaperId,studentName,tel,address,schoolId,regTime) " +
-            "values('${studentPaperId}','${studentName}','${tel}','${address}','${schoolId}',now())")
+    @Insert("insert into student(studentId,studentPaperId,studentName,tel,address,schoolId,regTime) " +
+            "values(#{studentId},#{studentPaperId},#{studentName},#{tel},#{address},#{schoolId},now())")
     public int insertStudent(Student student);
 
 
     @Insert("<script>" +
-            "  insert into student(studentPaperId,studentName,tel,address,schoolId,regTime)  values" +
+            "  insert into student(studentId,studentPaperId,studentName,tel,address,schoolId,regTime)  values" +
             " <foreach collection =\"list\" item=\"s\" separator =\",\" >" +
-            " ('${s.studentPaperId}','${s.studentName}','${s.tel}','${s.address}','${s.schoolId}',now()) " +
+            " (#{s.studentId}, #{s.studentPaperId},#{s.studentName},#{s.tel},#{s.address},#{s.schoolId},now()) " +
             "</foreach>" +
             "</script>")
     public int groupInsertStudent(List<Student> students);

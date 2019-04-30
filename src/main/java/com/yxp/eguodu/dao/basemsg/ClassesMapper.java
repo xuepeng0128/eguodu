@@ -21,7 +21,7 @@ public interface ClassesMapper {
             " select c.classesId,c.classes,c.grade,c.classesName,c.headMaster,ifnull(dt.teacherName,'') as headMasterName," +
             "   s.schoolId,s.schoolName, ifnull(t.teacherNum,0) as teacherNum , ifnull(d.studentNum,0) as studentNum " +
             "  from classes c inner join school s on c.schoolId=s.schoolId  " +
-            "  left outer join v_onDutyTeacher dt on c.headMaster=dt.teacherPaperId " +
+            "  left outer join v_onDutyTeacher dt on c.headMaster=dt.teacherId " +
             "left outer join " +
             "( " +
             "  select classesId, ifnull(count(*),0) as teacherNum  from  classesteacher  " +
@@ -59,7 +59,7 @@ public interface ClassesMapper {
     @Select("<script> " +
             " select count(*) as total " +
             "  from classes c inner join school s on c.schoolId=s.schoolId  " +
-            "  left outer join v_onDutyTeacher dt on c.headMaster=dt.teacherPaperId " +
+            "  left outer join v_onDutyTeacher dt on c.headMaster=dt.teacherId " +
             "left outer join " +
             "( " +
             "  select classesId, ifnull(count(*),0) as teacherNum  from  classesteacher  " +
@@ -95,21 +95,21 @@ public interface ClassesMapper {
 
 
     @Insert(" insert into classes(classesId,grade,classes,classesName,schoolId,headMaster,regTime) values(" +
-            " '${classesId}',${grade},${classes},'${classesName}','${schoolId}','${headMaster}',now() )")
+            " func_makeBusinessId('classes',#{schoolId}),#{grade},#{classes},#{classesName},#{schoolId},#{headMaster},now() )")
     public int insertClasses(Classes classes);
 
 
     @Insert("<script>" +
-            "  insert into classesteacher(classesId,teacherPaperId,studySubjectId,regTime)  values" +
+            "  insert into classesteacher(classesId,teacherId,studySubjectId,regTime)  values" +
             " <foreach collection =\"list\" item=\"t\" separator =\",\" >" +
-            " ('${t.classesId}','${t.teacherPaperId}','${t.studySubjectId}',now()) " +
+            " (#{t.classesId},#{t.teacherId},#{t.studySubjectId},now()) " +
             "</foreach>" +
             "</script>")
     public int insertClassesTeachers(List<ClassesTeacher> classesTeachers);
 
 
     @Insert("<script>" +
-            "  insert into classesteacher(classesId,studentId,regTime)  values" +
+            "  insert into classesstudent(classesId,studentId,regTime)  values" +
             " <foreach collection =\"list\" item=\"s\" separator =\",\" >" +
             " ('${t.classesId}','${s.studentId}',now()) " +
             " </foreach>" +

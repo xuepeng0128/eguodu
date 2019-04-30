@@ -12,7 +12,7 @@ import java.util.Date;
 public class ClassesTeacher {
   private int  id;
   private String classesId;
-  private String  teacherPaperId;
+  private String  teacherId;
   private String  teacherName;
   private int    studySubjectId;
   private String studySubjectName;

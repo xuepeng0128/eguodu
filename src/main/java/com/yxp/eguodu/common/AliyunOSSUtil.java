@@ -35,7 +35,7 @@ public class AliyunOSSUtil {
         String fileHost=constantConfig.getYIGUODU_FILE_HOST();
         SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
         String dateStr=format.format(new Date());
-
+        String fileUrl ="";
         // 判断文件
         if(file==null){
             return null;
@@ -50,7 +50,7 @@ public class AliyunOSSUtil {
                 client.createBucket(createBucketRequest);
             }
             // 设置文件路径和名称
-            String fileUrl = fileHost + "/" + (dateStr + "/" + UUID.randomUUID().toString().replace("-", "") + "-" + file.getName());
+            fileUrl = fileHost + "/" + (dateStr + "/" + UUID.randomUUID().toString().replace("-", "") + "-" + file.getName());
             // 上传文件
             PutObjectResult result = client.putObject(new PutObjectRequest(bucketName, fileUrl, file));
             // 设置权限(公开读)
@@ -67,7 +67,7 @@ public class AliyunOSSUtil {
                 client.shutdown();
             }
         }
-        return null;
+        return fileUrl;
     }
 
 

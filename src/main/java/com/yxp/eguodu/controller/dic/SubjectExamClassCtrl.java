@@ -34,22 +34,22 @@ public class SubjectExamClassCtrl {
     }
 
     @PostMapping(value="/updateSubjectExamClass")
-    public String updateSubjectExamClass(@RequestBody SubjectExamClass subjectExamClass){
+    public Map<String, Object> updateSubjectExamClass(@RequestBody SubjectExamClass subjectExamClass){
         int d = svr.updateSubjectExamClass(subjectExamClass);
         if (d>=0)
-            return "ok";
+            return new HashMap<String,Object>(){{put("result","ok") ;}} ;
         else
-            return "fail";
+            return new HashMap<String,Object>(){{put("result","fail") ;}} ;
     }
 
     @GetMapping(value="/deleteSubjectExamClass")
-    public String deleteSubjectExamClass(String subjectExamClassId){
+    public Map<String, Object> deleteSubjectExamClass(String subjectExamClassId){
 
         int d =   svr.deleteSubjectExamClass(subjectExamClassId);
         if (d>=0)
-            return "ok";
+            return new HashMap<String,Object>(){{put("result","ok") ;}} ;
         else
-            return "fail";
+            return new HashMap<String,Object>(){{put("result","fail") ;}} ;
 
     }
 

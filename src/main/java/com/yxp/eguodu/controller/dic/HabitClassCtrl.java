@@ -37,22 +37,22 @@ public class HabitClassCtrl {
     }
 
     @PostMapping(value="/updateHabitClass")
-    public String updateHabitClass(@RequestBody HabitClass habitClass){
+    public Map<String, Object> updateHabitClass(@RequestBody HabitClass habitClass){
         int d = svr.updateHabitClass(habitClass);
         if (d>=0)
-            return "ok";
+            return new HashMap<String,Object>(){{put("result","ok") ;}} ;
         else
-            return "fail";
+            return new HashMap<String,Object>(){{put("result","fail") ;}} ;
     }
 
     @GetMapping(value="/deleteHabitClass")
-    public String deleteHabitClass(String habitClassId){
+    public Map<String, Object> deleteHabitClass(String habitClassId){
 
         int d =   svr.deleteHabitClass(habitClassId);
         if (d>=0)
-            return "ok";
+            return new HashMap<String,Object>(){{put("result","ok") ;}} ;
         else
-            return "fail";
+            return new HashMap<String,Object>(){{put("result","fail") ;}} ;
 
     }
 

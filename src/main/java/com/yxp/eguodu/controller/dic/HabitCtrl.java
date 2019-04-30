@@ -33,21 +33,21 @@ public class HabitCtrl {
     }
 
     @PostMapping(value="/updateHabit")
-    public String updateHabit(@RequestBody Habit Habit){
+    public Map<String, Object> updateHabit(@RequestBody Habit Habit){
         int d = svr.updateHabit(Habit);
         if (d>=0)
-            return "ok";
+            return new HashMap<String,Object>(){{put("result","ok") ;}} ;
         else
-            return "fail";
+            return new HashMap<String,Object>(){{put("result","fail") ;}} ;
     }
 
     @GetMapping(value="/deleteHabit")
-    public String deleteHabit(String HabitId){
+    public Map<String, Object> deleteHabit(String HabitId){
         int d =   svr.deleteHabit(HabitId);
         if (d>=0)
-            return "ok";
+            return new HashMap<String,Object>(){{put("result","ok") ;}} ;
         else
-            return "fail";
+            return new HashMap<String,Object>(){{put("result","fail") ;}} ;
 
     }
 }
