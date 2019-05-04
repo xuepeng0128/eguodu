@@ -25,7 +25,7 @@ public interface TeacherMapper {
             " and teacherPaperId like '%${teacherPaperId}%'" +
             "</if>" +
             "<if test='teacherName != null and teacherName !=\"\"'>" +
-            " and teacherName like '%${teacherName}'%" +
+            " and teacherName like '%${teacherName}%'" +
             "</if>" +
             "<if test='schoolId != null and schoolId !=\"\"'>" +
             " and t.schoolId = '${schoolId}'" +
@@ -53,7 +53,7 @@ public interface TeacherMapper {
             " and teacherPaperId like '%${teacherPaperId}%'" +
             "</if>" +
             "<if test='teacherName != null and teacherName !=\"\"'>" +
-            " and teacherName like '%${teacherName}'%" +
+            " and teacherName like '%${teacherName}%' " +
             "</if>" +
             "<if test='schoolId != null and schoolId !=\"\"'>" +
             " and t.schoolId = '${schoolId}'" +
@@ -74,6 +74,18 @@ public interface TeacherMapper {
             "</script>")
     public int insertTeacher(Teacher teacher);
 
+    /**
+     * 批量导入教师信息
+     * 1.删除原有老师，
+     * 2.删除user表老师用户
+     * 3.批量插入
+     * 4.批量插入user表
+     * @param teachers
+     * @return
+     */
+    @Delete("delete from teacher where schoolId='${schoolId}'")
+    public int deleteAllSchoolTeacher(Map<String,Object> paras);
+
     @Insert("<script>" +
             "  insert into teacher(teacherId,teacherPaperId,teacherName,tel,address,teacherDutyId,schoolId,regTime) values" +
             " <foreach collection =\"list\" item=\"t\" separator =\",\" >" +
@@ -81,6 +93,12 @@ public interface TeacherMapper {
             "</foreach>" +
             "</script>")
     public int groupInsertTeacher(List<Teacher> teachers);
+
+
+
+
+
+
     @Update("<script>" +
             " update teacher set teacherPaperId='${teacherPaperId}',teacherName='${teacherName}',tel='${tel}'," +
             " address='${address}',teacherDutyId='${teacherDutyId}',schoolId='${schoolId}' " +

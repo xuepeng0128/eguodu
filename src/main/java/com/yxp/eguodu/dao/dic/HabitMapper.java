@@ -18,10 +18,9 @@ public interface HabitMapper {
 
 
 
-
     @Insert("<script>" +
-            "  insert into dic_habit(habitId ,habitName,habitClass,memo) " +
-            "  values (func_makeDicId('habit',''),#{habitName},#{habitClass},#{memo})" +
+            "  insert into dic_habit(habitId ,habitName,habitClassId,subHabitClassId,memo) " +
+            "  values (func_makeDicId('habit',''),#{habitName},#{habitClassId},#{subHabitClassId},#{memo})" +
             "</script>")
     public int insertHabit(Habit habit);
 

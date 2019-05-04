@@ -4,9 +4,7 @@ import com.yxp.eguodu.common.queryparams.ClassesQueryParams;
 import com.yxp.eguodu.entity.Classes;
 import com.yxp.eguodu.entity.ClassesStudent;
 import com.yxp.eguodu.entity.ClassesTeacher;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 import java.util.Map;
@@ -98,6 +96,12 @@ public interface ClassesMapper {
             " func_makeBusinessId('classes',#{schoolId}),#{grade},#{classes},#{classesName},#{schoolId},#{headMaster},now() )")
     public int insertClasses(Classes classes);
 
+    @Update(" update classes set grade=#{grade} , classes=#{classes} ,classesName=#{classesName}," +
+            " schoolId =#{schoolId},headMaster=#{headMaster} where classesId=#{classesId} ")
+    public  int updateClasses(Classes classes);
+
+    @Delete(" delete from classes where classesId=#{classesId}")
+    public int deleteClasses(Map<String,Object> paras);
 
     @Insert("<script>" +
             "  insert into classesteacher(classesId,teacherId,studySubjectId,regTime)  values" +

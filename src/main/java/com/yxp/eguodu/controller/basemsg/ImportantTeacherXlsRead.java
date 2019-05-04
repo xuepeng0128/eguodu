@@ -117,7 +117,8 @@ public class ImportantTeacherXlsRead extends XlsRead {
                             null
                     ));
                 }
-
+        response.setCharacterEncoding("utf-8");
+        response.setContentType("text/html;charset=utf-8");
         PrintWriter writer = null;
         try {
             writer = response.getWriter();

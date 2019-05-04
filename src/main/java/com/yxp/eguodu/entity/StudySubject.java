@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class StudySubject {
 
-    private int studySubjectId;
+    private String studySubjectId;
     private String studySubjectName;
     private String  habitClassId;
     private String habitClassName;

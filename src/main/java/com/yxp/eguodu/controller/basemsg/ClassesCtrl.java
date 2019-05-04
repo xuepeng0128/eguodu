@@ -35,10 +35,51 @@ public class ClassesCtrl {
                 }};
     }
 
+    /**
+     * 插入班级
+     * @param classes
+     * @return
+     */
     @PostMapping(value="/insertClasses")
     public Map<String,Object> insertClasses(@RequestBody Classes classes){
-       return null;
+       int d= svr.insertClasses(classes);
+        if (d>0)
+            return new HashMap<String,Object>(){{put("result","ok") ;}} ;
+        else
+            return new HashMap<String,Object>(){{put("result","fail") ;}} ;
     }
+    /**
+     * 修改班级
+     * @param classes
+     * @return
+     */
+    @PostMapping(value="/updateClasses")
+    public Map<String,Object> updateClasses(@RequestBody Classes classes){
+        int d= svr.updateClasses(classes);
+        if (d>=0)
+            return new HashMap<String,Object>(){{put("result","ok") ;}} ;
+        else
+            return new HashMap<String,Object>(){{put("result","fail") ;}} ;
+    }
+
+    /**
+     * 删除班级
+     * @param classesId
+     * @return
+     */
+    @GetMapping(value="/deleteClasses")
+    public Map<String,Object> deleteClasses(String classesId){
+        int d= svr.deleteClasses(new HashMap<String,Object>(){{put("classesId",classesId) ;}});
+        if (d>=0)
+            return new HashMap<String,Object>(){{put("result","ok") ;}} ;
+        else
+            return new HashMap<String,Object>(){{put("result","fail") ;}} ;
+    }
+
+
+
+
+
 
 
 
