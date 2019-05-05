@@ -17,7 +17,7 @@ public interface TeacherMapper {
             "     , t.schoolId , s.schoolName from teacher t " +
             "left outer join dic_teacherduty d on t.teacherDutyId=d.teacherDutyId\n" +
             "left outer join school s on t.schoolId=s.schoolId " +
-            "where 1=1" +
+            "where 1=1 and endTime is not null " +
             "<if test='teacherId != null and teacherId !=\"\"'>" +
             " and teacherId like '%${teacherId}%'" +
             "</if>" +
@@ -45,7 +45,7 @@ public interface TeacherMapper {
             "select count(*) as total from teacher t " +
             "left outer join dic_teacherduty d on t.teacherDutyId=d.teacherDutyId\n" +
             "left outer join school s on t.schoolId=s.schoolId " +
-            "where 1=1" +
+            "where 1=1 and endTime is not null " +
             "<if test='teacherId != null and teacherId !=\"\"'>" +
             " and teacherId like '%${teacherId}%'" +
             "</if>" +
@@ -80,7 +80,6 @@ public interface TeacherMapper {
      * 2.删除user表老师用户
      * 3.批量插入
      * 4.批量插入user表
-     * @param teachers
      * @return
      */
     @Delete("delete from teacher where schoolId='${schoolId}'")
@@ -108,5 +107,14 @@ public interface TeacherMapper {
     @Delete("<script>" +
             " delete from teacher where teacherId=${teacherId}" +
             "</script>")
-    public int deleteTeacher(String id);
+    public int deleteTeacher(Map<String,Object> paras);
+
+
+    @Update("<script>" +
+            " update teacher set endTime= now() where teacherId='${teacherId}'" +
+            "</script>")
+    public int quitDuty(Map<String,Object> paras);
+
+
+
 }

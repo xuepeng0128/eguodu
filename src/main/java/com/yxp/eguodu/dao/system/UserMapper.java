@@ -86,6 +86,15 @@ public interface UserMapper {
             "</script>")
     public int insertUser(User user);
 
+
+    @Insert("<script>" +
+            "  insert into user(userId,account,passWord,schoolId,employeeId,teacherId,supperAdmin,schoolAdmin,addTime,kind) values" +
+            " <foreach collection =\"list\" item=\"t\" separator =\",\" >" +
+            " ( func_makeDicId('user',''),'${t.account}','${t.passWord}','${t.schoolId}','${t.employeeId}','${t.supperAdmin}','${t.schoolAdmin}',now(),#{t.kind}) " +
+            "</foreach>" +
+            "</script>")
+    public int groupInsertUser(List<User> users);
+
     @Update("<script>" +
             " update user set account=#{account} where userId='${userId}'" +
             "</script>")
@@ -94,4 +103,17 @@ public interface UserMapper {
             " update user set passWord=#{passWord} where userId=#{userId}" +
             "</script>")
     public int changePwd(User user);
+
+
+    @Delete("<script>" +
+            "  delete from user where userId='${userId}'" +
+            "</script>")
+    public int deleteUser(Map<String,Object> paras);
+
+
+    @Delete("<script>" +
+            "  delete from user where teacherId='${teacherId}'" +
+            "</script>")
+    public int deleteUserByTeacherId(Map<String,Object> paras);
+
 }

@@ -33,6 +33,7 @@ public interface ClassesMapper {
             " " +
             ") d on c.classesId=d.classesId " +
             "where 1=1 " +
+            " " +
             " <if test='classesId != null and classedId !=\"\" and classesId !=\"0\" '>" +
             "    and c.classesId='${classesId}'" +
             " </if>" +

@@ -43,8 +43,23 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
+    public int groupInsertUser(List<User> users) {
+        return mapper.groupInsertUser(users);
+    }
+
+    @Override
     public int changePwd(User user) {
         return mapper.changePwd(user);
+    }
+
+    @Override
+    public int deleteUser(Map<String, Object> paras) {
+        return mapper.deleteUser(paras);
+    }
+
+    @Override
+    public int deleteUserByTeacherId(Map<String, Object> paras) {
+        return mapper.deleteUserByTeacherId(paras);
     }
 
 

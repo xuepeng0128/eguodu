@@ -9,8 +9,9 @@ import java.util.Map;
 public interface TeacherService {
     public List<Map<String,Object>> teacherList(TeacherQueryParams paras);
     public List<Map<String,Object>> teacherListTotal(TeacherQueryParams paras);
-    public int groupInsertTeachers(List<Teacher> teachers);
-    public int insertTeacher(Teacher teacher);
+    public int groupInsertTeachers(List<Teacher> teachers) throws Exception;
+    public int insertTeacher(Teacher teacher) throws Exception;
     public int updateTeacher(Teacher teacher);
-    public int deleteTeacher(String id);
+    public int deleteTeacher(Map<String,Object> paras);
+    public int quitDuty(Map<String,Object> paras);
 }

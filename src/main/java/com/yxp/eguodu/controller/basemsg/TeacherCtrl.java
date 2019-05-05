@@ -147,8 +147,10 @@ public class TeacherCtrl {
     }
 
     @GetMapping(value="/deleteTeacher")
-    public Map<String,Object> deleteTeacher(String id){
-        int d = svr.deleteTeacher(id);
+    public Map<String,Object> deleteTeacher(String teacherId){
+        int d = svr.deleteTeacher(new HashMap<String,Object>(){{
+              put("teacherId",teacherId);
+        }});
         if (d>0)
             return new HashMap<String,Object>(){{put("result","ok") ;}} ;
         else
@@ -156,6 +158,21 @@ public class TeacherCtrl {
     }
 
 
+    @GetMapping(value="/quitDutyTeacher")
+    public Map<String,Object> quitDutyTeacher(String teacherId){
+        int d = svr.quitDuty(new HashMap<String,Object>(){{
+            put("teacherId",teacherId);
+        }});
+
+
+
+
+
+        if (d>0)
+            return new HashMap<String,Object>(){{put("result","ok") ;}} ;
+        else
+            return new HashMap<String,Object>(){{put("result","fail") ;}} ;
+    }
 
 
 

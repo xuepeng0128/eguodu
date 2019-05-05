@@ -13,6 +13,9 @@ public interface UserService {
     public List<Map<String,Object>> userListTotal(UserQueryParams queryParams);
     public int insertUser(User user);
     public int updateUser(User user);
+    public int groupInsertUser(List<User> users);
     public int changePwd(User user);
+    public int deleteUser(Map<String,Object> paras);
+    public int deleteUserByTeacherId(Map<String,Object> paras);
 
 }
