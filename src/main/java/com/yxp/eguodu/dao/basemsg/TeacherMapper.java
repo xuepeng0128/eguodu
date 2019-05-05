@@ -17,7 +17,7 @@ public interface TeacherMapper {
             "     , t.schoolId , s.schoolName from teacher t " +
             "left outer join dic_teacherduty d on t.teacherDutyId=d.teacherDutyId\n" +
             "left outer join school s on t.schoolId=s.schoolId " +
-            "where 1=1 and endTime is not null " +
+            "where 1=1 and endTime is  null " +
             "<if test='teacherId != null and teacherId !=\"\"'>" +
             " and teacherId like '%${teacherId}%'" +
             "</if>" +

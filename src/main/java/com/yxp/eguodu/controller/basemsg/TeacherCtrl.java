@@ -118,7 +118,7 @@ public class TeacherCtrl {
 
 
     @PostMapping(value="/insertTeacher")
-    public Map<String,Object> insertTeacher(@RequestBody Teacher teacher){
+    public Map<String,Object> insertTeacher(@RequestBody Teacher teacher) throws Exception {
         int d = svr.insertTeacher(teacher);
         if (d>0)
             return new HashMap<String,Object>(){{put("result","ok") ;}} ;
@@ -128,7 +128,7 @@ public class TeacherCtrl {
 
 
     @PostMapping(value = "/groupInsertTeachers")
-    public Map<String,Object> groupInsertTeachers(@RequestBody List<Teacher> teachers){
+    public Map<String,Object> groupInsertTeachers(@RequestBody List<Teacher> teachers) throws Exception {
         int d = svr.groupInsertTeachers(teachers);
         if (d>0)
             return new HashMap<String,Object>(){{put("result","ok") ;}} ;

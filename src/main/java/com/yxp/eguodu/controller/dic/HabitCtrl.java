@@ -9,6 +9,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 次数模式，数量模式，时间模式
+ */
 @RestController
 @RequestMapping(value = "/api/dic/habit", method = {RequestMethod.GET, RequestMethod.POST}, produces = "application/json;charset=UTF-8")
 public class HabitCtrl {
