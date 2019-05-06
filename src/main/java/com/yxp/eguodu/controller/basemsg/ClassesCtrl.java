@@ -2,6 +2,7 @@ package com.yxp.eguodu.controller.basemsg;
 
 import com.yxp.eguodu.common.queryparams.ClassesQueryParams;
 import com.yxp.eguodu.entity.Classes;
+import com.yxp.eguodu.entity.ClassesTeacher;
 import com.yxp.eguodu.service.basemsg.ClassesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -77,10 +78,21 @@ public class ClassesCtrl {
     }
 
 
+    @GetMapping(value="/classesTeacherList")
+    public List<Map<String,Object>> classesTeacherList(String classesId,String schoolStyle){
+          return svr.classesTeacherList(new HashMap<String,Object>(){{
+              put("classesId",classesId);
+              put("schoolStyle", Integer.parseInt(schoolStyle));
+          }});
+    }
 
-
-
-
-
+    @PostMapping(value="/saveClassesTeachers")
+    public Map<String,Object> saveClassesTeachers(@RequestBody List<ClassesTeacher> classesTeachers){
+           int d =svr.saveClassesTeacher(classesTeachers);
+        if (d>=0)
+            return new HashMap<String,Object>(){{put("result","ok") ;}} ;
+        else
+            return new HashMap<String,Object>(){{put("result","fail") ;}} ;
+    }
 
 }

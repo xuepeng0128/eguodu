@@ -9,9 +9,6 @@ import org.apache.ibatis.annotations.*;
 import java.util.List;
 import java.util.Map;
 
-
-
-
 @Mapper
 public interface ClassesMapper {
 
@@ -104,22 +101,55 @@ public interface ClassesMapper {
     @Delete(" delete from classes where classesId=#{classesId}")
     public int deleteClasses(Map<String,Object> paras);
 
+
+    @Select("<script> " +
+            "select sub.studySubjectId, sub.studySubjectName ,st.teacherId , t.teacherName from " +
+            "( " +
+            "select studySubjectId,studySubjectName from dic_studysubject " +
+            " where 1=1 " +
+            " <if test='schoolStyle==1>" +
+            "  and primarySchool=1 " +
+            " </if>" +
+            " <if test='schoolStyle==2>" +
+            "  and middleSchool=2 " +
+            " </if>" +
+            ") sub left outer join " +
+            "(  " +
+            " select studySubjectId , teacherId from classesteacher where classesId='${classesId}' and endTime is null " +
+            ") st on sub.studySubjectId=st.studySubjectId left outer join teacher t on st.teacherId=t.teacherName ")
+    public List<Map<String,Object>> classesTeacherList(Map<String,Object> paras);
+
+
     @Insert("<script>" +
             "  insert into classesteacher(classesId,teacherId,studySubjectId,regTime)  values" +
-            " <foreach collection =\"list\" item=\"t\" separator =\",\" >" +
-            " (#{t.classesId},#{t.teacherId},#{t.studySubjectId},now()) " +
-            "</foreach>" +
+            " (#{classesId},#{teacherId},#{studySubjectId},now()) " +
             "</script>")
-    public int insertClassesTeachers(List<ClassesTeacher> classesTeachers);
+    public int insertClassesTeacher(ClassesTeacher classesTeacher);
 
-
+    @Update("<script>" +
+            " update classesteacher set endTime=now() where classesId='${classesId}' and teacherId='${teacherId}' and studySubjectId='${studySubjectId}'" +
+            "</script>")
+    public int classesTeacherLeave(Map<String,Object> paras);
     @Insert("<script>" +
             "  insert into classesstudent(classesId,studentId,regTime)  values" +
             " <foreach collection =\"list\" item=\"s\" separator =\",\" >" +
-            " ('${t.classesId}','${s.studentId}',now()) " +
+            "    ('${s.classesId}','${s.studentId}',now()) " +
             " </foreach>" +
             "</script>")
-    public int insertClassesStudents(List<ClassesStudent> classesStudents);
+    public int groupInsertClassesStudents(List<ClassesStudent> classesStudents);
+
+   @Insert("<script>" +
+         "  insert into classesstudent(classesId,studentId,regTime)  values" +
+         "    ('${classesId}','${studentId}',now()) " +
+         "</script>")
+    public int insertSingleClassesStudent(ClassesStudent classesStudent);
+
+   @Update("<script> update classesstudent set endTime=now() where classesId='${classedId}' and studentId='${studentId}'")
+    public int classesStudentLeave(Map<String,Object> paras);
+
+
+
+
 
 
 }

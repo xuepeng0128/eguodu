@@ -16,9 +16,14 @@ public class Student {
    private String studentPaperId;
    private String studentId;
    private String studentName;
-    private String schoolId;
+   private int sex;
+   private  Date birthday;
+
+   private String schoolId;
    private String address ; // 家庭住址
    private String tel;
+   private String headimg;
+   private String nickname;
    private Date regTime;
    private String  wxcode; // 小程序openid
 

@@ -14,8 +14,9 @@ public class ClassesTeacher {
   private String classesId;
   private String  teacherId;
   private String  teacherName;
-  private int    studySubjectId;
+  private String    studySubjectId;
   private String studySubjectName;
+  private int schoolStyle;
   private Date regTime;
   private Date endTime;
 }
