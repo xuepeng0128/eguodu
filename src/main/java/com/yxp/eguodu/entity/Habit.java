@@ -17,7 +17,19 @@ public class Habit {
   private String subHabitClassId;
   private String subHabitClassName;
   private String memo ; // 文本描述
+  private String icon;
+  private String color;
 //  private String videoUrl ; // 视频
 //  private String audioUrl ; // 音频
    private String picUrl; // 图片
+
+  private int perTime;
+  private String timeUnit;
+  private int mode;
+  private String timeModeNum;
+  private int countModeNum;
+  private float valueModeNum;
+  private String unitName;
+
+
 }

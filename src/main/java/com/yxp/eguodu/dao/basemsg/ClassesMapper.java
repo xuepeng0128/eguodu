@@ -107,16 +107,17 @@ public interface ClassesMapper {
             "( " +
             "select studySubjectId,studySubjectName from dic_studysubject " +
             " where 1=1 " +
-            " <if test='schoolStyle==1>" +
+            " <if test='schoolStyle==1'>" +
             "  and primarySchool=1 " +
             " </if>" +
-            " <if test='schoolStyle==2>" +
+            " <if test='schoolStyle==2'>" +
             "  and middleSchool=2 " +
             " </if>" +
             ") sub left outer join " +
             "(  " +
             " select studySubjectId , teacherId from classesteacher where classesId='${classesId}' and endTime is null " +
-            ") st on sub.studySubjectId=st.studySubjectId left outer join teacher t on st.teacherId=t.teacherName ")
+            ") st on sub.studySubjectId=st.studySubjectId left outer join teacher t on st.teacherId=t.teacherName " +
+            "</script>")
     public List<Map<String,Object>> classesTeacherList(Map<String,Object> paras);
 
 
@@ -127,7 +128,8 @@ public interface ClassesMapper {
     public int insertClassesTeacher(ClassesTeacher classesTeacher);
 
     @Update("<script>" +
-            " update classesteacher set endTime=now() where classesId='${classesId}' and teacherId='${teacherId}' and studySubjectId='${studySubjectId}'" +
+            " update classesteacher set endTime=now() where classesId='${classesId}' and teacherId='${teacherId}' " +
+            " and studySubjectId='${studySubjectId}'" +
             "</script>")
     public int classesTeacherLeave(Map<String,Object> paras);
     @Insert("<script>" +
@@ -144,7 +146,9 @@ public interface ClassesMapper {
          "</script>")
     public int insertSingleClassesStudent(ClassesStudent classesStudent);
 
-   @Update("<script> update classesstudent set endTime=now() where classesId='${classedId}' and studentId='${studentId}'")
+   @Update("<script> update classesstudent set endTime=now() " +
+           "where classesId='${classedId}' and studentId='${studentId}' " +
+           "</script>")
     public int classesStudentLeave(Map<String,Object> paras);
 
 
