@@ -112,6 +112,7 @@ public class ImportantTeacherXlsRead extends XlsRead {
                             teachermList.get(2).toString(), // 老师姓名
                             "01", // 当前职务
                             "",
+                            false,
                             teachermList.get(3).toString() ,
                             schoolId,
                             null
