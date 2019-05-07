@@ -35,23 +35,33 @@ public class TeacherServiceImp implements TeacherService {
     public int groupInsertTeachers(List<Teacher> teachers) throws Exception {
         int d =0;
         d=mapper.groupInsertTeacher( teachers);
-        List<User> ulist = new ArrayList<User>();
-        for (Teacher teacher : teachers){
-            User user = new User( "",teacher.getTel(),DesUtil.encrypt("123456"),teacher.getSchoolId(),
-                    null,teacher.getTeacherId(),false,false,null,2);
-            ulist.add(user);
+
+        List<Teacher> tlist = mapper.teacherNoInUser(new HashMap<String,Object>(){{
+            put("schoolId",teachers.get(0).getSchoolId());
+        }});
+        for (Teacher t : tlist)
+        {
+            User user = new User( "",t.getTel(),DesUtil.encrypt("123456"),t.getSchoolId(),
+                    null,t.getTeacherId(),false,false,null,2);
+            userMapper.insertUser(user);
         }
-        d=userMapper.groupInsertUser(ulist);
-        return d;
+        return 1;
     }
 
     @Override
     public int insertTeacher(Teacher teacher) throws Exception {
 
         mapper.insertTeacher(teacher);
-        User user = new User( "",teacher.getTel(),DesUtil.encrypt("123456"),teacher.getSchoolId(),
-                    null,teacher.getTeacherId(),false,false,null,2);
-        return userMapper.insertUser(user);
+        List<Teacher> tlist = mapper.teacherNoInUser(new HashMap<String,Object>(){{
+            put("schoolId",teacher.getSchoolId());
+        }});
+        for (Teacher t : tlist)
+        {
+            User user = new User( "",t.getTel(),DesUtil.encrypt("123456"),t.getSchoolId(),
+                    null,t.getTeacherId(),false,false,null,2);
+            userMapper.insertUser(user);
+        }
+        return 1;
     }
 
     @Override

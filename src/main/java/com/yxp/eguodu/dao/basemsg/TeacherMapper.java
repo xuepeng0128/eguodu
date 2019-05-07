@@ -14,7 +14,7 @@ import java.util.Map;
 public interface TeacherMapper {
     @Select("<script> " +
             "select teacherId, teacherPaperId,teacherName,t.tel,t.address,ifnull(t.teacherDutyId,'') as teacherDutyId , ifnull(d.teacherDutyName,'') as teacherDutyName\n" +
-            "     , t.schoolId , s.schoolName from teacher t " +
+            "     , d.master, t.schoolId , s.schoolName from teacher t " +
             "left outer join dic_teacherduty d on t.teacherDutyId=d.teacherDutyId\n" +
             "left outer join school s on t.schoolId=s.schoolId " +
             "where 1=1 and endTime is  null " +
@@ -68,11 +68,21 @@ public interface TeacherMapper {
             "</script>")
     public List<Map<String,Object>> teacherListTotal(TeacherQueryParams paras);
 
-    @Insert("<script>" +
+    @Insert({"<script>" +
             "  insert into teacher(teacherId,teacherPaperId,teacherName,tel,address,teacherDutyId,schoolId,regTime)" +
             "  values( func_makeBusinessId('teacher','${schoolId}'), '${teacherPaperId}','${teacherName}','${tel}','${address}','${teacherDutyId}','${schoolId}',now())" +
-            "</script>")
+            "</script>" } )
     public int insertTeacher(Teacher teacher);
+
+
+
+
+    @Select ("<script>" +
+            "   select teacherId,teacherPaperId,teacherName,tel,address,teacherDutyId,schoolId from " +
+            "   teacher where schoolId='${schoolId}' and  tel not in (select account from user where schoolId='${schoolId}') " +
+            "</script>")
+    public List<Teacher> teacherNoInUser(Map<String,Object> paras);
+
 
     /**
      * 批量导入教师信息

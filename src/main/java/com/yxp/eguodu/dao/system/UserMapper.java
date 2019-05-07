@@ -87,6 +87,8 @@ public interface UserMapper {
     public int insertUser(User user);
 
 
+
+
     @Insert("<script>" +
             "  insert into user(userId,account,passWord,schoolId,employeeId,teacherId,supperAdmin,schoolAdmin,addTime,kind) values" +
             " <foreach collection =\"list\" item=\"t\" separator =\",\" >" +

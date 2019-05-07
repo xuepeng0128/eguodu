@@ -29,4 +29,5 @@ public interface ClassesService {
 
     public int classesStudentLeave(ClassesStudent classesStudent);
 
+    public List<Classes> teacherAtClasses(Map<String,Object> paras);
 }

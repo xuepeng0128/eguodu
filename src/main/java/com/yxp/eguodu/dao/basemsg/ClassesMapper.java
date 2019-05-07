@@ -153,7 +153,15 @@ public interface ClassesMapper {
 
 
 
-
-
+   @Select("<script>" +
+           "   select c.classesId,c.grade,c.classes,c.headMaster ,t.teacherName as headMasterName,c.schoolId from " +
+           "( " +
+           " select classesId from classesteacher where teacherId='${teacherId}' " +
+           " union " +
+           " select classesId from classes where headMaster ='${teacherId}' " +
+           ") ac inner join classes c on ac.classesId=c.classesId " +
+           " inner join teacher t on c.headMaster=t.teacherId " +
+           "</script>")
+   public List<Classes> teacherAtClasses(Map<String, Object> paras);
 
 }

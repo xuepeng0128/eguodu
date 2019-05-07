@@ -95,4 +95,20 @@ public class ClassesCtrl {
             return new HashMap<String,Object>(){{put("result","fail") ;}} ;
     }
 
+    /**
+     * 该老师所任课班级
+     */
+    @GetMapping(value="/teacherAtClasses")
+    public List<Classes> teacherAtClasses(String teacherId){
+           List<Classes> list = svr.teacherAtClasses(new HashMap<String,Object>(){{
+               put("teacherId",teacherId);
+           }});
+           return list;
+    }
+
+
+
+
+
+
 }

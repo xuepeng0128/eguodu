@@ -134,4 +134,9 @@ public class ClassesServiceImp implements ClassesService {
     public int classesStudentLeave(ClassesStudent classesStudent) {
         return 0;
     }
+
+    @Override
+    public List<Classes> teacherAtClasses(Map<String, Object> paras) {
+        return classesMapper.teacherAtClasses(paras);
+    }
 }

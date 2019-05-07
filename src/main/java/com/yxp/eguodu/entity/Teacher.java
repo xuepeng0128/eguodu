@@ -18,6 +18,7 @@ public class Teacher {
     private String teacherName; // 老师姓名
     private String teacherDutyId; // 当前职务
     private String teacherDutyName;
+    private boolean master;
     private String address;
     private String schoolId;
     private Date regTime;
