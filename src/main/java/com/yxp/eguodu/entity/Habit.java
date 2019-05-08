@@ -8,28 +8,30 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-// 标准习惯模板
+// 习惯类
 public class Habit {
-  private String habitId;
-  private String habitName;
-  private String habitClassId ;
-  private String habitClassName;
-  private String subHabitClassId;
-  private String subHabitClassName;
-  private String memo ; // 文本描述
-  private String icon;
-  private String color;
-//  private String videoUrl ; // 视频
-//  private String audioUrl ; // 音频
-   private String picUrl; // 图片
-
-  private int perTime;
-  private String timeUnit;
-  private int mode;
-  private String timeModeNum;
-  private int countModeNum;
-  private float valueModeNum;
-  private String unitName;
+// private String  habitId
+//  private String          circleId
+//  private String  habitClassId
+//  private String         subHabitClassId
+//  private String  icon
+//  private String         color
+//  private String habitName
+//  private String         memo
+//  private String  picUrl
+//  private int         pirTime
+//  timeUnit
+//          mode
+//  timeModeNum
+//          countModeNum
+//  valueModeNum
+//          unitName
+//  guoduIcon
+//          score
+//  putCardExamId
+//          buildTime
+//  buildTeacherId
+//          buildStudentId
 
 
 }
