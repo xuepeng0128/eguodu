@@ -10,7 +10,6 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class Teacher {
     private String teacherId;
     private String teacherPaperId; // 身份证
