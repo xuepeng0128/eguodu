@@ -128,7 +128,16 @@ public class UpLoadMediaController {
             put("aliUrl" , uploadUrl);
         }};
 
-        writer.print(uploadUrl);
+//        {
+//            "error" : 0,
+//                "url" : "http://www.example.com/path/to/file.ext"
+//        }
+
+
+        writer.print( JSON.toJSONString(  new HashMap<String,Object>(){{
+            put("error",0);
+            put("url",uploadUrl );
+        }}  ));
 
     }
 
