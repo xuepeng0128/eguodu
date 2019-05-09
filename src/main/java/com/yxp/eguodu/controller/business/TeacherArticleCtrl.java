@@ -1,5 +1,6 @@
 package com.yxp.eguodu.controller.business;
 
+
 import com.yxp.eguodu.entity.TeacherArticle;
 import com.yxp.eguodu.service.business.TeacherArticleService;
 import org.springframework.beans.factory.annotation.Autowired;

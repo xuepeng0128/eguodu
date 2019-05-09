@@ -78,4 +78,61 @@ public class UpLoadMediaController {
 
     }
 
+
+
+
+    /** 文件上传*/
+    @RequestMapping(value = "/uploadueditorMediaFile")
+    @ResponseBody
+    public void uploadueditor( MultipartFile file,HttpServletResponse response) {
+
+
+        PrintWriter writer = null;
+        try {
+            writer = response.getWriter();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        if(file==null){
+            writer.print("");
+            return;
+        }
+
+        response.setHeader("Access-Control-Allow-Methods", "POST,PUT,OPTIONS,DELETE,GET");
+        response.setHeader("Access-Control-Allow-Headers", "X-Requested-With,content-type,Origin");
+        response.setHeader("Access-Control-Allow-Credentials", "true");
+        logger.info("文件上传");
+        String filename = file.getOriginalFilename();
+        System.out.println(filename);
+        uploadUrl="http://wxg-sign.oss-cn-qingdao.aliyuncs.com/";
+        try {
+
+            if (file!=null) {
+                if (!"".equals(filename.trim())) {
+                    File newFile = new File(filename);
+                    FileOutputStream os = new FileOutputStream(newFile);
+                    os.write(file.getBytes());
+                    os.close();
+                    file.transferTo(newFile);
+                    // 上传到OSS
+                    uploadUrl += aliyunOSSUtil.upLoad(newFile);
+                }
+
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        Map<String,String> retmap = new HashMap<String,String>(){{
+            put("aliUrl" , uploadUrl);
+        }};
+
+        writer.print(uploadUrl);
+
+    }
+
+
+
+
 }
