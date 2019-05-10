@@ -162,13 +162,23 @@ public interface ClassesMapper {
            ") ac inner join classes c on ac.classesId=c.classesId " +
            " inner join teacher t on c.headMaster=t.teacherId " +
            "</script>")
-   public List<Classes> teacherAtClasses(Map<String, Object> paras);
-
-
+   public List<Classes> teacherTeachedClasses(Map<String, Object> paras);
 
 
    @Select("<script>" +
-           "   " +
+           "  select ct.classesId,t.teacherId,t.teacherName,sub.studySubjectId,sub.studySubjectName from " +
+           "( " +
+           "select classesId,teacherId,studySubjectId from classesteacher where classesId='${classesId}' and  endTime is null " +
+           ") ct  inner join dic_studysubject sub on ct.studySubjectId=sub.studySubjectId inner join teacher t on  " +
+           "ct.teacherId=t.teacherId and t.schoolId='${schoolId}' " +
+           " </script>")
+  public List<ClassesTeacher> subjectTeachersAtClasses(Map<String,Object> paras);
+
+   @Select("<script>" +
+           "  select stu.studentId, stu.studentName, stu.studentPaperId,stu.nickName,stu.tel,stu.address,stu.birthday,stu.sex    from   " +
+           "( " +
+           "  select classesId,studentId from classesstudent where classesId='${classesId}' and endTime is NULL " +
+           ") cstu inner join student stu on cstu.studentId=stu.studentId and stu.schoolId='${schoolId}'  " +
            "</script>")
    public List<Map<String,Object>> studentAtClasses(Map<String,Object> paras);
 

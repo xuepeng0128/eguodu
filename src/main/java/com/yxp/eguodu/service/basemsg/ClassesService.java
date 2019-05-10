@@ -18,7 +18,7 @@ public interface ClassesService {
     public int deleteClasses(Map<String,Object> paras);
 
     public List<Map<String,Object>> classesTeacherList(Map<String,Object> paras);
-    public int saveClassesTeacher(List<ClassesTeacher> classesTeachers);
+    public int saveClassesTeacher(ClassesTeacher classesTeacher);
 
 
     public int groupAddStuents(Map<String,Object> paras);
@@ -28,6 +28,7 @@ public interface ClassesService {
     public int updateClassesStudent(ClassesStudent classesStudent);
 
     public int classesStudentLeave(ClassesStudent classesStudent);
-
-    public List<Classes> teacherAtClasses(Map<String,Object> paras);
+    public List<Map<String,Object>> studentAtClasses(Map<String,Object> paras);
+    public List<Classes> teacherTeachedClasses(Map<String,Object> paras);
+    public List<ClassesTeacher> subjectTeachersAtClasses(Map<String,Object> paras);
 }

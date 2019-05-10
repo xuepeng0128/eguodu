@@ -86,27 +86,37 @@ public class ClassesCtrl {
           }});
     }
 
-    @PostMapping(value="/saveClassesTeachers")
-    public Map<String,Object> saveClassesTeachers(@RequestBody List<ClassesTeacher> classesTeachers){
-           int d =svr.saveClassesTeacher(classesTeachers);
+    @PostMapping(value="/saveClassesTeacher")
+    public Map<String,Object> saveClassesTeacher(@RequestBody ClassesTeacher classesTeacher){
+           int d =svr.saveClassesTeacher(classesTeacher);
         if (d>=0)
             return new HashMap<String,Object>(){{put("result","ok") ;}} ;
         else
             return new HashMap<String,Object>(){{put("result","fail") ;}} ;
     }
 
-    /**
-     * 该老师所任课班级
-     */
-    @GetMapping(value="/teacherAtClasses")
-    public List<Classes> teacherAtClasses(String teacherId){
-           List<Classes> list = svr.teacherAtClasses(new HashMap<String,Object>(){{
+
+    @GetMapping(value="/teacherTeachedClasses")
+    public List<Classes> teacherTeachedClasses(String teacherId){
+           List<Classes> list = svr.teacherTeachedClasses(new HashMap<String,Object>(){{
                put("teacherId",teacherId);
            }});
            return list;
     }
 
+    @GetMapping(value="/subjectTeachersAtClasses")
+    public List<ClassesTeacher> subjectTeachersAtClasses(String classesId,String schoolId){
+        List<ClassesTeacher> list = svr.subjectTeachersAtClasses(new HashMap<String,Object>(){{
+            put("classesId",classesId);
+            put("schoolId",schoolId);
+        }});
+        return list;
+    }
 
+    @GetMapping(value="/studentAtClasses")
+    public List<Map<String,Object>> studentAtClasses(String classesId,String schoolId){
+             return  svr.stu;
+    }
 
 
 

@@ -54,43 +54,53 @@ public class ClassesServiceImp implements ClassesService {
     }
 
     @Override
-    public int saveClassesTeacher(List<ClassesTeacher> classesTeachers) {
-        List<Map<String,Object>> sourceTeachers = classesMapper.classesTeacherList(new HashedMap<String,Object>(){{
-            put("schoolStyle",classesTeachers.get(0).getSchoolStyle());
-            put("classesId" ,classesTeachers.get(0).getClassesId());
-        }});
-
-        sourceTeachers.stream().filter(o->o.get("teacherId").toString().equals("")).forEach(
-                v -> {
-                    classesTeachers.stream().filter(s->s.getStudySubjectId().equals(v.get("studySubjectId").toString())).forEach(
-                            clt -> {
-                                classesMapper.insertClassesTeacher(clt);
-                            }
-                    );
-                }
-        );
-
-        sourceTeachers.stream().filter(o-> !o.get("teacherId").toString().equals("")).forEach(
-                v ->{
-                     ClassesTeacher ctl=  classesTeachers.stream().filter(s ->  s.getStudySubjectId().equals(v.get("studySubjectId").toString())).findFirst().orElse(null);
-                     if(!ctl.getTeacherId().equals(v.get("teacherId").toString()))
-                     {
-                         classesMapper.classesTeacherLeave(new HashMap<String,Object>(){{
-                               put("classesId", v.get("classesId").toString());
-                               put("teacherId",v.get("teacherId").toString());
-                               put("studySubjectId",v.get("studySubjectId").toString());
-                         }});
-                         classesMapper.insertClassesTeacher(ctl);
-                     }
+    public int saveClassesTeacher(ClassesTeacher classesTeacher) {
 
 
+          classesMapper.classesTeacherLeave(new HashMap<String,Object>(){{
+               put("classesId",classesTeacher.getClassesId());
+               put("teacherId",classesTeacher.getTeacherId());
+               put("studySubjectId",classesTeacher.getStudySubjectId());
+          }});
 
-                }
-        );
+         classesMapper.insertClassesTeacher(classesTeacher);
+
+//        List<Map<String,Object>> sourceTeachers = classesMapper.classesTeacherList(new HashedMap<String,Object>(){{
+//            put("schoolStyle",classesTeachers.get(0).getSchoolStyle());
+//            put("classesId" ,classesTeachers.get(0).getClassesId());
+//        }});
+//
+//        sourceTeachers.stream().filter(o->o.get("teacherId").toString().equals("")).forEach(
+//                v -> {
+//                    classesTeachers.stream().filter(s->s.getStudySubjectId().equals(v.get("studySubjectId").toString())).forEach(
+//                            clt -> {
+//                                classesMapper.insertClassesTeacher(clt);
+//                            }
+//                    );
+//                }
+//        );
+//
+//        sourceTeachers.stream().filter(o-> !o.get("teacherId").toString().equals("")).forEach(
+//                v ->{
+//                     ClassesTeacher ctl=  classesTeachers.stream().filter(s ->  s.getStudySubjectId().equals(v.get("studySubjectId").toString())).findFirst().orElse(null);
+//                     if(!ctl.getTeacherId().equals(v.get("teacherId").toString()))
+//                     {
+//                         classesMapper.classesTeacherLeave(new HashMap<String,Object>(){{
+//                               put("classesId", v.get("classesId").toString());
+//                               put("teacherId",v.get("teacherId").toString());
+//                               put("studySubjectId",v.get("studySubjectId").toString());
+//                         }});
+//                         classesMapper.insertClassesTeacher(ctl);
+//                     }
+//
+//
+//
+//                }
+//        );
 
 
 
-        return 0;
+        return 1;
     }
 
     @Override
@@ -136,7 +146,17 @@ public class ClassesServiceImp implements ClassesService {
     }
 
     @Override
-    public List<Classes> teacherAtClasses(Map<String, Object> paras) {
-        return classesMapper.teacherAtClasses(paras);
+    public List<Map<String, Object>> studentAtClasses(Map<String, Object> paras) {
+        return classesMapper.studentAtClasses(paras);
+    }
+
+    @Override
+    public List<Classes> teacherTeachedClasses(Map<String, Object> paras) {
+        return classesMapper.teacherTeachedClasses(paras);
+    }
+
+    @Override
+    public List<ClassesTeacher> subjectTeachersAtClasses(Map<String, Object> paras) {
+        return classesMapper.subjectTeachersAtClasses(paras);
     }
 }
