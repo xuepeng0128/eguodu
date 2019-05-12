@@ -9,10 +9,10 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ClassesStudent {
-   private String classesId;
-   private String          studentId;
-   private String   studentName;
-   private Date regTime;
-   private Date         endTime;
+public class NoticeStudent {
+    private String  noticeId;
+    private String  studentId;
+    private String  studentName;
+    private Date receiveTime;
 }
+

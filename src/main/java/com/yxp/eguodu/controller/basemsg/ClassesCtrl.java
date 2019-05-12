@@ -2,11 +2,13 @@ package com.yxp.eguodu.controller.basemsg;
 
 import com.yxp.eguodu.common.queryparams.ClassesQueryParams;
 import com.yxp.eguodu.entity.Classes;
+import com.yxp.eguodu.entity.ClassesStudent;
 import com.yxp.eguodu.entity.ClassesTeacher;
 import com.yxp.eguodu.service.basemsg.ClassesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -97,10 +99,37 @@ public class ClassesCtrl {
 
 
     @GetMapping(value="/teacherTeachedClasses")
-    public List<Classes> teacherTeachedClasses(String teacherId){
+    public List<Classes> teacherTeachedClasses(String teacherId,String schoolId){
            List<Classes> list = svr.teacherTeachedClasses(new HashMap<String,Object>(){{
                put("teacherId",teacherId);
+               put("schoolId",schoolId);
            }});
+
+           if(list != null && list.size()>0)
+           {
+               for (Classes c : list)
+               {
+                   c.setTeachers(   svr.subjectTeachersAtClasses(new HashMap<String,Object>(){{
+                       put("classesId",c.getClassesId());
+                       put("schoolId",schoolId);
+                   }}));
+
+
+                 List<Map<String,Object>> slist=  svr.studentAtClasses(new HashMap<String,Object>(){{
+                       put("classesId",c.getClassesId());
+                       put("schoolId",schoolId);
+                   }});
+                   List<ClassesStudent> students = new ArrayList<ClassesStudent>();
+                   for (Map<String,Object> s : slist)
+                   {
+                       ClassesStudent cs = new ClassesStudent(c.getClassesId(),s.get("studentId").toString(),s.get("studentName").toString(),null,null);
+                       students.add(cs);
+                   }
+
+
+                   c.setStudents( students);
+               }
+           }
            return list;
     }
 
@@ -115,7 +144,10 @@ public class ClassesCtrl {
 
     @GetMapping(value="/studentAtClasses")
     public List<Map<String,Object>> studentAtClasses(String classesId,String schoolId){
-             return  svr.stu;
+             return  svr.studentAtClasses(new HashMap<String,Object>(){{
+                 put("classesId",classesId);
+                 put("schoolId",schoolId);
+             }});
     }
 
 

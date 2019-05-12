@@ -109,7 +109,7 @@ public class ClassesServiceImp implements ClassesService {
       List<Student> slist =  (List<Student>) paras.get("studentList")  ;
       List<ClassesStudent> ctulist = new ArrayList<ClassesStudent>();
       for (Student st : slist){
-          ctulist.add(new ClassesStudent(classesId,st.getStudentId(),null,null));
+          ctulist.add(new ClassesStudent(classesId,st.getStudentId(),st.getStudentName(),null,null));
       }
       classesMapper.groupInsertClassesStudents(ctulist);
 

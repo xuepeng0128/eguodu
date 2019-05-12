@@ -1,6 +1,7 @@
 package com.yxp.eguodu.serviceimp.business;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.yxp.eguodu.common.ExcelUtil;
 import com.yxp.eguodu.dao.business.SchoolExamMapper;
 import com.yxp.eguodu.entity.SchoolExamExcelTemplate;
@@ -10,10 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class SchoolExamServiceImp implements SchoolExamService {
@@ -29,7 +27,7 @@ public class SchoolExamServiceImp implements SchoolExamService {
                 put("schoolId",schoolId);
             }});
             List<SchoolExamExcelTemplate> list= new ArrayList<SchoolExamExcelTemplate>();
-            List<Map<String,Object>> subFullScore = new ArrayList<>(JSON.parseArray(subjectFullScores, Map.class));
+            List<Map<String,Object>> subFullScore = JSONArray.parseObject(subjectFullScores, List.class);
             for (SchoolExamExcelTemplate t : lista){
                    for(int i =0 ;i<subFullScore.size();i++)
                    {

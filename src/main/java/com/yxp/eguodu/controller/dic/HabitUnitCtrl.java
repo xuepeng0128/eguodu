@@ -1,6 +1,7 @@
 package com.yxp.eguodu.controller.dic;
 
 
+import com.yxp.eguodu.entity.HabitUnit;
 import com.yxp.eguodu.service.dic.HabitUnitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,7 @@ public class HabitUnitCtrl {
 
 
     @GetMapping(value="/habitUnitList")
-    public List<Map<String,Object>>  habitUnitList(){
+    public List<HabitUnit>  habitUnitList(){
          return svr.habitUnitList();
     }
 
