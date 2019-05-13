@@ -1,6 +1,7 @@
 package com.yxp.eguodu.controller.business;
 
 
+import com.yxp.eguodu.common.queryparams.TeacherArticleQueryParams;
 import com.yxp.eguodu.entity.TeacherArticle;
 import com.yxp.eguodu.service.business.TeacherArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,27 +20,19 @@ public class TeacherArticleCtrl {
 
     @GetMapping(value="/teacherArticleList")
     public List<Map<String,Object>>  teacherArticleList(String teacherId,String teacherName,String schoolId,
-                                                        String schoolName,String pageBegin,String pageSize){
-        List<Map<String,Object>> list = svr.teacherArticleList( new HashMap<String,Object>(){{
-            put("teacheId",teacherId);
-            put("teacherName",teacherName);
-            put("schoolId",schoolId);
-            put("schoolName",schoolName);
-            put("pageSize",pageSize);
-            put("pageBegin",pageBegin);
-        }});
+                                                        String schoolName,String pageNo,String pageBegin,String pageSize){
+        List<Map<String,Object>> list = svr.teacherArticleList( new TeacherArticleQueryParams (
+          teacherId,teacherName,schoolId,schoolName,pageNo,pageSize,pageBegin
+        ));
         return list;
     }
 
     @GetMapping(value="/teacherArticleListTotal")
     public Map<String,Object>  teacherArticleListTotal(String teacherId,String teacherName,String schoolId,
-                                                        String schoolName,String pageBegin,String pageSize){
-        List<Map<String,Object>> list = svr.teacherArticleListTotal( new HashMap<String,Object>(){{
-            put("teacheId",teacherId);
-            put("teacherName",teacherName);
-            put("schoolId",schoolId);
-            put("schoolName",schoolName);
-        }});
+                                                        String schoolName,String pageNo,String pageBegin,String pageSize){
+        List<Map<String,Object>> list = svr.teacherArticleListTotal( new TeacherArticleQueryParams (
+                teacherId,teacherName,schoolId,schoolName,pageNo,pageSize,pageBegin
+        ));
         Map<String,Object> re= new HashMap<String,Object>();
         re.put("total",Integer.parseInt( list.get(0).get("total").toString()));
         return re;

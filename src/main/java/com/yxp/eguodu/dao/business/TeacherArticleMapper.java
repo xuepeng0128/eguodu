@@ -1,5 +1,6 @@
 package com.yxp.eguodu.dao.business;
 
+import com.yxp.eguodu.common.queryparams.TeacherArticleQueryParams;
 import com.yxp.eguodu.entity.TeacherArticle;
 import org.apache.ibatis.annotations.*;
 
@@ -41,7 +42,7 @@ public interface TeacherArticleMapper {
             " </if> " +
             " limit ${pageBegin},${pageSize}" +
             "</script>")
-    public List<Map<String,Object>> teacherArticleList(Map<String,Object> paras);
+    public List<Map<String,Object>> teacherArticleList(TeacherArticleQueryParams paras);
 
 
     @Select("<script>" +
@@ -66,7 +67,7 @@ public interface TeacherArticleMapper {
             "   and s.schoolName like '%${schoolName}%'" +
             " </if> " +
             "</script>")
-    public List<Map<String,Object>> teacherArticleListTotal(Map<String,Object> paras);
+    public List<Map<String,Object>> teacherArticleListTotal(TeacherArticleQueryParams paras);
 
 
 

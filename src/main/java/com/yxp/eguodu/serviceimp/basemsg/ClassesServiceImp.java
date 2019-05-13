@@ -104,6 +104,31 @@ public class ClassesServiceImp implements ClassesService {
     }
 
     @Override
+    public int groupAddStudents(List<Student> classesStudentList) {
+        return 0;
+    }
+
+    @Override
+    public int insertClassesStudent(Student classesStudent) {
+        return 0;
+    }
+
+    @Override
+    public int updateClassesStudent(Student classesStudent) {
+        return 0;
+    }
+
+    @Override
+    public int classesStudentLeave(Student classesStudent) {
+        return 0;
+    }
+
+    @Override
+    public int deleteClassesStudent(String studentId, String classesId) {
+        return 0;
+    }
+
+    @Override
     public int groupAddStuents(Map<String, Object> paras) {
       String classesId=  paras.get("classesId").toString();
       List<Student> slist =  (List<Student>) paras.get("studentList")  ;
@@ -130,20 +155,7 @@ public class ClassesServiceImp implements ClassesService {
       return 0;
     }
 
-    @Override
-    public int insertClassesStudent(Map<String, Object> paras) {
-        return 0;
-    }
 
-    @Override
-    public int updateClassesStudent(ClassesStudent classesStudent) {
-        return 0;
-    }
-
-    @Override
-    public int classesStudentLeave(ClassesStudent classesStudent) {
-        return 0;
-    }
 
     @Override
     public List<Map<String, Object>> studentAtClasses(Map<String, Object> paras) {

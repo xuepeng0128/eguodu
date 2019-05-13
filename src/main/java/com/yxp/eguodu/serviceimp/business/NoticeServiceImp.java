@@ -20,6 +20,11 @@ public class NoticeServiceImp  implements NoticeService {
     }
 
     @Override
+    public List<Map<String, Object>> noticeListTotal(Map<String, Object> paras) {
+        return mapper.noticeListTotal(paras);
+    }
+
+    @Override
     public List<NoticeStudent> noticeStudentList(Map<String, Object> paras) {
         return mapper.noticeStudentList(paras);
     }

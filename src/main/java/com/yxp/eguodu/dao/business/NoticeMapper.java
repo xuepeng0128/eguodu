@@ -14,16 +14,46 @@ import java.util.Map;
 public interface NoticeMapper {
 
     @Select("<script>" +
-            "select m.noticeId,m.noticeContent, ifnull(count(1),0)  as receiveStudentNums  from notice m inner join " +
-            "noticestudent s on m.noticeId=s.noticeId " +
-            "where m.teacherId='${teacherId}' " +
-            " <if test='noticeContent != null and noticeContent !=\"\"'>" +
-            "and m.noticeContent like '%${noticeContent}%' " +
-            " </if> " +
-            "group by m.noticeId,m.noticeContent " +
-            "LIMIT ${pageBegin},${pageSize} " +
+            " select main.noticeId,main.noticeContent,main.receiveStudentNums , ifnull(sub.haveReadStudentNums,0) as haveReadStudentNums from  " +
+            " " +
+            "  (select m.noticeId,m.noticeContent, ifnull(count(1),0)  as receiveStudentNums  from notice m inner join \n" +
+            "         noticestudent s on m.noticeId=s.noticeId  " +
+            "          where m.teacherId='${teacherId}'  " +
+            "      and m.noticeContent like '%${noticeContent}%'  " +
+            "     group by m.noticeId,m.noticeContent " +
+            ") main left outer join  " +
+            "  ( " +
+            "   select m.noticeId,ifnull(count(1),0)  as haveReadStudentNums  from notice m inner join  " +
+            "         noticestudent s on m.noticeId=s.noticeId  " +
+            "          where m.teacherId='${teacherId}' and s.receivetime is not null " +
+            "      and m.noticeContent like '%${noticeContent}%'  " +
+            "     group by m.noticeId) sub on main.noticeId=sub.noticeId " +
+            "  LIMIT ${pageBegin},${pageSize} " +
             "</script>")
     public List<Notice> noticeList(Map<String,Object> paras);
+
+
+
+    @Select("<script>" +
+            " select count(*) as total from (" +
+            "     select main.noticeId,main.noticeContent,main.receiveStudentNums , ifnull(sub.haveReadStudentNums,0) as haveReadStudentNums from  " +
+
+            "        (select m.noticeId,m.noticeContent, ifnull(count(1),0)  as receiveStudentNums  from notice m inner join " +
+            "                noticestudent s on m.noticeId=s.noticeId  " +
+            "                    where m.teacherId='${teacherId}'  " +
+            "                 and m.noticeContent like '%${noticeContent}%'  " +
+            "               group by m.noticeId,m.noticeContent " +
+            "         ) main left outer join  " +
+            "           ( " +
+            "             select m.noticeId,ifnull(count(1),0)  as haveReadStudentNums  from notice m inner join  " +
+            "                 noticestudent s on m.noticeId=s.noticeId  " +
+            "                    where m.teacherId='${teacherId}' and s.receivetime is not null " +
+            "                and m.noticeContent like '%${noticeContent}%'  " +
+            "               group by m.noticeId) sub on main.noticeId=sub.noticeId" +
+            " ) a " +
+            "</script>")
+    public List<Map<String,Object>> noticeListTotal(Map<String,Object> paras);
+
 
     @Select("<script>" +
             "  select nt.noticeId,nt.studentId,s.studentName, nt.receiveTime from noticestudent nt inner join " +
@@ -32,8 +62,8 @@ public interface NoticeMapper {
             "</script>")
     public List<NoticeStudent> noticeStudentList(Map<String,Object> paras);
 
-    @Insert("insert into notice(noticeId,noticeContent,teacherId,sendTime) " +
-            " values(#{noticeId},#{noticeContent},#{teacherId},now())")
+    @Insert("<script> insert into notice(noticeId,noticeContent,teacherId,sendTime) " +
+            " values(#{noticeId},#{noticeContent},#{teacherId},now()) </script>")
    public int insertNotice(Notice notice);
 
     @Insert(" <script>" +

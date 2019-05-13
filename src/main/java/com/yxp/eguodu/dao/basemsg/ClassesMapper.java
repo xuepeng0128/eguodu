@@ -166,11 +166,19 @@ public interface ClassesMapper {
 
 
    @Select("<script>" +
-           "  select ct.classesId,t.teacherId,t.teacherName,sub.studySubjectId,sub.studySubjectName from " +
-           "( " +
-           "select classesId,teacherId,studySubjectId from classesteacher where classesId='${classesId}' and  endTime is null " +
-           ") ct  inner join dic_studysubject sub on ct.studySubjectId=sub.studySubjectId inner join teacher t on  " +
-           "ct.teacherId=t.teacherId and t.schoolId='${schoolId}' " +
+           " select ct.classesId,ct.teacherId, ct.teacherName , sub.studySubjectId, sub.studySubjectName from dic_studysubject sub  left outer join " +
+           "  ( " +
+           "          select a.classesId,a.teacherId, t.teacherName,a.studySubjectId from classesteacher a  " +
+           "             inner join teacher t on  " +
+           "             a.teacherId=t.teacherId and t.schoolId='${schoolId}' " +
+           "          where a.classesId='${classesId}' and  a.endTime is null  " +
+           "   )ct  on ct.studySubjectId=sub.studySubjectId where " +
+           " <if test ='schoolStyle==\"1\"'>" +
+           "      sub.primarySchool=1 " +
+           " </if>" +
+           " <if test ='schoolStyle==\"2\"'>" +
+           "      sub.middleSchool=1 " +
+           " </if>" +
            " </script>")
   public List<ClassesTeacher> subjectTeachersAtClasses(Map<String,Object> paras);
 

@@ -1,6 +1,7 @@
 package com.yxp.eguodu.serviceimp.business;
 
 import com.sun.org.apache.xerces.internal.xs.datatypes.ObjectList;
+import com.yxp.eguodu.common.queryparams.TeacherArticleQueryParams;
 import com.yxp.eguodu.dao.business.TeacherArticleMapper;
 import com.yxp.eguodu.entity.TeacherArticle;
 import com.yxp.eguodu.service.business.TeacherArticleService;
@@ -16,13 +17,13 @@ public class TeacherArticleServiceImp implements TeacherArticleService {
     private TeacherArticleMapper mapper;
 
     @Override
-    public List<Map<String, Object>> teacherArticleList(Map<String,Object> paras) {
+    public List<Map<String, Object>> teacherArticleList(TeacherArticleQueryParams paras) {
         List<Map<String, Object>> list =mapper.teacherArticleList(paras);
         return list;
     }
 
     @Override
-    public List<Map<String, Object>> teacherArticleListTotal(Map<String,Object> paras) {
+    public List<Map<String, Object>> teacherArticleListTotal(TeacherArticleQueryParams paras) {
         List<Map<String, Object>> list =mapper.teacherArticleListTotal(paras);
         return list;
     }

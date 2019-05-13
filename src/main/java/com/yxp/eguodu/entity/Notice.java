@@ -15,4 +15,5 @@ public class Notice {
    private String  teacherId;
    private Date sendTime;
    private int receiveStudentNums;
+   private int haveReadStudentNums;
 }
