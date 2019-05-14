@@ -3,6 +3,7 @@ package com.yxp.eguodu.controller.basemsg;
 import cn.hutool.poi.excel.ExcelUtil;
 import com.alibaba.fastjson.JSON;
 import com.yxp.eguodu.common.XlsRead;
+import com.yxp.eguodu.entity.Student;
 import com.yxp.eguodu.entity.Teacher;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -23,9 +25,9 @@ import java.util.Map;
 @Controller
 public class importStudentXlsRead  extends XlsRead {
 
-
-    @PostMapping(value = "/importantTeacherXls/upload" , produces = "application/json;charset=UTF-8" )
-    public void importDeviceData(@RequestBody MultipartFile file, String schoolId, HttpServletRequest request, HttpServletResponse response) {
+//学号	身份证	联系电话	名称	性别	出生日期	家庭住址
+    @PostMapping(value = "/importantStudentXls/upload" , produces = "application/json;charset=UTF-8" )
+    public void importStudentData(@RequestBody MultipartFile file, String schoolId, HttpServletRequest request, HttpServletResponse response) {
         Map<String, String[]> parameterMap = request.getParameterMap();
         InputStream is = null;
         try {
@@ -34,22 +36,22 @@ public class importStudentXlsRead  extends XlsRead {
             e.printStackTrace();
         }
         cn.hutool.poi.excel.ExcelReader reader = ExcelUtil.getReader(is);
-        List<Teacher> tlist = new ArrayList<Teacher>();
+        List<Student> tlist = new ArrayList<Student>();
         List<List<Object>> readAll = reader.read();
-        for (List<Object> teachermList : readAll) {
-            if (teachermList.get(0).toString().contains("身份证") ) {
+        for (List<Object> studentmList : readAll) {
+            if (studentmList.get(0).toString().contains("学号") ) {
                 continue;
             }
-            tlist.add( new Teacher("",
-                    teachermList.get(0).toString(), // 身份证
-                    teachermList.get(1).toString(),// 电话
-                    teachermList.get(2).toString(), // 老师姓名
-                    "01", // 当前职务
+
+            tlist.add( new Student( 0 ,    studentmList.get(1).toString(), // 身份证
+                    studentmList.get(0).toString() ,
+                    studentmList.get(3).toString() ,
+                    Integer.parseInt(studentmList.get(4).toString()), // 性别
+                    new Date(   studentmList.get(5).toString()),// 出生日期
                     "",
-                    false,
-                    teachermList.get(3).toString() ,
-                    schoolId,
-                    null
+                    studentmList.get(6).toString(), // 老师姓名
+                    studentmList.get(2).toString(), // 老师姓名
+                     null,null,null,null
             ));
         }
         response.setCharacterEncoding("utf-8");

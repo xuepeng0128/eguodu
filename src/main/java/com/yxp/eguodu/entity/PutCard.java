@@ -3,6 +3,7 @@ package com.yxp.eguodu.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.List;
@@ -17,6 +18,7 @@ public class PutCard {
     private TrainSchool trainSchool;
     private Circle circle;
     private Habit habit;
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date putCardTime;
     private String memo;
     private Student student;

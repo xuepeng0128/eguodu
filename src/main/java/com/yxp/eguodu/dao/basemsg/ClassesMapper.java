@@ -144,15 +144,25 @@ public interface ClassesMapper {
          "  insert into classesstudent(classesId,studentId,regTime)  values" +
          "    ('${classesId}','${studentId}',now()) " +
          "</script>")
-    public int insertSingleClassesStudent(ClassesStudent classesStudent);
+    public int insertClassesStudent(ClassesStudent classesStudent);
 
    @Update("<script> update classesstudent set endTime=now() " +
            "where classesId='${classedId}' and studentId='${studentId}' " +
            "</script>")
     public int classesStudentLeave(Map<String,Object> paras);
 
-
-
+    @Delete("<script>" +
+            "   delete from classesstudent where classesId='${classesId}' and studentId ='${studentId}'" +
+            "</script>")
+    public int deleteClassesStudent(Map<String,Object> paras);
+    @Select("<script>" +
+            " select cls.classesId,cls.grade,cls.classes,cls.classesName,cls.schoolId,sch.schoolName,cls.headMaster,ifnull(t.teacherName,'') as teacherName " +
+            "  from classes cls inner join " +
+            "school sch on cls.schoolId=sch.schoolId " +
+            "left outer join teacher t on cls.headMaster=t.teacherId and t.endTime is not null " +
+            " where cls.schoolId='${schoolId}' and cls.grade='${grade}'" +
+            "</script>")
+    public List<Classes> gradeClasses(Map<String,Object> paras);
    @Select("<script>" +
            "   select c.classesId,c.grade,c.classes,c.headMaster ,t.teacherName as headMasterName,c.schoolId from " +
            "( " +
@@ -163,6 +173,8 @@ public interface ClassesMapper {
            " inner join teacher t on c.headMaster=t.teacherId and t.schoolId='$schoolId' " +
            "</script>")
    public List<Classes> teacherTeachedClasses(Map<String, Object> paras);
+
+
 
 
    @Select("<script>" +
@@ -182,8 +194,11 @@ public interface ClassesMapper {
            " </script>")
   public List<ClassesTeacher> subjectTeachersAtClasses(Map<String,Object> paras);
 
-   @Select("<script>" +
-           "  select stu.studentId, stu.studentName, stu.studentPaperId,stu.nickName,stu.tel,stu.address,stu.birthday,stu.sex    from   " +
+
+
+
+    @Select("<script>" +
+           "  select stu.studentId, stu.studentName, stu.studentPaperId,stu.nickName,stu.tel,stu.address,stu.birthday,stu.sex,stu.schoolId,stu.headimg,stu.nickname,stu.wxcode    from   " +
            "( " +
            "  select classesId,studentId from classesstudent where classesId='${classesId}' and endTime is NULL " +
            ") cstu inner join student stu on cstu.studentId=stu.studentId and stu.schoolId='${schoolId}'  " +

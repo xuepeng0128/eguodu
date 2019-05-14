@@ -3,6 +3,7 @@ package com.yxp.eguodu.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -31,6 +32,7 @@ public class Habit {
     private int  guoduCoin;
     private float  score;
     private String putCardExamId;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date buildTime;
     private String  buildTeacherId;
     private String  buildStudentId;

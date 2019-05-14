@@ -3,6 +3,7 @@ package com.yxp.eguodu.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.List;
@@ -16,6 +17,7 @@ public class TeacherHabit {
 
     private String circleId; // 所属圈子
     private Teacher teacher; // 创建习惯的任职老师
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date buildDate; // 创建时间
     private Habit habit;  // 创建的习惯
     private int guodoubi; // 打卡所得果豆币

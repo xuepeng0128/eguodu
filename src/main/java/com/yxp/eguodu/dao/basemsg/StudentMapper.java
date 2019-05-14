@@ -62,7 +62,7 @@ public interface StudentMapper {
 
 
     @Update("<script>" +
-            " update student set endTime = now() where studentId='${studentId}'" +
+            " update student set endTime = now() where studentId='${studentId}' and schoolId ='${schoolId}'" +
             "</script>")
     public int studentLeaveSchool(Student student);
 

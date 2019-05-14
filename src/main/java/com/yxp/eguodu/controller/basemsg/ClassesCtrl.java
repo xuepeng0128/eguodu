@@ -5,13 +5,12 @@ import com.yxp.eguodu.entity.Classes;
 import com.yxp.eguodu.entity.ClassesStudent;
 import com.yxp.eguodu.entity.ClassesTeacher;
 import com.yxp.eguodu.service.basemsg.ClassesService;
+import org.apache.ibatis.annotations.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping(value = "/api/basemsg/classes", method = {RequestMethod.GET, RequestMethod.POST}, produces = "application/json;charset=UTF-8")
@@ -98,6 +97,45 @@ public class ClassesCtrl {
     }
 
 
+    @GetMapping(value="/gradeClasses")
+    public List<Classes> gradeClasses(String grade,String schoolId){
+        List<Classes> list = svr.gradeClasses(new HashMap<String,Object>(){{
+            put("grade",grade);
+            put("schoolId",schoolId);
+        }});
+        if(list != null && list.size()>0)
+        {
+            for (Classes c : list)
+            {
+                c.setTeachers(   svr.subjectTeachersAtClasses(new HashMap<String,Object>(){{
+                    put("classesId",c.getClassesId());
+                    put("schoolId",schoolId);
+                }}));
+
+
+                List<Map<String,Object>> slist=  svr.studentAtClasses(new HashMap<String,Object>(){{
+                    put("classesId",c.getClassesId());
+                    put("schoolId",schoolId);
+                }});
+                List<ClassesStudent> students = new ArrayList<ClassesStudent>();
+                for (Map<String,Object> s : slist)
+                {
+
+                    ClassesStudent cs = new ClassesStudent(c.getClassesId(),s.get("studentId").toString(),s.get("studentName").toString(),
+                            s.get("studentPaperId").toString(), Integer.parseInt(s.get("sex").toString()),
+                            new Date(s.get("birthday").toString()),  s.get("schoolId").toString(),
+                            s.get("address").toString(), s.get("tel").toString(), s.get("headimg").toString(),
+                            s.get("nickname").toString(), s.get("wxcode").toString(),
+                            null,null);
+                    students.add(cs);
+                }
+
+
+                c.setStudents( students);
+            }
+        }
+        return list;
+    }
     @GetMapping(value="/teacherTeachedClasses")
     public List<Classes> teacherTeachedClasses(String teacherId,String schoolId){
            List<Classes> list = svr.teacherTeachedClasses(new HashMap<String,Object>(){{
@@ -122,7 +160,15 @@ public class ClassesCtrl {
                    List<ClassesStudent> students = new ArrayList<ClassesStudent>();
                    for (Map<String,Object> s : slist)
                    {
-                       ClassesStudent cs = new ClassesStudent(c.getClassesId(),s.get("studentId").toString(),s.get("studentName").toString(),null,null);
+
+
+
+                       ClassesStudent cs = new ClassesStudent(c.getClassesId(),s.get("studentId").toString(),s.get("studentName").toString(),
+                                                              s.get("studentPaperId").toString(), Integer.parseInt(s.get("sex").toString()),
+                                                              new Date(s.get("birthday").toString()),  s.get("schoolId").toString(),
+                                                              s.get("address").toString(), s.get("tel").toString(), s.get("headimg").toString(),
+                                                              s.get("nickname").toString(), s.get("wxcode").toString(),
+                                                        null,null);
                        students.add(cs);
                    }
 
@@ -152,6 +198,50 @@ public class ClassesCtrl {
     }
 
 
+    @PostMapping(value="/groupInsertClassesStudent")
+    public Map<String,Object> groupInsertClassesStudent(@RequestBody Map<String, Object> paras){
+          svr.groupAddStudents(paras);
+          return new HashMap<String,Object>(){{
+              put("result","ok");
+          }};
+    }
 
+
+    @PostMapping(value="/insertClassesStudent")
+    public  Map<String,Object> insertClassesStudent(@RequestBody ClassesStudent classesStudent){
+        svr.insertClassesStudent(classesStudent);
+        return new HashMap<String,Object>(){{
+            put("result","ok");
+        }};
+    }
+
+    @PostMapping(value="/updateClassesStudent")
+    public  Map<String,Object> updateClassesStudent(@RequestBody ClassesStudent classesStudent){
+        svr.updateClassesStudent(classesStudent);
+        return new HashMap<String,Object>(){{
+            put("result","ok");
+        }};
+    }
+
+
+    @PostMapping(value="/classesStudentLeave")
+    public  Map<String,Object> classesStudentLeave(@RequestBody ClassesStudent classesStudent){
+        svr.classesStudentLeave(classesStudent);
+        return new HashMap<String,Object>(){{
+            put("result","ok");
+        }};
+    }
+
+
+    @GetMapping(value="/deleteClassesStudent")
+    public  Map<String,Object> deleteClassesStudent(String classesId,String studentId){
+        svr.deleteClassesStudent(new HashMap<String,Object>(){{
+            put("classesId",classesId);
+            put("studentId",studentId);
+        }});
+        return new HashMap<String,Object>(){{
+            put("result","ok");
+        }};
+    }
 
 }

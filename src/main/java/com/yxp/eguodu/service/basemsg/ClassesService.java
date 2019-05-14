@@ -21,13 +21,15 @@ public interface ClassesService {
     public int saveClassesTeacher(ClassesTeacher classesTeacher);
 
 
-    public int groupAddStudents(List<Student> classesStudentList);
-    public int insertClassesStudent(Student classesStudent);
-    public int updateClassesStudent(Student classesStudent);
-    public int classesStudentLeave(Student classesStudent);
+    public int groupAddStudents(Map<String, Object> paras);
+    public int insertClassesStudent(ClassesStudent classesStudent);
+    public int updateClassesStudent(ClassesStudent classesStudent);
+    public int classesStudentLeave(ClassesStudent classesStudent);
     public int deleteClassesStudent(Map<String,Object> paras);
 
     public List<Map<String,Object>> studentAtClasses(Map<String,Object> paras);
+
     public List<Classes> teacherTeachedClasses(Map<String,Object> paras);
+    public List<Classes> gradeClasses(Map<String,Object> paras);
     public List<ClassesTeacher> subjectTeachersAtClasses(Map<String,Object> paras);
 }

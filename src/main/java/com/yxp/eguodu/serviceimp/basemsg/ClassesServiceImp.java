@@ -103,38 +103,63 @@ public class ClassesServiceImp implements ClassesService {
         return 1;
     }
 
+
+
+
     @Override
-    public int groupAddStudents(List<Student> classesStudentList) {
-        return 0;
+    public int insertClassesStudent(ClassesStudent classesStudent) {
+        classesMapper.insertClassesStudent(classesStudent);
+        studentMapper.insertStudent(new Student( 0,classesStudent.getStudentPaperId(),classesStudent.getStudentId(),
+                                                     classesStudent.getStudentName(),
+                                                     classesStudent.getSex(), classesStudent.getBirthday(),classesStudent.getSchoolId(),
+                                                      classesStudent.getAddress(), classesStudent.getTel(),
+                                                     null,null,null,null)
+        );
+        return 1;
     }
 
     @Override
-    public int insertClassesStudent(Student classesStudent) {
-        return 0;
+    public int updateClassesStudent(ClassesStudent classesStudent) {
+        studentMapper.updateStudent(
+                new Student( 0,classesStudent.getStudentPaperId(),classesStudent.getStudentId(),
+                        classesStudent.getStudentName(),
+                        classesStudent.getSex(), classesStudent.getBirthday(),classesStudent.getSchoolId(),
+                        classesStudent.getAddress(), classesStudent.getTel(),
+                        null,null,null,null)
+        );
+        return 1;
     }
 
     @Override
-    public int updateClassesStudent(Student classesStudent) {
-        return 0;
+    public int classesStudentLeave(ClassesStudent classesStudent) {
+
+        classesMapper.classesStudentLeave(new HashMap<String,Object>(){{
+            put("classesId" , classesStudent.getClassesId());
+            put("studentId" , classesStudent.getStudentId());
+        }});
+        studentMapper.studentLeaveSchool(
+                new Student( 0,classesStudent.getStudentPaperId(),classesStudent.getStudentId(),
+                        classesStudent.getStudentName(),
+                        classesStudent.getSex(), classesStudent.getBirthday(),classesStudent.getSchoolId(),
+                        classesStudent.getAddress(), classesStudent.getTel(),
+                        null,null,null,null)
+        );
+        return 1;
     }
 
     @Override
-    public int classesStudentLeave(Student classesStudent) {
-        return 0;
+    public int deleteClassesStudent(Map<String, Object> paras) {
+        return classesMapper.deleteClassesStudent(paras);
     }
 
-    @Override
-    public int deleteClassesStudent(String studentId, String classesId) {
-        return 0;
-    }
 
     @Override
-    public int groupAddStuents(Map<String, Object> paras) {
+    public int groupAddStudents(Map<String, Object> paras) {
       String classesId=  paras.get("classesId").toString();
       List<Student> slist =  (List<Student>) paras.get("studentList")  ;
       List<ClassesStudent> ctulist = new ArrayList<ClassesStudent>();
       for (Student st : slist){
-          ctulist.add(new ClassesStudent(classesId,st.getStudentId(),st.getStudentName(),null,null));
+          ctulist.add(new ClassesStudent(classesId,st.getStudentId(),st.getStudentName(),null,1,null,null,null,null,null,null,null,null,null));
       }
       classesMapper.groupInsertClassesStudents(ctulist);
 
@@ -150,9 +175,7 @@ public class ClassesServiceImp implements ClassesService {
                studentMapper.studentLeaveSchool(st);
                studentMapper.insertStudent(st);
         }
-
-
-      return 0;
+        return 1;
     }
 
 
@@ -165,6 +188,11 @@ public class ClassesServiceImp implements ClassesService {
     @Override
     public List<Classes> teacherTeachedClasses(Map<String, Object> paras) {
         return classesMapper.teacherTeachedClasses(paras);
+    }
+
+    @Override
+    public List<Classes> gradeClasses(Map<String, Object> paras) {
+        return classesMapper.gradeClasses(paras);
     }
 
     @Override

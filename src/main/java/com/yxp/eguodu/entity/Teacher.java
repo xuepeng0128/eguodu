@@ -3,6 +3,7 @@ package com.yxp.eguodu.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -20,5 +21,6 @@ public class Teacher {
     private boolean master;
     private String address;
     private String schoolId;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date regTime;
 }

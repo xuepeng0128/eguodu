@@ -3,6 +3,7 @@ package com.yxp.eguodu.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.List;
@@ -22,7 +23,9 @@ public class Classes {
     private String headMasterName;
     private String    schoolId; // 所属学校
     private String    schoolName; // 所属学校
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date regTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date endTime;
     private List<ClassesTeacher> teachers;
     private List<ClassesStudent> students;

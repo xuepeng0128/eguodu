@@ -91,7 +91,7 @@ public class ImportantTeacherXlsRead extends XlsRead {
 
 
     @PostMapping(value = "/importantTeacherXls/upload" , produces = "application/json;charset=UTF-8" )
-    public void importDeviceData(@RequestBody MultipartFile file,String schoolId, HttpServletRequest request, HttpServletResponse response) {
+    public void importTeacherData(@RequestBody MultipartFile file,String schoolId, HttpServletRequest request, HttpServletResponse response) {
         Map<String, String[]> parameterMap = request.getParameterMap();
             InputStream is = null;
             try {
