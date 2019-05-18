@@ -4,6 +4,7 @@ import com.yxp.eguodu.common.queryparams.ClassesQueryParams;
 import com.yxp.eguodu.entity.Classes;
 import com.yxp.eguodu.entity.ClassesStudent;
 import com.yxp.eguodu.entity.ClassesTeacher;
+import com.yxp.eguodu.entity.Cstudent;
 import com.yxp.eguodu.service.basemsg.ClassesService;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -137,10 +138,11 @@ public class ClassesCtrl {
         return list;
     }
     @GetMapping(value="/teacherTeachedClasses")
-    public List<Classes> teacherTeachedClasses(String teacherId,String schoolId){
+    public List<Classes> teacherTeachedClasses(String teacherId,String schoolId,String schoolStyle ){
            List<Classes> list = svr.teacherTeachedClasses(new HashMap<String,Object>(){{
                put("teacherId",teacherId);
                put("schoolId",schoolId);
+
            }});
 
            if(list != null && list.size()>0)
@@ -150,6 +152,7 @@ public class ClassesCtrl {
                    c.setTeachers(   svr.subjectTeachersAtClasses(new HashMap<String,Object>(){{
                        put("classesId",c.getClassesId());
                        put("schoolId",schoolId);
+                       put("schoolStyle",schoolStyle);
                    }}));
 
 
@@ -164,10 +167,10 @@ public class ClassesCtrl {
 
 
                        ClassesStudent cs = new ClassesStudent(c.getClassesId(),s.get("studentId").toString(),s.get("studentName").toString(),
-                                                              s.get("studentPaperId").toString(), Integer.parseInt(s.get("sex").toString()),
-                                                              new Date(s.get("birthday").toString()),  s.get("schoolId").toString(),
-                                                              s.get("address").toString(), s.get("tel").toString(), s.get("headimg").toString(),
-                                                              s.get("nickname").toString(), s.get("wxcode").toString(),
+                                                              s.get("studentPaperId").toString(), Integer.parseInt(Optional.ofNullable(s.get("sex")).orElse(1).toString()),
+                                                              Optional.ofNullable((Date) s.get("birthday")).orElse(new Date()),  s.get("schoolId").toString(),
+                                                              s.get("address").toString(), s.get("tel").toString(), Optional.ofNullable(s.get("headimg")).orElse("").toString(),
+                                                              Optional.ofNullable(s.get("nickname")).orElse("").toString(), Optional.ofNullable(s.get("wxcode")).orElse("").toString(),
                                                         null,null);
                        students.add(cs);
                    }
@@ -199,8 +202,8 @@ public class ClassesCtrl {
 
 
     @PostMapping(value="/groupInsertClassesStudent")
-    public Map<String,Object> groupInsertClassesStudent(@RequestBody Map<String, Object> paras){
-          svr.groupAddStudents(paras);
+    public Map<String,Object> groupInsertClassesStudent(@RequestBody Cstudent cstudent){
+          svr.groupAddStudents(cstudent.getClassesId(),cstudent.getStudentList());
           return new HashMap<String,Object>(){{
               put("result","ok");
           }};

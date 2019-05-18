@@ -21,7 +21,7 @@ public interface ClassesService {
     public int saveClassesTeacher(ClassesTeacher classesTeacher);
 
 
-    public int groupAddStudents(Map<String, Object> paras);
+    public int groupAddStudents(String classesId,List<Student> studentList);
     public int insertClassesStudent(ClassesStudent classesStudent);
     public int updateClassesStudent(ClassesStudent classesStudent);
     public int classesStudentLeave(ClassesStudent classesStudent);

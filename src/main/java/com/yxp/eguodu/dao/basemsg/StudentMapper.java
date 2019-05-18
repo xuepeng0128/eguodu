@@ -11,7 +11,7 @@ import java.util.Map;
 @Mapper
 public interface StudentMapper {
     @Select("<script>" +
-            " select id,studentId, studentPaperId,studentName,s.tel,s.address,s.schoolId,c.schoolName," +
+            " select id,studentId, studentPaperId,studentName,s.tel,s.address,s.sex,s.birthday,s.schoolId,c.schoolName," +
             "  l.grade,l.classes,l.classesName ,c.schoolStyle,c.train " +
             " from student s inner join " +
             " school c on s.schoolId=c.schoolId inner JOIN classes l on s.schoolId=l.schoolId" +
@@ -53,11 +53,11 @@ public interface StudentMapper {
     public List<Map<String,Object>> studentListTotal(StudentQueryParams queryParams);
 
     @Select("select id,studentId,studentPaperId,studentName,sex,birthday,tel,address,schoolId,wxCode,headimg,nickName,regTime,endTime" +
-            " where studentId ='${studentId}' order by id desc limit 1 ")
+            " from student where studentId ='${studentId}' order by id desc limit 1 ")
     public List<Student> findStudentById(Map<String,Object> paras);
 
-    @Insert("insert into student(studentId,studentPaperId,studentName,tel,address,schoolId,regTime) " +
-            "values(#{studentId},#{studentPaperId},#{studentName},#{tel},#{address},#{schoolId},now())")
+    @Insert("insert into student(studentId,studentPaperId,studentName,tel,address,sex,birthday,schoolId,regTime) " +
+            "values(#{studentId},#{studentPaperId},#{studentName},#{tel},#{address},#{sex},#{birthday},#{schoolId},now())")
     public int insertStudent(Student student);
 
 
@@ -67,16 +67,16 @@ public interface StudentMapper {
     public int studentLeaveSchool(Student student);
 
     @Insert("<script>" +
-            "  insert into student(studentId,studentPaperId,studentName,tel,address,schoolId,regTime)  values" +
+            "  insert into student(studentId,studentPaperId,studentName,tel,address,sex,birthday,schoolId,regTime)  values" +
             " <foreach collection =\"list\" item=\"s\" separator =\",\" >" +
-            " (#{s.studentId}, #{s.studentPaperId},#{s.studentName},#{s.tel},#{s.address},#{s.schoolId},now()) " +
+            " (#{s.studentId}, #{s.studentPaperId},#{s.studentName},#{s.tel},#{s.address},#{s.sex},#{s.birthday},#{s.schoolId},now()) " +
             "</foreach>" +
             "</script>")
     public int groupInsertStudent(List<Student> students);
 
 
     @Update("update student set studentPaperId='${studentPaperId}',studentName='${studentName}',tel='${tel}'," +
-            " address='${address}',schoolId='${schoolId}',wxcode='${wxcode}' where id= ${id}")
+            " address='${address}', sex=#{sex},birthday=#{birthday},schoolId='${schoolId}',wxcode='${wxcode}' where id= ${id}")
     public int updateStudent(Student student);
 
 

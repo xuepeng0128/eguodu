@@ -170,7 +170,7 @@ public interface ClassesMapper {
            " union " +
            " select classesId from classes where headMaster ='${teacherId}' " +
            ") ac inner join classes c on ac.classesId=c.classesId " +
-           " inner join teacher t on c.headMaster=t.teacherId and t.schoolId='$schoolId' " +
+           " inner join teacher t on c.headMaster=t.teacherId and t.schoolId='${schoolId}' " +
            "</script>")
    public List<Classes> teacherTeachedClasses(Map<String, Object> paras);
 
@@ -184,12 +184,12 @@ public interface ClassesMapper {
            "             inner join teacher t on  " +
            "             a.teacherId=t.teacherId and t.schoolId='${schoolId}' " +
            "          where a.classesId='${classesId}' and  a.endTime is null  " +
-           "   )ct  on ct.studySubjectId=sub.studySubjectId where " +
+           "   )ct  on ct.studySubjectId=sub.studySubjectId where 1=1  " +
            " <if test ='schoolStyle==\"1\"'>" +
-           "      sub.primarySchool=1 " +
+           "     and  sub.primarySchool=1 " +
            " </if>" +
            " <if test ='schoolStyle==\"2\"'>" +
-           "      sub.middleSchool=1 " +
+           "    and  sub.middleSchool=1 " +
            " </if>" +
            " </script>")
   public List<ClassesTeacher> subjectTeachersAtClasses(Map<String,Object> paras);

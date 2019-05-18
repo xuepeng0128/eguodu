@@ -8,7 +8,6 @@ import com.yxp.eguodu.entity.ClassesStudent;
 import com.yxp.eguodu.entity.ClassesTeacher;
 import com.yxp.eguodu.entity.Student;
 import com.yxp.eguodu.service.basemsg.ClassesService;
-import org.apache.commons.collections4.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -154,12 +153,15 @@ public class ClassesServiceImp implements ClassesService {
 
 
     @Override
-    public int groupAddStudents(Map<String, Object> paras) {
-      String classesId=  paras.get("classesId").toString();
-      List<Student> slist =  (List<Student>) paras.get("studentList")  ;
+    public int groupAddStudents(String classId, List<Student> studentList) {
+      String classesId= classId;
+      List<Student> slist =  studentList;
       List<ClassesStudent> ctulist = new ArrayList<ClassesStudent>();
-      for (Student st : slist){
-          ctulist.add(new ClassesStudent(classesId,st.getStudentId(),st.getStudentName(),null,1,null,null,null,null,null,null,null,null,null));
+      for (int i=0; i<slist.size();i++){
+
+          ctulist.add(new ClassesStudent(classesId,slist.get(i).getStudentId(),slist.get(i).getStudentName(),slist.get(i).getStudentPaperId(),
+                                    slist.get(i).getSex(),slist.get(i).getBirthday(),slist.get(i).getSchoolId(),slist.get(i).getAddress()
+                                    ,slist.get(i).getTel(),null,null,null,null,null));
       }
       classesMapper.groupInsertClassesStudents(ctulist);
 
@@ -172,7 +174,7 @@ public class ClassesServiceImp implements ClassesService {
                    st.setNickname(OldStudent.getNickname());
                    st.setWxcode(OldStudent.getWxcode());
                }
-               studentMapper.studentLeaveSchool(st);
+             //  studentMapper.studentLeaveSchool(st);
                studentMapper.insertStudent(st);
         }
         return 1;
