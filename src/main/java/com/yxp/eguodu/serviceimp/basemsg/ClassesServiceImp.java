@@ -55,12 +55,19 @@ public class ClassesServiceImp implements ClassesService {
     @Override
     public int saveClassesTeacher(ClassesTeacher classesTeacher) {
 
+     List<Map<String,Object>>  sourcelist=  classesMapper.findClassesTeacherBySubjectId(new HashMap<String,Object>(){{
+            put("classesId",classesTeacher.getClassesId());
+            put("studySubjectId",classesTeacher.getStudySubjectId());
+        }});
+        if (sourcelist != null && sourcelist.size()>0)
+        {
+            classesMapper.classesTeacherLeave(new HashMap<String,Object>(){{
+                put("classesId",classesTeacher.getClassesId());
+                put("teacherId",sourcelist.get(0).get("teacherId").toString());
+                put("studySubjectId",classesTeacher.getStudySubjectId());
+            }});
+        }
 
-          classesMapper.classesTeacherLeave(new HashMap<String,Object>(){{
-               put("classesId",classesTeacher.getClassesId());
-               put("teacherId",classesTeacher.getTeacherId());
-               put("studySubjectId",classesTeacher.getStudySubjectId());
-          }});
 
          classesMapper.insertClassesTeacher(classesTeacher);
 
@@ -188,8 +195,8 @@ public class ClassesServiceImp implements ClassesService {
     }
 
     @Override
-    public List<Classes> teacherTeachedClasses(Map<String, Object> paras) {
-        return classesMapper.teacherTeachedClasses(paras);
+    public List<Classes> teacherTeachedClasses(String teacherId,String schoolId) {
+        return classesMapper.teacherTeachedClasses(teacherId,schoolId);
     }
 
     @Override

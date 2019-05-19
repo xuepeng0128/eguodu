@@ -15,8 +15,11 @@ import java.util.Date;
 public class Habit {
     private String  habitId;
     private String  circleId;
+    private String  circleTitle;
     private String  habitClassId;
-    private String   subHabitClassId;
+    private String  habitClassName;
+    private String  subHabitClassId;
+    private String  subHabitClassName;
     private String   icon;
     private String  color;
     private String  habitName;

@@ -127,6 +127,11 @@ public interface ClassesMapper {
             "</script>")
     public int insertClassesTeacher(ClassesTeacher classesTeacher);
 
+    @Select("<script>" +
+            "  select classesId,teacherId,studySubjectId from classesteacher where classesId='${classesId}' and studySubjectId='${studySubjectId}'" +
+            "</script>")
+    public List<Map<String,Object>> findClassesTeacherBySubjectId(Map<String,Object> paras);
+
     @Update("<script>" +
             " update classesteacher set endTime=now() where classesId='${classesId}' and teacherId='${teacherId}' " +
             " and studySubjectId='${studySubjectId}'" +
@@ -172,7 +177,7 @@ public interface ClassesMapper {
            ") ac inner join classes c on ac.classesId=c.classesId " +
            " inner join teacher t on c.headMaster=t.teacherId and t.schoolId='${schoolId}' " +
            "</script>")
-   public List<Classes> teacherTeachedClasses(Map<String, Object> paras);
+   public List<Classes> teacherTeachedClasses(@Param("teacherId") String teacherId,@Param("schoolId") String schoolId);
 
 
 

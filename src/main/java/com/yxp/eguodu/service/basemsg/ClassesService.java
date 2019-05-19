@@ -29,7 +29,7 @@ public interface ClassesService {
 
     public List<Map<String,Object>> studentAtClasses(Map<String,Object> paras);
 
-    public List<Classes> teacherTeachedClasses(Map<String,Object> paras);
+    public List<Classes> teacherTeachedClasses(String teacherId,String schoolId);
     public List<Classes> gradeClasses(Map<String,Object> paras);
     public List<ClassesTeacher> subjectTeachersAtClasses(Map<String,Object> paras);
 }

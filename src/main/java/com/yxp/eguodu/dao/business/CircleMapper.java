@@ -99,7 +99,7 @@ public interface CircleMapper {
     @Insert("<script>" +
             "  insert into circle(circleId,circleTitle,subTitle,circleClassId,schoolId,classesId,buildTeacherId,buildTime,memo,picUrl,circleProperty)" +
             "   values(func_makeBusinessId('circle',#{schoolId}) ,#{circleTitle},#{subTitle},#{circleClassId},#{schoolId},#{classesId},#{buildTeacherId}," +
-            "   #{buildTime},#{memo},#{picUrl},#{circleProperty} )" +
+            "   now(),#{memo},#{picUrl},#{circleProperty} )" +
             " </script>")
    public int insertCircle(Circle circle);
 

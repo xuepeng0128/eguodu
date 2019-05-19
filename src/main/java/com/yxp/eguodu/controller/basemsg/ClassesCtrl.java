@@ -139,11 +139,7 @@ public class ClassesCtrl {
     }
     @GetMapping(value="/teacherTeachedClasses")
     public List<Classes> teacherTeachedClasses(String teacherId,String schoolId,String schoolStyle ){
-           List<Classes> list = svr.teacherTeachedClasses(new HashMap<String,Object>(){{
-               put("teacherId",teacherId);
-               put("schoolId",schoolId);
-
-           }});
+           List<Classes> list = svr.teacherTeachedClasses(teacherId,schoolId);
 
            if(list != null && list.size()>0)
            {
