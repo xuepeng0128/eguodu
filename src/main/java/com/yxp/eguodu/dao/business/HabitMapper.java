@@ -98,7 +98,7 @@ public interface HabitMapper {
 
     @Insert("<script> " +
             "  insert into habitexam(habitExamId,teacherId,publishedDate,examTitle,examMemo,examBeginDate,examEndDate,totalScore) values(" +
-            " #{habitExamId,#{teacherId},now(),#{examTitle},#{examMemo},#{examBeginDate},#{examEndDate},#{totalScore})" +
+            " #{habitExamId},#{teacherId},now(),#{examTitle},#{examMemo},#{examBeginDate},#{examEndDate},#{totalScore})" +
             " </script> ")
     public int insertHabitExam(HabitExam habitExam);
 

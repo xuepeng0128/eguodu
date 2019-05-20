@@ -22,7 +22,7 @@ public class TeacherArticleCtrl {
     public List<Map<String,Object>>  teacherArticleList(String teacherId,String teacherName,String schoolId,
                                                         String schoolName,String pageNo,String pageBegin,String pageSize){
         List<Map<String,Object>> list = svr.teacherArticleList( new TeacherArticleQueryParams (
-          teacherId,teacherName,schoolId,schoolName,pageNo,pageSize,pageBegin
+          teacherId,teacherName,schoolId,schoolName,pageNo,pageBegin,pageSize
         ));
         return list;
     }

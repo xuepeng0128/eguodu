@@ -40,7 +40,7 @@ public class HabitCtrl {
         else
             return new HashMap<String,Object>(){{put("result","fail") ;}} ;
     }
-    @PostMapping(value="/insertExamHabit")
+    @PostMapping(value="/insertNoExamHabit")
     public Map<String,Object> insertNoExamHabit(@RequestBody  InsertExamHabitParams insertExamHabitParams){
         int d = svr.insertNoExamHabit(insertExamHabitParams.getHabits().get(0),insertExamHabitParams.getStudentIds());
         if (d>0)
