@@ -29,16 +29,17 @@ public class Habit {
     private String  timeUnit;
     private int  mode;
     private String  timeModeNum;
-    private int  countModeNum;
-    private float valueModeNum;
+    private Integer  countModeNum;
+    private Float valueModeNum;
     private String unitName;
-    private int  guoduCoin;
-    private float  score;
+    private Integer  guoduCoin;
+    private Float  score;
     private String putCardExamId;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date buildTime;
     private String  buildTeacherId;
     private String  buildStudentId;
-
+    private Date putcardBeginDate;
+    private Date putCardEndDate;
 
 }

@@ -2,20 +2,26 @@ package com.yxp.eguodu.entity;
 
 
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.List;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class HabitExam {
+    private String  habitExamId;
+    private String teacherId;
+    private String teacherName;
+    private Date publishedDate;
+    private String examTitle;
+    private String examMemo;
+    private Date examBeginDate;
+    private Date examEndDate;
+    private int totalScore;
 
-    private String examBatch; // 考核批次
-    private String examMemo ; // 考核说明
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date beginExamDate; // 考核开始日期
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date endExamDate; // 考核结束日期
-    private Teacher examTeacher; // 设定考核的老师
-    private int totalScore; // 考核总分
-    private List<TeacherHabit> teacherHabits;
 }
