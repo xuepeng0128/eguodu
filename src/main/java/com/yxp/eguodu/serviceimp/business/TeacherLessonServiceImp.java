@@ -1,5 +1,6 @@
 package com.yxp.eguodu.serviceimp.business;
 
+import com.yxp.eguodu.common.queryparams.TeacherLessonQueryParams;
 import com.yxp.eguodu.dao.business.TeacherLessonMapper;
 import com.yxp.eguodu.entity.SubTeacherLesson;
 import com.yxp.eguodu.entity.TeacherLesson;
@@ -15,13 +16,13 @@ public class TeacherLessonServiceImp implements TeacherLessonService {
     @Autowired
     private TeacherLessonMapper mapper ;
     @Override
-    public List<TeacherLesson> teacherLessonList(Map<String, Object> paras) {
-        return mapper.teacherLessonList(paras);
+    public List<TeacherLesson> teacherLessonList(TeacherLessonQueryParams queryParams) {
+        return mapper.teacherLessonList(queryParams);
     }
 
     @Override
-    public List<Map<String, Object>> teacherLessonListTotal(Map<String, Object> paras) {
-        return mapper.teacherLessonListTotal(paras);
+    public List<Map<String, Object>> teacherLessonListTotal(TeacherLessonQueryParams queryParams) {
+        return mapper.teacherLessonListTotal(queryParams);
     }
 
     @Override
@@ -35,8 +36,8 @@ public class TeacherLessonServiceImp implements TeacherLessonService {
     }
 
     @Override
-    public List<SubTeacherLesson> subTeacherLessonList(Map<String, Object> paras) {
-        return mapper.subTeacherLessonList(paras);
+    public List<SubTeacherLesson> subTeacherLessonList(String lessonId) {
+        return mapper.subTeacherLessonList(lessonId);
     }
 
     @Override

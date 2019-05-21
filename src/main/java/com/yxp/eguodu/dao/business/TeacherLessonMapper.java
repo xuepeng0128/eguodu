@@ -1,5 +1,6 @@
 package com.yxp.eguodu.dao.business;
 
+import com.yxp.eguodu.common.queryparams.TeacherLessonQueryParams;
 import com.yxp.eguodu.entity.SubTeacherLesson;
 import com.yxp.eguodu.entity.TeacherLesson;
 import org.apache.ibatis.annotations.*;
@@ -24,7 +25,7 @@ public interface TeacherLessonMapper {
             "</if>" +
             " limit $pageBegin,$pageSize " +
             "</script>")
-   public List<TeacherLesson> teacherLessonList(Map<String,Object> paras);
+   public List<TeacherLesson> teacherLessonList(TeacherLessonQueryParams queryParams);
 
 
 
@@ -39,7 +40,7 @@ public interface TeacherLessonMapper {
             "   and l.makeTeacherId ='${teacherId}'" +
             "</if>" +
             "</script>")
-    public List<Map<String,Object>> teacherLessonListTotal(Map<String,Object> paras);
+    public List<Map<String,Object>> teacherLessonListTotal(TeacherLessonQueryParams queryParams);
 
     @Select("select * from teacherlesson where lessonId='${lessonId}'")
     public List<Map<String,Object>> getTeacherLessonByLessonId( @Param("lessonId")  String lessonId);
@@ -52,7 +53,7 @@ public interface TeacherLessonMapper {
     @Select("<script> " +
             " select lessonId,lessonNo,memo,videoUrl,audioUrl,noPay from subteacherlesson where lessonId ='${lessonId}' " +
             "</script>")
-    public List<SubTeacherLesson> subTeacherLessonList(Map<String,Object> paras);
+    public List<SubTeacherLesson> subTeacherLessonList(@Param("lessonId") String lessonId);
 
 
 

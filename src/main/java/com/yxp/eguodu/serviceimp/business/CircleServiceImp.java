@@ -32,6 +32,7 @@ public class CircleServiceImp implements CircleService {
 
     @Override
     public int insertCircle(Circle circle) {
+           mapper.insertClassStudentToCircle(circle.getCircleId(),circle.getClassesId());
         return mapper.insertCircle(circle);
     }
 

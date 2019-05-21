@@ -105,10 +105,16 @@ public interface CircleMapper {
     public List<Student> circleStudentList(@Param("circleId") String circleId);
     @Insert("<script>" +
             "  insert into circle(circleId,circleTitle,subTitle,circleClassId,schoolId,classesId,buildTeacherId,buildTime,memo,picUrl,circleProperty)" +
-            "   values(func_makeBusinessId('circle',#{schoolId}) ,#{circleTitle},#{subTitle},#{circleClassId},#{schoolId},#{classesId},#{buildTeacherId}," +
+            "   values(#{circleId} ,#{circleTitle},#{subTitle},#{circleClassId},#{schoolId},#{classesId},#{buildTeacherId}," +
             "   now(),#{memo},#{picUrl},#{circleProperty} )" +
             " </script>")
    public int insertCircle(Circle circle);
+
+    @Insert("<script>" +
+            "  insert into circlestudent(circleId,studentId,regTime)\n" +
+            "  select '${circleId}',studentId, now() from classesstudent where classesId='${classesId}'" +
+            "</script>")
+    public int insertClassStudentToCircle(@Param("circleId") String circleId,@Param("classesId") String classesId);
 
     @Update(" update circle set circleTitle=#{circleTitle},subTitle=#{subTitle},circleClassId=#{circleClassId}," +
             "  memo=#{memo},picUrl=#{picUrl},circleProperty=#{circleProperty} where circleId=#{circleId}")
