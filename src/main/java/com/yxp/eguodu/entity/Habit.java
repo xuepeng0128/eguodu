@@ -14,6 +14,8 @@ import java.util.Date;
 // 习惯类
 public class Habit {
     private String  habitId;
+    private int  grade;
+    private int  classes;
     private String  circleId;
     private String  circleTitle;
     private String  habitClassId;
@@ -34,12 +36,15 @@ public class Habit {
     private String unitName;
     private Integer  guoduCoin;
     private Float  score;
-    private String putCardExamId;
+    private String habitExamId;
+    private String examTitle ;
+    private String totalScore;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date buildTime;
     private String  buildTeacherId;
     private String  buildStudentId;
     private Date putcardBeginDate;
     private Date putCardEndDate;
+    private int joinStudents;
 
 }

@@ -3,6 +3,7 @@ package com.yxp.eguodu.serviceimp.business;
 import com.yxp.eguodu.common.queryparams.CircleQueryParams;
 import com.yxp.eguodu.dao.business.CircleMapper;
 import com.yxp.eguodu.entity.Circle;
+import com.yxp.eguodu.entity.Student;
 import com.yxp.eguodu.service.business.CircleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,11 @@ public class CircleServiceImp implements CircleService {
     @Override
     public List<Map<String, Object>> circleListTotal(CircleQueryParams circleQueryParams) {
         return mapper.circleListTotal(circleQueryParams);
+    }
+
+    @Override
+    public List<Student> circleStudentList(String circleId) {
+        return mapper.circleStudentList(circleId);
     }
 
     @Override

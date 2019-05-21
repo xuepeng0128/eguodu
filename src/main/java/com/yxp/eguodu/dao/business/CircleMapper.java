@@ -2,7 +2,9 @@ package com.yxp.eguodu.dao.business;
 
 import com.yxp.eguodu.common.queryparams.CircleQueryParams;
 import com.yxp.eguodu.entity.Circle;
+import com.yxp.eguodu.entity.Student;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
@@ -95,7 +97,12 @@ public interface CircleMapper {
             "</script>")
    public List<Map<String,Object>> circleListTotal(CircleQueryParams circleQueryParams);
 
-
+   @Select("<script>" +
+           "  select stu.studentId,stu.studentPaperId,stu.studentName,stu.sex,stu.birthday,stu.tel,stu.address,stu.schoolId,stu.wxCode,stu.headimg,stu.nickName,stu.regTime,stu.endTime  \n" +
+           "from circlestudent cs inner join circle c on cs.circleId=c.circleId inner join student stu on c.schoolId=stu.schoolId and cs.studentId=stu.studentId\n" +
+           "where c.circleId='${circleId}'" +
+           "</script>")
+    public List<Student> circleStudentList(@Param("circleId") String circleId);
     @Insert("<script>" +
             "  insert into circle(circleId,circleTitle,subTitle,circleClassId,schoolId,classesId,buildTeacherId,buildTime,memo,picUrl,circleProperty)" +
             "   values(func_makeBusinessId('circle',#{schoolId}) ,#{circleTitle},#{subTitle},#{circleClassId},#{schoolId},#{classesId},#{buildTeacherId}," +

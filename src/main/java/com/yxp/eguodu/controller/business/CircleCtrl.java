@@ -2,6 +2,7 @@ package com.yxp.eguodu.controller.business;
 
 import com.yxp.eguodu.common.queryparams.CircleQueryParams;
 import com.yxp.eguodu.entity.Circle;
+import com.yxp.eguodu.entity.Student;
 import com.yxp.eguodu.service.business.CircleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -46,6 +47,10 @@ public class CircleCtrl {
        return re;
    }
 
+   @GetMapping(value="/circleStudentList")
+   public List<Student> circleStudentList(String circleId){
+       return svr.circleStudentList(circleId);
+   }
    @PostMapping(value="/insertCircle")
     public Map<String,Object> insertCircle( @RequestBody Circle circle){
         int d =svr.insertCircle(circle);

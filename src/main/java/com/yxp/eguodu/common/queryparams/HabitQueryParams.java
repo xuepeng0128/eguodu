@@ -2,6 +2,7 @@ package com.yxp.eguodu.common.queryparams;
 
 public class HabitQueryParams {
     private String  habitId;
+    private String classesId;
     private String circleId;
     private String circleTitle;
     private String habitName;
@@ -10,6 +11,7 @@ public class HabitQueryParams {
     private String schoolId;
     private String buildTeacherId;
     private String buildStudentId;
+    private String examed;
     private String pageSize;
     private String pageNo;
     private String pageBegin;
