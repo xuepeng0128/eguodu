@@ -103,6 +103,14 @@ public interface CircleMapper {
            "where c.circleId='${circleId}'" +
            "</script>")
     public List<Student> circleStudentList(@Param("circleId") String circleId);
+
+   @Select("<script>" +
+           "   select c.circleId,c.circleTitle,c.subTitle,c.circleClassId,c.schoolId,c.classesId,c.buildTeacherId,c.buildTime,c.memo,c.picUrl,c.circleProperty\n" +
+           " from circle c  inner join circleteacher ct on c.circleId=ct.circleId\n" +
+           "where ct.teacherId='${teacherId}'" +
+           "</script>")
+   public List<Circle> teacherJoinedCircles(@Param("teacherId") String teacherId);
+
     @Insert("<script>" +
             "  insert into circle(circleId,circleTitle,subTitle,circleClassId,schoolId,classesId,buildTeacherId,buildTime,memo,picUrl,circleProperty)" +
             "   values(#{circleId} ,#{circleTitle},#{subTitle},#{circleClassId},#{schoolId},#{classesId},#{buildTeacherId}," +
@@ -115,6 +123,15 @@ public interface CircleMapper {
             "  select '${circleId}',studentId, now() from classesstudent where classesId='${classesId}'" +
             "</script>")
     public int insertClassStudentToCircle(@Param("circleId") String circleId,@Param("classesId") String classesId);
+
+
+    @Insert("<script>" +
+            "   insert into circleteacher(circleId, teacherId) " +
+            "  select '${circleId}' as circleId, buildTeacherId from circle where circleId='${circleId}' " +
+            "     UNION " +
+            "  select '${circleId}' as circleId, teacherId from  classesteacher where classesId='${classesId}'" +
+            "</script>")
+    public int insertTeachersToCircle(@Param("circleId") String circleId,@Param("classesId") String classesId);
 
     @Update(" update circle set circleTitle=#{circleTitle},subTitle=#{subTitle},circleClassId=#{circleClassId}," +
             "  memo=#{memo},picUrl=#{picUrl},circleProperty=#{circleProperty} where circleId=#{circleId}")

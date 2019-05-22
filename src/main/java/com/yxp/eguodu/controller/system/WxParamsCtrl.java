@@ -18,11 +18,13 @@ public class WxParamsCtrl {
     @GetMapping(value="/wxparams")
     public Map<String,Object> wxparams(){
         String paramsstr = svr.wxParamsList().stream().findFirst().orElse(new HashMap<String,Object>()).get("param").toString();
-        return JSON.parseObject(paramsstr,Map.class);
+        return new HashMap<String ,Object>(){{
+            put("paramstr",paramsstr);
+        }};
     }
 
-    @PostMapping(value="/insertWxparams")
-    public Map<String,Object> insertWxParams(String paramstr){
+    @GetMapping(value="/insertWxparams")
+    public Map<String,Object> insertWxParams( String paramstr){
         svr.insertWxParams(new HashMap<String,Object>(){{
              put("param",paramstr);
         }});

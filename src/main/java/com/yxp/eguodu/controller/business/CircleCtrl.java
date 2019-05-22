@@ -51,6 +51,13 @@ public class CircleCtrl {
    public List<Student> circleStudentList(String circleId){
        return svr.circleStudentList(circleId);
    }
+
+
+   @GetMapping(value = "/teacherJoinedCircles")
+   public List<Circle> teacherJoinedCircles(String teacherId){
+      return  svr.teacherJoinedCircles(teacherId);
+   }
+
    @PostMapping(value="/insertCircle")
     public Map<String,Object> insertCircle( @RequestBody Circle circle){
         int d =svr.insertCircle(circle);

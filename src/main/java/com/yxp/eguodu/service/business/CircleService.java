@@ -15,6 +15,7 @@ public interface CircleService {
 
     public List<Map<String,Object>> circleListTotal(CircleQueryParams circleQueryParams);
     public List<Student> circleStudentList( String circleId);
+    public List<Circle> teacherJoinedCircles(String teacherId);
     public int insertCircle(Circle circle);
 
     public int updateCircle(Circle circle);
