@@ -113,10 +113,10 @@ public interface HabitMapper {
 
     @Insert("<script>" +
             "  insert into habit (habitId,circleId,habitClassId,subHabitClassId,icon,color,habitName,memo,picUrl,pirTime," +
-            " timeUnit,mode,timeModeNum,countModeNum,valueModeNum,unitName,guoduCoin,score,putCardExamId,buildTime," +
+            " timeUnit,mode,timeModeNum,countModeNum,valueModeNum,unitName,guoduCoin,score,habitExamId,buildTime," +
             " buildTeacherId,buildStudentId,putcardBeginDate,putcardEndDate) values(" +
             " #{habitId},#{circleId},#{habitClassId},#{subHabitClassId},#{icon},#{color},#{habitName},#{memo},#{picUrl},#{pirTime}," +
-            "  #{timeUnit},#{mode},#{timeModeNum},#{countModeNum},#{valueModeNum},#{unitName},#{guoduCoin},#{score},#{putCardExamId},now()," +
+            "  #{timeUnit},#{mode},#{timeModeNum},#{countModeNum},#{valueModeNum},#{unitName},#{guoduCoin},#{score},#{habitExamId},now()," +
             "  #{buildTeacherId},#{buildStudentId},#{putcardBeginDate},#{putcardEndDate})" +
             " </script> ")
     public int insertHabit(Habit habit);
