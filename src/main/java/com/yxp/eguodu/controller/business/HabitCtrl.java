@@ -20,12 +20,27 @@ public class HabitCtrl {
     @Autowired
     private HabitService svr;
     @GetMapping(value="/habitList")
-    public List<Habit> habitList(HabitQueryParams habitQueryParams){
+    public List<Habit> habitList(    String  habitId, String classesId, String circleId, String circleTitle, String habitName, String habitClassId,
+                                      String subHabitClassId, String schoolId, String buildTeacherId, String buildStudentId, String examed,
+                                      String pageSize, String pageNo, String pageBegin){
+         if (classesId != null && !classesId.equals("")){
+             classesId= "'" + classesId.replace(",","','") + "'";
+         }
+         HabitQueryParams habitQueryParams= new HabitQueryParams(  habitId,  classesId,  circleId,  circleTitle,  habitName,  habitClassId,
+                  subHabitClassId,  schoolId,  buildTeacherId,  buildStudentId,  examed,
+                  pageSize,  pageNo,  pageBegin);
         return svr.habitList(habitQueryParams);
     }
     @GetMapping(value="/habitListTotal")
-    public Map<String,Object> habitListTotal(HabitQueryParams habitQueryParams){
-
+    public Map<String,Object> habitListTotal(String  habitId, String classesId, String circleId, String circleTitle, String habitName, String habitClassId,
+                                             String subHabitClassId, String schoolId, String buildTeacherId, String buildStudentId, String examed,
+                                             String pageSize, String pageNo, String pageBegin){
+        if (classesId != null && !classesId.equals("")){
+            classesId= "'" + classesId.replace(",","','") + "'";
+        }
+        HabitQueryParams habitQueryParams= new HabitQueryParams(  habitId,  classesId,  circleId,  circleTitle,  habitName,  habitClassId,
+                subHabitClassId,  schoolId,  buildTeacherId,  buildStudentId,  examed,
+                pageSize,  pageNo,  pageBegin);
         Map<String,Object> re= new HashMap<String,Object>();
         re.put("total", Integer.parseInt( svr.habitListTotal(habitQueryParams).get(0).get("total").toString()));
         return re;

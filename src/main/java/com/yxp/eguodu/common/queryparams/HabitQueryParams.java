@@ -1,5 +1,12 @@
 package com.yxp.eguodu.common.queryparams;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class HabitQueryParams {
     private String  habitId;
     private String classesId;

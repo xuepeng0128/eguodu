@@ -1,11 +1,13 @@
 package com.yxp.eguodu.controller.system;
 
 import com.alibaba.fastjson.JSON;
+import com.yxp.eguodu.entity.SystemParams;
 import com.yxp.eguodu.service.system.WxParamsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -16,17 +18,27 @@ public class WxParamsCtrl {
     private WxParamsService svr;
 
     @GetMapping(value="/wxparams")
-    public Map<String,Object> wxparams(){
-        String paramsstr = svr.wxParamsList().stream().findFirst().orElse(new HashMap<String,Object>()).get("param").toString();
-        return new HashMap<String ,Object>(){{
-            put("paramstr",paramsstr);
-        }};
+    public SystemParams wxparams(){
+        List<Map<String, Object>> list = svr.wxParamsList();
+        String paramsstr="";
+        if (list==null  || list.size()==0)
+        {
+            paramsstr="";
+        }else {
+            paramsstr=list.get(0).get("param").toString();
+        }
+        SystemParams p = null;
+        if (! paramsstr.equals(""))
+        {
+            p= JSON.parseObject(paramsstr,SystemParams.class);
+        }
+        return p;
     }
 
-    @GetMapping(value="/insertWxparams")
-    public Map<String,Object> insertWxParams( String paramstr){
+    @PostMapping(value="/insertWxparams")
+    public Map<String,Object> insertWxParams(@RequestBody SystemParams params){
         svr.insertWxParams(new HashMap<String,Object>(){{
-             put("param",paramstr);
+             put("param",JSON.toJSONString(params));
         }});
         return new HashMap<String,Object>(){{
            put("result","ok");

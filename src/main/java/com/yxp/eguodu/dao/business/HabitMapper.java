@@ -41,8 +41,11 @@ public interface HabitMapper {
         " <if test ='schoolId != null and schoolId != \"\" and schoolId != \"0\"'>" +
         "     and c.schoolId='${schoolId}'" +
         " </if> " +
-        " <if test ='teacherId != null and teacherId != \"\" and teacherId != \"0\"'>" +
-        "     and c.buildTeacherId='${teacherId}'" +
+        " <if test ='buildTeacherId != null and buildTeacherId != \"\" and buildTeacherId != \"0\"'>" +
+        "     and c.buildTeacherId='${buildTeacherId}'" +
+        " </if> " +
+        " <if test ='buildStudentId != null and buildStudentId != \"\" and buildStudentId != \"0\"'>" +
+        "     and h.buildStudentId='${buildStudentId}'" +
         " </if> " +
         " <if test ='circleTitle != null and circleTitle != \"\" '>" +
         "     and c.circleTitle like '%${circleTitle}%'" +
@@ -51,12 +54,12 @@ public interface HabitMapper {
         "     and h.habitName like '%${habitName}%'" +
         " </if> " +
         " <if test ='examed == \"1\" '>" +
-        "  <![CDATA[   and ifnull(h.examId,'')  <> '' ]]> " +
+        "  <![CDATA[   and ifnull(h.habitExamId,'')  <> '' ]]> " +
         " </if> " +
         " <if test ='examed == \"0\" '>" +
-        "      and ifnull(h.examId,'') ='' " +
+        "      and ifnull(h.habitExamId,'') ='' " +
         " </if> " +
-        " order by h.examId ,h.habitId" +
+        " order by h.habitExamId ,h.habitId" +
         "  limit ${pageBegin},${pageSize}" +
         "</script>")
     public List<Habit> habitList(HabitQueryParams habitQueryParams);
@@ -64,9 +67,9 @@ public interface HabitMapper {
 
     @Select("<script>" +
             "   select count(*) as total  " +
-            "  from habit h inner join circle c on h.circleId=c.circleId " +
+            "  from habit h inner join circle c on h.circleId=c.circleId  " +
             "inner join dic_habitclass p on h.habitClassId=p.habitClassId  inner join dic_habitclass s on h.subHabitClassId " +
-            " =s.habitClassId left outer join habitexam e on h.habitExamId=e.habitExamId  left outer join classes cla on c.classesId=cla.classesId " +
+            " =s.habitClassId left outer join habitexam e on h.habitExamId=e.habitExamId  left outer join classes cla on c.classesId=cla.classesId" +
             " left outer join (select habitId , count(studentId) as joinStudents from habitstudent group by habitId  )stu on h.habitId=stu.habitId " +
             "where 1=1 " +
             " <if test ='habitId != null and habitId != \"\" and habitId != \"0\"'>" +
@@ -76,7 +79,7 @@ public interface HabitMapper {
             "     and h.circleId='${circleId}'" +
             " </if> " +
             " <if test ='classesId != null and classesId != \"\" and classesId != \"0\"'>" +
-            "     and c.classesId='${classesId}'" +
+            "     and c.classesId in (${classesId})" +
             " </if> " +
             " <if test ='habitClassId != null and habitClassId != \"\" and habitClassId != \"0\"'>" +
             "     and h.habitClassId='${habitClassId}'" +
@@ -88,7 +91,7 @@ public interface HabitMapper {
             "     and c.schoolId='${schoolId}'" +
             " </if> " +
             " <if test ='buildTeacherId != null and buildTeacherId != \"\" and buildTeacherId != \"0\"'>" +
-            "     and h.buildTeacherId='${buildTeacherId}'" +
+            "     and c.buildTeacherId='${buildTeacherId}'" +
             " </if> " +
             " <if test ='buildStudentId != null and buildStudentId != \"\" and buildStudentId != \"0\"'>" +
             "     and h.buildStudentId='${buildStudentId}'" +
@@ -100,10 +103,10 @@ public interface HabitMapper {
             "     and h.habitName like '%${habitName}%'" +
             " </if> " +
             " <if test ='examed == \"1\" '>" +
-            "  <![CDATA[   and ifnull(h.examId,'')  <> '' ]]> " +
+            "  <![CDATA[   and ifnull(h.habitExamId,'')  <> '' ]]> " +
             " </if> " +
             " <if test ='examed == \"0\" '>" +
-            "      and ifnull(h.examId,'') ='' " +
+            "      and ifnull(h.habitExamId,'') ='' " +
             " </if> " +
             "</script>")
     public List<Map<String,Object>> habitListTotal(HabitQueryParams habitQueryParams);
