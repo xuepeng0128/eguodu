@@ -117,7 +117,7 @@ public interface HabitMapper {
             " buildTeacherId,buildStudentId,putcardBeginDate,putcardEndDate) values(" +
             " #{habitId},#{circleId},#{habitClassId},#{subHabitClassId},#{icon},#{color},#{habitName},#{memo},#{picUrl},#{pirTime}," +
             "  #{timeUnit},#{mode},#{timeModeNum},#{countModeNum},#{valueModeNum},#{unitName},#{guoduCoin},#{score},#{habitExamId},now()," +
-            "  #{buildTeacherId},#{buildStudentId},#{putcardBeginDate},#{putcardEndDate})" +
+            "  #{buildTeacherId},#{buildStudentId},#{putCardBeginDate},#{putCardEndDate})" +
             " </script> ")
     public int insertHabit(Habit habit);
 
@@ -143,6 +143,22 @@ public interface HabitMapper {
 
             " </script>")
     public int groupInsertStudentPutCardPlan(List<StudentPutCard> studentPutCard);
+
+    @Select("<script>" +
+            " select pt.studentId,  count(*) as puts from " +
+            "  ( " +
+            "     select habitId from habit where habitExamId='' " +
+            "  ) ex inner join studentputcard pt on ex.habitId=pt.habitId " +
+            " group by pt.studentId " +
+            " limit 1" +
+            "</script>")
+    public List<Map<String,Object>> examPutCards(@Param("habitExamId") String habitExamId);
+
+    @Update("<script>" +
+            "  update studentputcard  set canGetScore=#{canGetScore} where habitId in (select habitId from habit where habitExamId=#{habitExamId} )" +
+            "</script>")
+    public int setCanGetScore(@Param("habitExamId") String habitExamId,@Param("canGetScore") float canGetScore);
+
 
    @Update("")
     public int studentPutCard(@Param("habitId") String habitId , @Param("studentId") String studentId);

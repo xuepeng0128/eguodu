@@ -43,7 +43,7 @@ public class Habit {
     private Date buildTime;
     private String  buildTeacherId;
     private String  buildStudentId;
-    private Date putcardBeginDate;
+    private Date putCardBeginDate;
     private Date putCardEndDate;
     private int joinStudents;
 
