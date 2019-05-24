@@ -23,7 +23,7 @@ public interface TeacherLessonMapper {
             " <if test='teacherId != null and teacherId !=\"\" and teacherId !=\"0\"'>" +
             "   and l.makeTeacherId ='${teacherId}'" +
             "</if>" +
-            " limit $pageBegin,$pageSize " +
+            " limit ${pageBegin},${pageSize} " +
             "</script>")
    public List<TeacherLesson> teacherLessonList(TeacherLessonQueryParams queryParams);
 

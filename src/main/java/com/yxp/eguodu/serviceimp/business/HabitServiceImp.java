@@ -43,6 +43,11 @@ public class HabitServiceImp implements HabitService {
         {
             mapper.groupInsertStudentPutCardPlan(calStudentPutCardPlan(studentIds[i],habitExam,habits));
         }
+
+        List<Map<String,Object>> slist= mapper.examPutCards(habitExam.getHabitExamId());
+        float canGetScore = ((float) habitExam.getTotalScore())/  ((float) slist.get(0).get("puts"));
+        mapper.setCanGetScore(habitExam.getHabitExamId(),canGetScore);
+
         return 1;
     }
 
@@ -62,6 +67,10 @@ public class HabitServiceImp implements HabitService {
                 add(habit);
             }}));
         }
+
+
+
+
         return 1;
     }
 
@@ -81,7 +90,7 @@ public class HabitServiceImp implements HabitService {
         List<StudentPutCard> studentPutCardList = new ArrayList<StudentPutCard>();
         for(Habit h : habits)
         {
-            beginPutCardTime= h.getPutcardBeginDate();
+            beginPutCardTime= h.getPutCardBeginDate();
             int perTime=h.getPirTime();
             String timeUnit=h.getTimeUnit();
             do{
@@ -112,7 +121,7 @@ public class HabitServiceImp implements HabitService {
                          putCard.setShouldFinish(h.getCountModeNum().toString());
                      else
                          putCard.setShouldFinish(h.getTimeModeNum());
-
+                     putCard.setStudentId(studentId);
                      studentPutCardList.add(putCard);
             }while(beginPutCardTime.before(h.getPutCardEndDate()));
 
