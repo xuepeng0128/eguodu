@@ -147,7 +147,7 @@ public interface HabitMapper {
     @Select("<script>" +
             " select pt.studentId,  count(*) as puts from " +
             "  ( " +
-            "     select habitId from habit where habitExamId='' " +
+            "     select habitId from habit where habitExamId='${habitExamId}' " +
             "  ) ex inner join studentputcard pt on ex.habitId=pt.habitId " +
             " group by pt.studentId " +
             " limit 1" +

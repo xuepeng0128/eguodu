@@ -1,5 +1,6 @@
 package com.yxp.eguodu.controller.business;
 
+import com.yxp.eguodu.common.queryparams.InsertNoticeParams;
 import com.yxp.eguodu.entity.Notice;
 import com.yxp.eguodu.entity.NoticeStudent;
 import com.yxp.eguodu.service.business.NoticeService;
@@ -56,8 +57,8 @@ public class NoticeCtrl {
     }
 
     @PostMapping(value="/insertNotice")
-    public Map<String,Object> insertNotice(@RequestBody Map<String,Object> paras){
-          svr.insertNotice(paras);
+    public Map<String,Object> insertNotice(@RequestBody InsertNoticeParams params){
+          svr.insertNotice(params);
           return new HashMap<String,Object>(){{put("result","ok") ;}} ;
     }
 }
