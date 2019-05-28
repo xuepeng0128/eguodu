@@ -1,5 +1,6 @@
 package com.yxp.eguodu.serviceimp.business;
 
+import com.yxp.eguodu.common.queryparams.InsertNoticeParams;
 import com.yxp.eguodu.dao.business.NoticeMapper;
 import com.yxp.eguodu.entity.Notice;
 import com.yxp.eguodu.entity.NoticeStudent;
@@ -30,9 +31,9 @@ public class NoticeServiceImp  implements NoticeService {
     }
 
     @Override
-    public int insertNotice(Map<String,Object> paras) {
-        mapper.insertNotice( (Notice) paras.get("notice"));
-        mapper.insertNoticeStudent((List<NoticeStudent>) paras.get("noticeStudents"));
+    public int insertNotice(InsertNoticeParams params) {
+        mapper.insertNotice(params.getNotice());
+        mapper.insertNoticeStudent(params.getNoticeStudents());
         return 1;
     }
 

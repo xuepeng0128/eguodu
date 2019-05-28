@@ -1,5 +1,6 @@
 package com.yxp.eguodu.service.business;
 
+import com.yxp.eguodu.common.queryparams.InsertNoticeParams;
 import com.yxp.eguodu.entity.Notice;
 import com.yxp.eguodu.entity.NoticeStudent;
 import org.apache.ibatis.annotations.Insert;
@@ -14,6 +15,6 @@ public interface NoticeService {
     public List<Notice> noticeList(Map<String,Object> paras);
     public List<Map<String,Object>> noticeListTotal(Map<String,Object> paras);
     public List<NoticeStudent> noticeStudentList(Map<String,Object> paras);
-    public int insertNotice(Map<String,Object> paras);
+    public int insertNotice(InsertNoticeParams params);
     public int noticeStudentReceived(Map<String,Object> params);
 }
