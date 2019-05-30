@@ -21,6 +21,7 @@ public class Teacher {
     private boolean master;
     private String address;
     private String schoolId;
+    private String schoolName;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date regTime;
 }

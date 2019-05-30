@@ -117,7 +117,7 @@ public class ClassesServiceImp implements ClassesService {
         classesMapper.insertClassesStudent(classesStudent);
         studentMapper.insertStudent(new Student( 0,classesStudent.getStudentPaperId(),classesStudent.getStudentId(),
                                                      classesStudent.getStudentName(),
-                                                     classesStudent.getSex(), classesStudent.getBirthday(),classesStudent.getSchoolId(),
+                                                     classesStudent.getSex(), classesStudent.getBirthday(),classesStudent.getSchoolId(),null,
                                                       classesStudent.getAddress(), classesStudent.getTel(),
                                                      null,null,null,null)
         );
@@ -129,7 +129,7 @@ public class ClassesServiceImp implements ClassesService {
         studentMapper.updateStudent(
                 new Student( 0,classesStudent.getStudentPaperId(),classesStudent.getStudentId(),
                         classesStudent.getStudentName(),
-                        classesStudent.getSex(), classesStudent.getBirthday(),classesStudent.getSchoolId(),
+                        classesStudent.getSex(), classesStudent.getBirthday(),classesStudent.getSchoolId(),null,
                         classesStudent.getAddress(), classesStudent.getTel(),
                         null,null,null,null)
         );
@@ -146,7 +146,7 @@ public class ClassesServiceImp implements ClassesService {
         studentMapper.studentLeaveSchool(
                 new Student( 0,classesStudent.getStudentPaperId(),classesStudent.getStudentId(),
                         classesStudent.getStudentName(),
-                        classesStudent.getSex(), classesStudent.getBirthday(),classesStudent.getSchoolId(),
+                        classesStudent.getSex(), classesStudent.getBirthday(),classesStudent.getSchoolId(),null,
                         classesStudent.getAddress(), classesStudent.getTel(),
                         null,null,null,null)
         );
@@ -168,7 +168,7 @@ public class ClassesServiceImp implements ClassesService {
 
           ctulist.add(new ClassesStudent(classesId,slist.get(i).getStudentId(),slist.get(i).getStudentName(),slist.get(i).getStudentPaperId(),
                                     slist.get(i).getSex(),slist.get(i).getBirthday(),slist.get(i).getSchoolId(),slist.get(i).getAddress()
-                                    ,slist.get(i).getTel(),null,null,null,null,null));
+                                    ,slist.get(i).getTel(),null,null,null,null,null,null));
       }
       classesMapper.groupInsertClassesStudents(ctulist);
 

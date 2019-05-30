@@ -41,6 +41,18 @@ public interface TeacherMapper {
     public List<Map<String,Object>> teacherList(TeacherQueryParams paras);
 
 
+
+    @Select("<script>" +
+            "  select  teacherId, teacherPaperId,  t.tel, teacherName,  t.teacherDutyId,  d.teacherDutyName,  d.master ,  t.address,  t.schoolId," +
+            "   s.schoolName from teacher t inner join school s on t.schoolId=s.schoolId left outer join dic_teacherduty d " +
+            "  on t.teacherDutyId=d.teacherDutyId " +
+            "where t.wxcode like '%${openId}%'" +
+            "</script>")
+    public List<Teacher> teacherListByOpenId(@Param("openId") String openId);
+
+
+
+
     @Select("<script> " +
             "select count(*) as total from teacher t " +
             "left outer join dic_teacherduty d on t.teacherDutyId=d.teacherDutyId\n" +

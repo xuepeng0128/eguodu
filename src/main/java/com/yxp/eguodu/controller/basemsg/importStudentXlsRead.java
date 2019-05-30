@@ -49,6 +49,7 @@ public class importStudentXlsRead  extends XlsRead {
                     Integer.parseInt(studentmList.get(4).toString().equals("男") ? "1" :"2"), // 性别
                     (Date)  studentmList.get(5),// 出生日期
                     schoolId,
+                    null,
                     studentmList.get(6).toString(), // 老师姓名
                     studentmList.get(2).toString(), // 老师姓名
                      null,null,null,null

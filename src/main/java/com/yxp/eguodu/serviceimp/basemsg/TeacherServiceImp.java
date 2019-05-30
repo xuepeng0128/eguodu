@@ -27,6 +27,11 @@ public class TeacherServiceImp implements TeacherService {
     }
 
     @Override
+    public List<Teacher> teacherListByOpenId(String openId) {
+        return mapper.teacherListByOpenId(openId);
+    }
+
+    @Override
     public List<Map<String, Object>> teacherListTotal(TeacherQueryParams paras) {
         return mapper.teacherListTotal(paras);
     }

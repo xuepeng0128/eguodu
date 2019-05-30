@@ -33,6 +33,12 @@ public interface StudentMapper {
     public List<Map<String,Object>> studentList(StudentQueryParams queryParams);
 
     @Select("<script>" +
+            "   select    id,studentPaperId,studentId,studentName,sex,birthday,t.schoolId, s.schoolName,t.address,t.tel,headimg,nickname," +
+            "   t.regTime, wxcode from student t inner join school s on t.schoolId=s.schoolId " +
+            "where t.wxcode like '%${openId}%'" +
+            "</script>")
+    public List<Student>  studentListByOpenId(@Param("openId") String openId);
+    @Select("<script>" +
             " select count(*) as total " +
             " from student s inner join " +
             " school c on s.schoolId=c.schoolId inner JOIN classes l on s.schoolId=l.schoolId" +
@@ -56,8 +62,8 @@ public interface StudentMapper {
             " from student where studentId ='${studentId}' order by id desc limit 1 ")
     public List<Student> findStudentById(Map<String,Object> paras);
 
-    @Insert("insert into student(studentId,studentPaperId,studentName,tel,address,sex,birthday,schoolId,regTime) " +
-            "values(#{studentId},#{studentPaperId},#{studentName},#{tel},#{address},#{sex},#{birthday},#{schoolId},now())")
+    @Insert("insert into student(studentId,studentPaperId,studentName,tel,address,sex,birthday,schoolId,regTime,inviteCode) " +
+            "values(#{studentId},#{studentPaperId},#{studentName},#{tel},#{address},#{sex},#{birthday},#{schoolId},now(),func_makeInviteCode(6,'student'))")
     public int insertStudent(Student student);
 
 
@@ -67,9 +73,9 @@ public interface StudentMapper {
     public int studentLeaveSchool(Student student);
 
     @Insert("<script>" +
-            "  insert into student(studentId,studentPaperId,studentName,tel,address,sex,birthday,schoolId,regTime)  values" +
+            "  insert into student(studentId,studentPaperId,studentName,tel,address,sex,birthday,schoolId,regTime,inviteCode)  values" +
             " <foreach collection =\"list\" item=\"s\" separator =\",\" >" +
-            " (#{s.studentId}, #{s.studentPaperId},#{s.studentName},#{s.tel},#{s.address},#{s.sex},#{s.birthday},#{s.schoolId},now()) " +
+            " (#{s.studentId}, #{s.studentPaperId},#{s.studentName},#{s.tel},#{s.address},#{s.sex},#{s.birthday},#{s.schoolId},now(),func_makeInviteCode(6,'student')) " +
             "</foreach>" +
             "</script>")
     public int groupInsertStudent(List<Student> students);

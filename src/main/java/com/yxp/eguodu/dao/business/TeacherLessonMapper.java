@@ -17,6 +17,9 @@ public interface TeacherLessonMapper {
             "  makeTime,l.schoolId , s.schoolName,l.publishTime from teacherlesson l inner join teacher t on l.makeTeacherId=t.teacherId " +
             "  inner join school s on l.schoolId=s.schoolId " +
             " where 1=1 " +
+            " <if test='lessonTitle != null and lessonTitle !=\"\" '>" +
+            "   and lessonTitle  like '%${lessonTitle}%'" +
+            "</if>" +
             " <if test='schoolId != null and schoolId !=\"\" and schoolId !=\"0\"'>" +
             "   and l.schoolId ='${schoolId}'" +
             "</if>" +
@@ -33,6 +36,9 @@ public interface TeacherLessonMapper {
             "   select count(*) as total from teacherlesson l inner join teacher t on l.makeTeacherId=t.teacherId " +
             "  inner join school s on l.schoolId=s.schoolId " +
             " where 1=1 " +
+            " <if test='lessonTitle != null and lessonTitle !=\"\" '>" +
+            "   and lessonTitle  like '%${lessonTitle}%'" +
+            "</if>" +
             " <if test='schoolId != null and schoolId !=\"\" and schoolId !=\"0\"'>" +
             "   and l.schoolId ='${schoolId}'" +
             "</if>" +

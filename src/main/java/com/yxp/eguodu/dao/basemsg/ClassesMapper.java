@@ -203,7 +203,8 @@ public interface ClassesMapper {
 
 
     @Select("<script>" +
-           "  select stu.studentId, stu.studentName, stu.studentPaperId,stu.nickName,stu.tel,stu.address,stu.birthday,stu.sex,stu.schoolId,stu.headimg,stu.nickname,stu.wxcode    from   " +
+           "  select stu.studentId, stu.studentName, stu.studentPaperId,stu.nickName,stu.tel,stu.address,stu.birthday,stu.sex,stu.schoolId," +
+            " stu.headimg,stu.nickname,stu.wxcode ,stu.inviteCode   from   " +
            "( " +
            "  select classesId,studentId from classesstudent where classesId='${classesId}' and endTime is NULL " +
            ") cstu inner join student stu on cstu.studentId=stu.studentId and stu.schoolId='${schoolId}'  " +

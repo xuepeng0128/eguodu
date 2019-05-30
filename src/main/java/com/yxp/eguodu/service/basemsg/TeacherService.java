@@ -8,6 +8,7 @@ import java.util.Map;
 
 public interface TeacherService {
     public List<Map<String,Object>> teacherList(TeacherQueryParams paras);
+    public List<Teacher> teacherListByOpenId( String openId);
     public List<Map<String,Object>> teacherListTotal(TeacherQueryParams paras);
     public int groupInsertTeachers(List<Teacher> teachers) throws Exception;
     public int insertTeacher(Teacher teacher) throws Exception;

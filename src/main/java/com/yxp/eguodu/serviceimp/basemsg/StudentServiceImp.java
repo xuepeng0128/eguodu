@@ -20,6 +20,11 @@ public class StudentServiceImp implements StudentService {
     }
 
     @Override
+    public List<Student> studentListByOpenId(String openId) {
+        return mapper.studentListByOpenId(openId);
+    }
+
+    @Override
     public List<Map<String, Object>> studentListTotal(StudentQueryParams paras) {
         List<Map<String, Object>> list =mapper.studentListTotal(paras);
         return list;

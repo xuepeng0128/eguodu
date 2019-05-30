@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TeacherLessonQueryParams {
+    private String lessonTitle;
     private String  teacherId;
     private String teacherName ;
     private String schoolId ;

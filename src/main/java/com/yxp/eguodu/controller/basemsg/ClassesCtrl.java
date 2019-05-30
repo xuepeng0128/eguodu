@@ -127,7 +127,7 @@ public class ClassesCtrl {
                             new Date(s.get("birthday").toString()),  s.get("schoolId").toString(),
                             s.get("address").toString(), s.get("tel").toString(), s.get("headimg").toString(),
                             s.get("nickname").toString(), s.get("wxcode").toString(),
-                            null,null);
+                            null,null,null);
                     students.add(cs);
                 }
 
@@ -167,7 +167,7 @@ public class ClassesCtrl {
                                                               Optional.ofNullable((Date) s.get("birthday")).orElse(new Date()),  s.get("schoolId").toString(),
                                                               s.get("address").toString(), s.get("tel").toString(), Optional.ofNullable(s.get("headimg")).orElse("").toString(),
                                                               Optional.ofNullable(s.get("nickname")).orElse("").toString(), Optional.ofNullable(s.get("wxcode")).orElse("").toString(),
-                                                        null,null);
+                                                        null,null,Optional.ofNullable(s.get("inviteCode")).orElse("").toString());
                        students.add(cs);
                    }
 

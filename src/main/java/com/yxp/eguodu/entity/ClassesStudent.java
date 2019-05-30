@@ -28,4 +28,5 @@ public class ClassesStudent {
    private Date regTime;
    @DateTimeFormat(pattern = "yyyy-MM-dd")
    private Date endTime;
+   private String inviteCode;
 }

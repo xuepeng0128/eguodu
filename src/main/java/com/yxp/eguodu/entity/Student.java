@@ -20,8 +20,8 @@ public class Student {
    private int sex;
    @DateTimeFormat(pattern = "yyyy-MM-dd")
    private  Date birthday;
-
    private String schoolId;
+   private String schoolName;
    private String address ; // 家庭住址
    private String tel;
    private String headimg;
