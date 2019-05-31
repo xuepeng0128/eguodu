@@ -21,4 +21,5 @@ public class TeacherLesson {
    private String schoolName;
    @DateTimeFormat(pattern = "yyyy-MM-dd")
    private Date publishTime;
+   private int habitNum;
 }

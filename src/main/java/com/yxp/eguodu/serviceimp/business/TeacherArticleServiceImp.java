@@ -50,4 +50,9 @@ public class TeacherArticleServiceImp implements TeacherArticleService {
     public int deleteArticle(Map<String, Object> paras) {
         return mapper.deleteArticle(paras);
     }
+
+    @Override
+    public int publishToHabit(String articleId, String habitId) {
+        return mapper.publishToHabit(articleId,habitId);
+    }
 }

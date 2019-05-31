@@ -13,9 +13,10 @@ public interface TeacherLessonMapper {
 
 
     @Select(" <script>" +
-            "   select lessonId,lessonTitle,memo,guoduCoin,makeTeacherId, t.teacherName as makeTeacherName," +
-            "  makeTime,l.schoolId , s.schoolName,l.publishTime from teacherlesson l inner join teacher t on l.makeTeacherId=t.teacherId " +
-            "  inner join school s on l.schoolId=s.schoolId " +
+            "   select l.lessonId,lessonTitle,memo,guoduCoin,makeTeacherId, t.teacherName as makeTeacherName," +
+            "  makeTime,l.schoolId , s.schoolName,l.publishTime, ifnull(th.habitNum,0) as habitNum from teacherlesson l inner join teacher t on l.makeTeacherId=t.teacherId " +
+            "  inner join school s on l.schoolId=s.schoolId left outer join " +
+            "  (select lessonId, count(*) as habitNum from teacherlessonhabit ) th on l.lessonId=th.lessonId " +
             " where 1=1 " +
             " <if test='lessonTitle != null and lessonTitle !=\"\" '>" +
             "   and lessonTitle  like '%${lessonTitle}%'" +
@@ -64,7 +65,7 @@ public interface TeacherLessonMapper {
 
 
     @Insert("insert into  teacherlesson(lessonId,lessonTitle,memo,guoduCoin,makeTeacherId,makeTime,schoolId) values" +
-            " (#{lessonId},#{lessonTitle},#{memo},#{guoduCoin},#{makeTeacherId},#{makeTime},#{schoolId})")
+            " (#{lessonId},#{lessonTitle},#{memo},#{guoduCoin},#{makeTeacherId},now(),#{schoolId})")
    public int insertTeacherLesson(TeacherLesson teacherLesson);
 
     @Insert("insert into subteacherlesson(lessonId,lessonNo,memo,videoUrl,audioUrl,noPay) values(" +
@@ -75,13 +76,16 @@ public interface TeacherLessonMapper {
 
     @Update("update subteacherlesson set #{memo},#{videoUrl},#{audioUrl},#{noPay}")
     public int updateSubTeacherLesson(SubTeacherLesson subTeacherLesson);
-    @Delete("delete teacherlesson where lessonId=#{lessonId}")
+    @Delete("delete from teacherlesson where lessonId=#{lessonId}")
     public int deleteTeacherLesson(Map<String,Object> paras);
 
-    @Delete("delete subteacherlesson where lessonId=#{lessonId} and lessonNo=#{lessonNo}")
+    @Delete("delete from  subteacherlesson where lessonId=#{lessonId} and lessonNo=#{lessonNo}")
     public int deleteSubTeacherLesson(@Param("lessonId") String lessonId, @Param("lessonNo") int lessonNo);
 
 
-
+    @Insert("<script>" +
+            "  insert into teacherlessonhabit(lessonId,habitId) values(#{lessonId},#{habitId})" +
+            "</script>")
+    public int publishToHabit(@Param("lessonId") String lessonId, @Param("habitId") String habitId);
 
 }

@@ -90,6 +90,12 @@ public class TeacherArticleCtrl {
            return new HashMap<String,Object>(){{put("result","fail") ;}} ;
    }
 
+    @GetMapping(value="/publishToHabit")
+    public  Map<String,Object> publishToHabit(String habitId, String articleId){
 
+        svr.publishToHabit(habitId,articleId);
+
+        return new HashMap<String,Object>(){{put("result","ok") ;}} ;
+    }
 
 }

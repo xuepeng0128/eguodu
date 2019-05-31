@@ -19,18 +19,17 @@ public class TeacherLessonCtrl {
     @Autowired
     private TeacherLessonService svr;
 
-
     @GetMapping(value="/teacherLessonList")
-    public List<TeacherLesson> teacherLessonList(String schoolId,String schoolName, String teacherId,String teacherName,String pageNo, String pageBegin, String pageSize){
-        TeacherLessonQueryParams teacherLessonQueryParams = new TeacherLessonQueryParams(schoolId, schoolName,  teacherId, teacherName, pageNo,  pageBegin,  pageSize);
+    public List<TeacherLesson> teacherLessonList(String lessonTitle,String schoolId,String schoolName, String teacherId,String teacherName,String pageNo, String pageBegin, String pageSize){
+        TeacherLessonQueryParams teacherLessonQueryParams = new TeacherLessonQueryParams(lessonTitle,teacherId  , teacherName,schoolId,schoolName,  pageNo,  pageBegin,  pageSize);
         List<TeacherLesson> list = svr.teacherLessonList(teacherLessonQueryParams);
         return list;
     }
 
 
     @GetMapping(value="/teacherLessonListTotal")
-    public Map<String,Object> teacherLessonListTotal(String schoolId,String schoolName, String teacherId,String teacherName,String pageNo, String pageBegin, String pageSize){
-        TeacherLessonQueryParams teacherLessonQueryParams = new TeacherLessonQueryParams(schoolId, schoolName,  teacherId, teacherName, pageNo,  pageBegin,  pageSize);
+    public Map<String,Object> teacherLessonListTotal(String lessonTitle,String schoolId,String schoolName, String teacherId,String teacherName,String pageNo, String pageBegin, String pageSize){
+        TeacherLessonQueryParams teacherLessonQueryParams = new TeacherLessonQueryParams(lessonTitle,teacherId  , teacherName,schoolId,schoolName,  pageNo,  pageBegin,  pageSize);
 
         List<Map<String,Object>> list = svr.teacherLessonListTotal(teacherLessonQueryParams);
         Map<String,Object> re= new HashMap<String,Object>();
@@ -60,5 +59,12 @@ public class TeacherLessonCtrl {
     }
 
 
+    @GetMapping(value="/publishToHabit")
+    public  Map<String,Object> publishToHabit(String habitId, String lessonId){
+
+         svr.publishToHabit(habitId,lessonId);
+
+        return new HashMap<String,Object>(){{put("result","ok") ;}} ;
+    }
 
 }

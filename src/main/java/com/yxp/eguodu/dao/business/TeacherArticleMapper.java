@@ -100,4 +100,8 @@ public interface TeacherArticleMapper {
     @Delete("<script> delete from teacherarticle where articleId=#{articleId} </script>")
     public int deleteArticle(Map<String,Object> paras);
 
+    @Insert("<script>" +
+            "  insert into teacherarticelhabit(articleId,habitId) values(#{articleId},#{habitId})" +
+            "</script>")
+    public int publishToHabit(@Param("articleId") String articleId, @Param("habitId") String habitId);
 }

@@ -19,4 +19,5 @@ public interface TeacherArticleService {
     public int publishArticle(Map<String,Object> paras);
 
     public int deleteArticle(Map<String,Object> paras);
+    public int publishToHabit( String articleId,  String habitId);
 }

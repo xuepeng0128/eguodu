@@ -3,10 +3,7 @@ package com.yxp.eguodu.service.business;
 import com.yxp.eguodu.common.queryparams.TeacherLessonQueryParams;
 import com.yxp.eguodu.entity.SubTeacherLesson;
 import com.yxp.eguodu.entity.TeacherLesson;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 import java.util.Map;
@@ -30,4 +27,5 @@ public interface TeacherLessonService {
 
     public int deleteTeacherLesson(Map<String,Object> paras);
     public int deleteSubTeacherLesson(String lessonId,int lessonNo);
+    public int publishToHabit( String lessonId,  String habitId);
 }

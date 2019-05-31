@@ -69,4 +69,9 @@ public class TeacherLessonServiceImp implements TeacherLessonService {
     public int deleteSubTeacherLesson(String lessonId,int lessonNo) {
         return mapper.deleteSubTeacherLesson(lessonId,lessonNo);
     }
+
+    @Override
+    public int publishToHabit(String lessonId, String habitId) {
+        return mapper.publishToHabit(lessonId,habitId);
+    }
 }
