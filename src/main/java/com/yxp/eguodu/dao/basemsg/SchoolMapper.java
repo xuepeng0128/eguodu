@@ -2,10 +2,7 @@ package com.yxp.eguodu.dao.basemsg;
 
 import com.yxp.eguodu.common.queryparams.SchoolQueryParams;
 import com.yxp.eguodu.entity.School;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 import java.util.Map;
@@ -79,6 +76,14 @@ public interface SchoolMapper {
             "</script>")
     public List<Map<String,Object>> schoolList(SchoolQueryParams params);
 
+
+
+
+
+
+
+
+
     @Select("<script>" +
             "SELECT count(*) as total " +
             " from school s inner join dic_nation c on s.cityId=c.nationId " +
@@ -142,6 +147,14 @@ public interface SchoolMapper {
             "</script>")
     public List<Map<String,Object>> schoolListTotal(SchoolQueryParams params);
 
+
+
+   // 根据省市区查找学校(正规学校)
+    @Select("<script>" +
+            "  select schoolId,schoolName from school where train=0 and   districtId='${districtId}' " +
+            "  and schoolName like '%${schoolName}%' " +
+            "</script>")
+    public List<Map<String,Object>> schoolListByAreaAndName(@Param("districtId") String districtId,@Param("schoolName") String schoolName);
 
     @Insert("<script>" +
             " insert into school(schoolId,schoolName,cityId,districtId,longitude,latitude,tel,linkman,address,schoolStyle,saleManId,regTime,train)" +

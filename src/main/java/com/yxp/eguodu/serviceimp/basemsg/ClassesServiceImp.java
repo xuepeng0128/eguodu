@@ -119,7 +119,7 @@ public class ClassesServiceImp implements ClassesService {
                                                      classesStudent.getStudentName(),
                                                      classesStudent.getSex(), classesStudent.getBirthday(),classesStudent.getSchoolId(),null,
                                                       classesStudent.getAddress(), classesStudent.getTel(),
-                                                     null,null,null,null)
+                                                     null,null,null,null,null)
         );
         return 1;
     }
@@ -131,7 +131,7 @@ public class ClassesServiceImp implements ClassesService {
                         classesStudent.getStudentName(),
                         classesStudent.getSex(), classesStudent.getBirthday(),classesStudent.getSchoolId(),null,
                         classesStudent.getAddress(), classesStudent.getTel(),
-                        null,null,null,null)
+                        null,null,null,null,null)
         );
         return 1;
     }
@@ -148,7 +148,7 @@ public class ClassesServiceImp implements ClassesService {
                         classesStudent.getStudentName(),
                         classesStudent.getSex(), classesStudent.getBirthday(),classesStudent.getSchoolId(),null,
                         classesStudent.getAddress(), classesStudent.getTel(),
-                        null,null,null,null)
+                        null,null,null,null,null)
         );
         return 1;
     }

@@ -24,6 +24,11 @@ public class SchoolServiceImp implements SchoolService {
     }
 
     @Override
+    public List<Map<String, Object>> schoolListByAreaAndName(String districtId, String schoolName) {
+        return mapper.schoolListByAreaAndName(districtId,schoolName);
+    }
+
+    @Override
     public int insertSchool(School school) {
         return mapper.insertSchool(school);
     }

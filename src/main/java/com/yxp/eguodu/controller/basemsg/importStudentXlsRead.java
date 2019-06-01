@@ -52,7 +52,7 @@ public class importStudentXlsRead  extends XlsRead {
                     null,
                     studentmList.get(6).toString(), // 老师姓名
                     studentmList.get(2).toString(), // 老师姓名
-                     null,null,null,null
+                     null,null,null,null,null
             ));
         }
         response.setCharacterEncoding("utf-8");

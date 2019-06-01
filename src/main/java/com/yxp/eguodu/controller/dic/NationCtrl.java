@@ -18,7 +18,7 @@ public class NationCtrl {
     private NationService svr;
 
     @GetMapping(value="/nationList")
-    public List<Nation> HabitList(){
+    public List<Nation> nationList(){
         List<Nation> list= svr.nationList();
         return list;
     }

@@ -25,6 +25,20 @@ public class StudentServiceImp implements StudentService {
     }
 
     @Override
+    public Student bindStudentInviteCode(String inviteCode, String openId) {
+        List<Student> students= mapper.studentListByInviteCode(inviteCode);
+        if(students == null || students.size()==0){
+            return null;
+        }
+
+        else {
+            Student student= students.get(0);
+            mapper.addStudentOpenId(student.getId(),openId);
+            return student;
+        }
+    }
+
+    @Override
     public List<Map<String, Object>> studentListTotal(StudentQueryParams paras) {
         List<Map<String, Object>> list =mapper.studentListTotal(paras);
         return list;

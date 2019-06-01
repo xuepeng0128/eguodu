@@ -33,11 +33,31 @@ public interface StudentMapper {
     public List<Map<String,Object>> studentList(StudentQueryParams queryParams);
 
     @Select("<script>" +
-            "   select    id,studentPaperId,studentId,studentName,sex,birthday,t.schoolId, s.schoolName,t.address,t.tel,headimg,nickname," +
-            "   t.regTime, wxcode from student t inner join school s on t.schoolId=s.schoolId " +
+            "   select    id,studentPaperId,studentId,studentName,sex,birthday,t.schoolId, case when s.schoolName is null then t.schoolName else s.schoolName end as schoolName ," +
+            "   t.address,t.tel,headimg,nickname," +
+            "   t.regTime, wxcode from student t left outer join school s on t.schoolId=s.schoolId " +
             "where t.wxcode like '%${openId}%'" +
             "</script>")
     public List<Student>  studentListByOpenId(@Param("openId") String openId);
+
+    // 绑定学生邀请码
+    @Select("<script>" +
+            "   select    id,studentPaperId,studentId,studentName,sex,birthday,t.schoolId, case when s.schoolName is null then t.schoolName else s.schoolName end as schoolName ," +
+            "   t.address,t.tel,headimg,nickname," +
+            "   t.regTime, wxcode from student t left outer join school s on t.schoolId=s.schoolId " +
+            "where t.inviteCode = '${inviteCode}'" +
+            "</script>")
+    public List<Student> studentListByInviteCode(@Param("inviteCode") String inviteCode);
+
+
+    // 根据绑定成功的邀请码 ，填入openid
+    @Update("update student set wxcode= concat(ifnull(wxcode,''),'${openId}') where id= #{id}")
+    public int addStudentOpenId(@Param("id") int id,@Param("openId") String openId);
+
+
+
+
+
     @Select("<script>" +
             " select count(*) as total " +
             " from student s inner join " +
@@ -62,8 +82,9 @@ public interface StudentMapper {
             " from student where studentId ='${studentId}' order by id desc limit 1 ")
     public List<Student> findStudentById(Map<String,Object> paras);
 
-    @Insert("insert into student(studentId,studentPaperId,studentName,tel,address,sex,birthday,schoolId,regTime,inviteCode) " +
-            "values(#{studentId},#{studentPaperId},#{studentName},#{tel},#{address},#{sex},#{birthday},#{schoolId},now(),func_makeInviteCode(6,'student'))")
+    @Insert("insert into student(studentId,studentPaperId,studentName,tel,address,sex,birthday,schoolId,regTime,inviteCode,wxcode,relationShipId) " +
+            "values(#{studentId},#{studentPaperId},#{studentName},#{tel},#{address},#{sex},#{birthday},#{schoolId}," +
+            " now(),func_makeInviteCode(6,'student'), #{wxcode},#{relationShipId})")
     public int insertStudent(Student student);
 
 

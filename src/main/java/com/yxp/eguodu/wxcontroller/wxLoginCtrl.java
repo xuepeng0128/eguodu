@@ -2,6 +2,7 @@ package com.yxp.eguodu.wxcontroller;
 
 
 import com.alibaba.fastjson.JSONObject;
+import com.yxp.eguodu.entity.Student;
 import com.yxp.eguodu.service.basemsg.StudentService;
 import com.yxp.eguodu.service.basemsg.TeacherService;
 import io.swagger.annotations.Api;
@@ -12,10 +13,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
@@ -74,16 +72,18 @@ public class wxLoginCtrl {
         JSONObject jsonObject = JSONObject.parseObject(str);
 
         // 我们需要的openid，在一个小程序中，openid是唯一的
-        String openid = jsonObject.get("openid").toString();
+        String openid ="";
+        try{
+            openid = jsonObject.get("openid").toString();
+        }catch (Exception ex){
+            openid="无效码";
+        }
+
         map.put("data",openid);
         map.put("resultMsg","ok");
         return  map;
 
     }
-
-
-
-
 
     @ApiOperation( value = "根据openId获取当前用户信息",notes = "" +
             " 返回字段：{" +
@@ -142,6 +142,56 @@ public class wxLoginCtrl {
         map.put("resultMsg","ok");
         return map;
     }
+
+    @ApiOperation( value = "邀请码绑定 ",notes = "" +
+            " 返回字段：{" +
+            " data :  student 类 " +
+            "    resultMsg : 'ok' ：成功，验证码有效 ，否则返回fail ： 无效验证码" +
+            "}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "openId", value = "小程序openId", required = true, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "inviteCode", value = "学生邀请码", required = true, dataType = "String", paramType = "query"),
+    }
+    )
+    @GetMapping(value="/studentInviteCodeBind")
+    public Map<String,Object> studentInviteCodeBind(String openId,String inviteCode){
+        Map map = new HashMap();
+        //登录凭证不能为空
+        if (openId == null || openId.length() == 0) {
+            map.put("resultMsg", "openId 不能为空");
+            return map;
+        }
+        Student student= ssvr.bindStudentInviteCode(inviteCode,openId);
+        map.put("data", student );
+        map.put("resultMsg", student == null ? "fail" :"ok");
+        return map;
+    }
+
+
+    @ApiOperation( value = "非验证码学生绑定 ",notes = "" +
+            " 返回字段：{" +
+            "    resultMsg : 'ok' ：成功 ，否则返回失败信息 " +
+            "}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "student", value = "学生类", required = true, dataType = "Student"),
+    }
+    )
+
+    @PostMapping(value="/noInviteCodeStudentBind")
+    public Map<String,Object> noInviteCodeStudentBind(@RequestBody Student student){
+        Map map = new HashMap();
+        //登录凭证不能为空
+        if (student.getWxcode() == null || student.getWxcode().length() == 0) {
+            map.put("resultMsg", "openId 不能为空");
+            return map;
+        }
+        int d = ssvr.insertStudent(student);
+        if (d>0)
+            return new HashMap<String,Object>(){{put("resultMsg","ok") ;}} ;
+        else
+            return new HashMap<String,Object>(){{put("resultMsg","fail") ;}} ;
+    }
+
 
 
 
