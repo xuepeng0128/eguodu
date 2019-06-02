@@ -32,4 +32,10 @@ public interface ClassesService {
     public List<Classes> teacherTeachedClasses(String teacherId,String schoolId);
     public List<Classes> gradeClasses(Map<String,Object> paras);
     public List<ClassesTeacher> subjectTeachersAtClasses(Map<String,Object> paras);
+
+
+
+    //查找学生所在班级
+    public List<Map<String,Object>> findNowClassesByStudent( String studentId, String schoolId);
+
 }

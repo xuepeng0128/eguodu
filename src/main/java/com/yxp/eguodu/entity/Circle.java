@@ -26,6 +26,8 @@ public class Circle {
   private String classesName; // 班级名称
   private String buildTeacherId; // 建圈老师id
   private String buildTeacherName;
+  private String buildStudentId; // 建圈学生id
+  private String buildStudentName; // 建圈学生名称
   @DateTimeFormat(pattern = "yyyy-MM-dd")
   private Date  buildTime ;// 建圈日期
   private String  memo; // 圈子介绍
@@ -35,8 +37,5 @@ public class Circle {
   private Date    closeTime ; // 关闭时间
   private String  closeReason ; // 关闭原因
   private int   circleProperty; // 圈子性质 1.私有 2.公开
-
-
-
 
 }

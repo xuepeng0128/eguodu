@@ -19,23 +19,23 @@ public class CircleCtrl {
     private CircleService svr;
      
   @GetMapping(value="/circleList")
-    public List<Map<String ,Object>> circleList(   String circleTitle, String schoolId, String schoolName, String classesId, String grade,
-                                                    String classes,String classesName,String buildTeacherId, String buildTeacherName,
+    public List<Map<String ,Object>> circleList(   String circleTitle,String circleClassId, String schoolId, String schoolName, String classesId, String grade,
+                                                    String classes,String classesName,String buildTeacherId, String buildTeacherName,String buildStudentId,String buildStudentName,
                                                     String buildTimeBegin , String  buildTimeEnd , String  closeMan, String  closeTime , 
                                                     String  closeReason ,  String pageSize, String pageNo,String pageBegin){
-      CircleQueryParams circleQueryParams = new CircleQueryParams( circleTitle,  schoolId,  schoolName,  classesId,  grade,
-               classes, classesName, buildTeacherId,  buildTeacherName,
+      CircleQueryParams circleQueryParams = new CircleQueryParams( circleTitle, circleClassId,  schoolId,  schoolName,  classesId,  grade,
+               classes, classesName, buildTeacherId,  buildTeacherName, buildStudentId,buildStudentName,
                buildTimeBegin ,   buildTimeEnd ,   closeMan,   closeTime ,
                 closeReason ,   pageSize,  pageNo, pageBegin);
       return svr.circleList(circleQueryParams);
     } 
    @GetMapping(value="/circleListTotal")
-    public Map<String,Object> circleListTotal(String circleTitle, String schoolId, String schoolName, String classesId, String grade,
-                                                    String classes,String classesName,String buildTeacherId, String buildTeacherName,
-                                                    String buildTimeBegin , String  buildTimeEnd , String  closeMan, String  closeTime ,
-                                                    String  closeReason ,  String pageSize, String pageNo,String pageBegin){
-       CircleQueryParams circleQueryParams = new CircleQueryParams( circleTitle,  schoolId,  schoolName,  classesId,  grade,
-               classes, classesName, buildTeacherId,  buildTeacherName,
+    public Map<String,Object> circleListTotal(String circleTitle,String circleClassId, String schoolId, String schoolName, String classesId, String grade,
+                                              String classes,String classesName,String buildTeacherId, String buildTeacherName,String buildStudentId,String buildStudentName,
+                                              String buildTimeBegin , String  buildTimeEnd , String  closeMan, String  closeTime ,
+                                              String  closeReason ,  String pageSize, String pageNo,String pageBegin){
+       CircleQueryParams circleQueryParams = new CircleQueryParams( circleTitle, circleClassId,  schoolId,  schoolName,  classesId,  grade,
+               classes, classesName, buildTeacherId,  buildTeacherName, buildStudentId,buildStudentName,
                buildTimeBegin ,   buildTimeEnd ,   closeMan,   closeTime ,
                closeReason ,   pageSize,  pageNo, pageBegin);
 

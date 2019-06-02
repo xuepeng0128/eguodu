@@ -1,10 +1,8 @@
 package com.yxp.eguodu.wxcontroller;
 
-import com.yxp.eguodu.entity.Nation;
-import com.yxp.eguodu.entity.RelationShip;
+import com.yxp.eguodu.entity.*;
 import com.yxp.eguodu.service.basemsg.SchoolService;
-import com.yxp.eguodu.service.dic.NationService;
-import com.yxp.eguodu.service.dic.RelationShipService;
+import com.yxp.eguodu.service.dic.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -24,7 +22,7 @@ import java.util.stream.Collectors;
 @CrossOrigin
 @RestController
 @RequestMapping(value = "/api/wxdic",  produces = "application/json;charset=UTF-8")
-public class wxDicCtrl {
+public class WxDicCtrl {
 
     @Autowired
     private NationService nationsvr;
@@ -58,8 +56,8 @@ public class wxDicCtrl {
     )
     @GetMapping(value="/cityList")
     public Map<String,Object> cityList(String provinceId){
-        List<Nation> list= nationsvr.nationList().stream().filter(o-> !o.getNationId().contains("0000000000")
-           && o.getNationId().contains("00000000") && o.getNationId().startsWith(provinceId.substring(0,2))
+        List<Nation> list= nationsvr.nationList().stream().filter(o-> !o.getNationId().contains("0000")
+           && o.getNationId().contains("00") && o.getNationId().startsWith(provinceId.substring(0,2))
         ).collect(Collectors.toList());
         Map map = new HashMap();
         map.put("data", list );
@@ -79,8 +77,8 @@ public class wxDicCtrl {
     )
     @GetMapping(value="/districtList")
     public Map<String,Object> districtList(String cityId){
-        List<Nation> list= nationsvr.nationList().stream().filter(o-> !o.getNationId().contains("00000000")
-                && o.getNationId().contains("000000") && o.getNationId().startsWith(cityId.substring(0,4))
+        List<Nation> list= nationsvr.nationList().stream().filter(o-> !o.getNationId().contains("00")
+                 && o.getNationId().startsWith(cityId.substring(0,4))
         ).collect(Collectors.toList());
         Map map = new HashMap();
         map.put("data", list );
@@ -132,5 +130,103 @@ public class wxDicCtrl {
         map.put("resultMsg", "ok");
         return map;
     }
+
+
+    @Autowired
+    private CircleClassService circleClassService;
+    @ApiOperation( value = "圈子类别",notes = "" +
+            " 返回字段：{" +
+            "    data : [{" +
+            "                  circleClassId; // 类别编号" +
+            "                     pareClassId; // 上级类别(暂不使用)" +
+            "                   circleClassName; // 类别名称" +
+            "                             icon; // 图标url" +
+            "                             memo; // 描述 " +
+            "           }],   " +
+            "    resultMsg : 'ok' ：成功 ，否则返回错误信息" +
+            "}")
+    @ApiImplicitParams({
+      }
+    )
+    @GetMapping(value="/circleClassList")
+    public Map<String, Object> circleClassList(){
+
+        List<CircleClass> list = circleClassService.circleClassList();
+        Map map = new HashMap();
+        map.put("data", list );
+        map.put("resultMsg", "ok");
+        return map;
+    }
+
+    @Autowired
+    private IconService iconService ;
+
+    @ApiOperation( value = "图标库",notes = "" +
+            " 返回字段：{" +
+            "    data : [{" +
+            "                     iconUrl; // url" +
+            "           }],   " +
+            "    resultMsg : 'ok' ：成功 ，否则返回错误信息" +
+            "}")
+    @ApiImplicitParams({
+    }
+    )
+    @GetMapping(value="/iconList")
+    public Map<String, Object> iconList(){
+
+        List<Icon> list = iconService.iconList();
+        Map map = new HashMap();
+        map.put("data", list );
+        map.put("resultMsg", "ok");
+        return map;
+    }
+
+    @Autowired
+    private HabitUnitService habitUnitService ;
+
+    @ApiOperation( value = "习惯计量单位",notes = "" +
+            " 返回字段：{" +
+            "    data : [{" +
+            "                     unitName; // 单位名称" +
+            "           }],   " +
+            "    resultMsg : 'ok' ：成功 ，否则返回错误信息" +
+            "}")
+    @ApiImplicitParams({
+    }
+    )
+    @GetMapping(value="/habitUnitList")
+    public Map<String, Object> habitUnitList(){
+        List<HabitUnit> list = habitUnitService.habitUnitList();
+        Map map = new HashMap();
+        map.put("data", list );
+        map.put("resultMsg", "ok");
+        return map;
+    }
+
+    @Autowired
+    private HabitClassService habitClassService ;
+
+    @ApiOperation( value = "习惯类别",notes = "" +
+            " 返回字段：{" +
+            "    data : [{" +
+            "                     habitClassId; // 类别编号" +
+            "                     habitClassName ;// 类别名称" +
+            "                     pareHabitClassId; // 上级类别编号    " +
+            "           }],   " +
+            "    resultMsg : 'ok' ：成功 ，否则返回错误信息" +
+            "}")
+    @ApiImplicitParams({
+    }
+    )
+    @GetMapping(value="/habitClassList")
+    public Map<String, Object> habitClassList(){
+        List<HabitClass> list = habitClassService.habitClassList();
+        Map map = new HashMap();
+        map.put("data", list );
+        map.put("resultMsg", "ok");
+        return map;
+    }
+
+
 
 }

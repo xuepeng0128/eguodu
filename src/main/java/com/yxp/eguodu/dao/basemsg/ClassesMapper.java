@@ -212,4 +212,18 @@ public interface ClassesMapper {
    public List<Map<String,Object>> studentAtClasses(Map<String,Object> paras);
 
 
+
+
+    //查找学生所在班级
+    @Select("<script>" +
+            "  select sc.schoolId,sc.schoolName,c.classesId, grade,classes,classesName,sc.schoolStyle from classes c inner join " +
+            "( select classesId,studentId from classesstudent  where studentId='${studentId}' and endTime is null) cstu " +
+            " on c.classesId=cstu.classesId " +
+            " inner join school sc on c.schoolId=sc.schoolId " +
+            " where c.schoolId='${schoolId}' " +
+            "</script>")
+    public List<Map<String,Object>> findNowClassesByStudent(@Param("studentId") String studentId,@Param("schoolId") String schoolId);
+
+
+
 }

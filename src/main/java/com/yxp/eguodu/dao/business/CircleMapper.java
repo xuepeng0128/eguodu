@@ -112,17 +112,33 @@ public interface CircleMapper {
    public List<Circle> teacherJoinedCircles(@Param("teacherId") String teacherId);
 
     @Insert("<script>" +
-            "  insert into circle(circleId,circleTitle,subTitle,circleClassId,schoolId,classesId,buildTeacherId,buildTime,memo,picUrl,circleProperty)" +
-            "   values(#{circleId} ,#{circleTitle},#{subTitle},#{circleClassId},#{schoolId},#{classesId},#{buildTeacherId}," +
+            "  insert into circle(circleId,circleTitle,subTitle,circleClassId,schoolId,classesId,buildTeacherId,buildStudentId,buildTime,memo,picUrl,circleProperty)" +
+            "   values(#{circleId} ,#{circleTitle},#{subTitle},#{circleClassId},#{schoolId},#{classesId},#{buildTeacherId},#{buildStudentId}," +
             "   now(),#{memo},#{picUrl},#{circleProperty} )" +
             " </script>")
    public int insertCircle(Circle circle);
 
+    // 插入班级学生到圈子
     @Insert("<script>" +
             "  insert into circlestudent(circleId,studentId,regTime)\n" +
             "  select '${circleId}',studentId, now() from classesstudent where classesId='${classesId}'" +
             "</script>")
     public int insertClassStudentToCircle(@Param("circleId") String circleId,@Param("classesId") String classesId);
+
+    //插入某一学生到圈子
+    @Insert("<script>" +
+            "  insert into circlestudent(circleId,studentId,regTime) " +
+            " values( '${circleId}','${studentId}', now() ) " +
+            "</script>")
+    public int insertCurrentStudentToCircle(@Param("circleId") String circleId,@Param("studentId") String studentId);
+
+
+    // 某学生退出圈子
+    // 学生退出圈子
+    @Update("<script>" +
+            "  update circlestudent set leaveTime= now() where circleId='${circleId}' and studentId='${studentId}' and leaveTime is null  " +
+            "</script>")
+    public int  studentOutOfCircle(@Param("circleId") String circleId, @Param("studentId") String studentId);
 
 
     @Insert("<script>" +
@@ -146,5 +162,61 @@ public interface CircleMapper {
             " update circle set  closeMan =#{closeMan} , closeTime = now() , closeReason=#{closeReson} where circleId=#{circleId}   " +
             "</script>")
     public int closeCircle(Map<String,Object> paras);
+
+
+
+
+// -----------------------------------微信-----------------------------------------//
+
+   //按条件组合分页查询圈子(本学生未加入过的公开圈子)
+   @Select("<script>" +
+           " select circleId,circleTitle,subTitle,c.circleClassId, ccs.circleClassName, c.schoolId,ifnull(sc.schoolName,'') as schoolName, " +
+           "       classesId,buildTeacherId,ifnull(te.teacherName,'') as buildTeacherName, buildStudentId, ifnull(stu.studentName,'') as buildStudentName , " +
+           "       buildTime,c.memo,picUrl " +
+           " from circle c inner join dic_circleclass ccs on c.circleClassId=ccs.circleClassId left outer join school sc on c.schoolId=sc.schoolId  left outer join teacher te on  " +
+           " c.buildTeacherId = te.teacherId left outer join (select distinct studentId ,studentName from student) stu on c.buildStudentId= stu.studentId " +
+           " where circleProperty=2 and closeTime is null  " +
+           " <if test='circleTitle != null and circleTitle !=\"\" '>" +
+           " and c.circleTitle like '%${circleTitle}%' " +
+           " </if> " +
+           " <if test='circleClassId != null and circleClassId !=\"\"  and circleClassId !=\"0\" ' >" +
+           " and c.circleClassId='${circleClassId}' " +
+           " </if> " +
+           " and c.circleid not in (select DISTINCT circleId from circlestudent where leavetime is  null and studentId='${studentId}' ) " +
+           " limit ${pageBegin},${pageSize}" +
+           "</script>")
+   public List<Map<String ,Object>>  circleFindList(@Param("circleTitle") String circleTitle,@Param("circleClassId") String circleClassId,
+                                                    @Param("studentId") String studentId,@Param("pageSize") String pageSize,@Param("pageBegin") String pageBegin);
+
+
+    // 查询本学生当前加入的圈子
+
+    @Select("<script>" +
+            " select circleId,circleTitle,subTitle,c.circleClassId, ccs.circleClassName,c.schoolId,ifnull(sc.schoolName,'') as schoolName, " +
+            "       classesId,buildTeacherId,ifnull(te.teacherName,'') as buildTeacherName, buildStudentId, ifnull(stu.studentName,'') as buildStudentName , " +
+            "       buildTime, c.memo,picUrl,closeMan,closeTime,closeReason,circleProperty  " +
+            " from circle c  inner join dic_circleclass ccs on c.circleClassId=ccs.circleClassId left outer join school sc on c.schoolId=sc.schoolId  left outer join teacher te on  " +
+            " c.buildTeacherId = te.teacherId left outer join (select distinct studentId ,studentName from student) stu on c.buildStudentId= stu.studentId " +
+            " where 1=1 " +
+            " and c.circleid  in (select DISTINCT circleId from circlestudent where 1=1 " +
+            "  and leavetime is  null and studentId='${studentId}' ) " +
+            " limit ${pageBegin},${pageSize}" +
+            "</script>")
+    public List<Map<String,Object>> circleHaveJoinedList(@Param("studentId") String studentId, @Param("pageSize") String pageSize,@Param("pageBegin") String pageBegin);
+
+    // 查询本学生家长建的圈子
+    @Select("<script>" +
+            "   select circleId,circleTitle,subTitle,c.circleClassId, ccs.circleClassName,   buildTime, c.memo,picUrl,closeMan,closeTime,closeReason,circleProperty " +
+            "    from circle c inner join dic_circleclass ccs on c.circleClassId=ccs.circleClassId   where  buildStudentId='${studentId}' " +
+            " limit ${pageBegin},${pageSize}" +
+            "</script>")
+    public List<Map<String,Object>>  studentBuildCircleList(@Param("studentId") String studentId, @Param("pageSize") String pageSize,
+                                                             @Param("pageBegin") String pageBegin);
+
+
+
+
+
+
 
 }

@@ -208,4 +208,9 @@ public class ClassesServiceImp implements ClassesService {
     public List<ClassesTeacher> subjectTeachersAtClasses(Map<String, Object> paras) {
         return classesMapper.subjectTeachersAtClasses(paras);
     }
+
+    @Override
+    public List<Map<String, Object>> findNowClassesByStudent(String studentId, String schoolId) {
+        return classesMapper.findNowClassesByStudent(studentId,schoolId);
+    }
 }
