@@ -165,9 +165,9 @@ public interface HabitMapper {
    @Update("<script>" +
            "  update studentputcard set haveFinish = '${haveFinish}' ,  " +
            "                          finished= case when finishCompare ='gt'  then " +
-           "                                           case when haveFinish>= shouldFinish then true else FALSE end  " +
+           "                                       <![CDATA[    case when haveFinish>= shouldFinish then true else FALSE end ]]> " +
            "                                    ELSE " +
-           "                                           case when haveFinish<= shouldFinish then true else FALSE end   " +
+           "                                       <![CDATA[      case when haveFinish<= shouldFinish then true else FALSE end  ]]> " +
            "                                    end " +
            "  where id=#{id}  " +
            "</script>")
@@ -178,7 +178,7 @@ public interface HabitMapper {
     @Update("<script>" +
             " update studentputcard set " +
             "                          haveGuodubi = case when finished =1 THEN " +
-            "                                             case when func_calCanGetGuodubi('${studentId}')+ haveGuodubi  > canGetGuodubi  " +
+            "                                      <![CDATA[         case when func_calCanGetGuodubi('${studentId}')+ haveGuodubi  > canGetGuodubi  ]]>" +
             "                                             then canGetGuodubi  " +
             "                                             else func_calCanGetGuodubi('${studentId}')+ haveGuodubi end  " +
             "                                        else 0 end " +

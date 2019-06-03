@@ -16,7 +16,7 @@ public interface HabitTemplateMapper {
             " inner join dic_habitclass hc on h.habitClassId=hc.habitClassId " +
             " inner join dic_habitclass hcs on h.subHabitClassId=hcs.habitClassId " +
             " where 1=1 " +
-            " limit #{pageBegin} ,#{pageSize} " +
+            " limit ${pageBegin} ,${pageSize} " +
             " </script>"})
     public List<HabitTemplate> habitTemplateList(Map<String,Object> paras);
 
