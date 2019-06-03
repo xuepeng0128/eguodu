@@ -15,7 +15,7 @@ public interface HabitMapper {
 
 @Select("<script>" +
         "   select h.habitId,cla.grade, cla.classes ,  h.circleId,c.circleTitle,h.habitClassId ,p.habitClassName,h.subHabitClassId,s.habitClassName " +
-        "       as subHabitClassName ,h.icon,h.color,h.habitName,h.memo,h.picUrl,h.pirTime,h.timeUnit,h.`mode`,h.timeModeNum, " +
+        "       as subHabitClassName ,h.icon,h.color,h.habitName,h.memo,h.picUrl,h.pirTime,h.timeUnit,h.`mode`,h.timeModeNum, h.timeCompare," +
         "      h.countModeNum,h.valueModeNum,h.unitName,guoduCoin,h.score,h.habitExamId,e.examTitle , e.totalScore ," +
         "    h.buildTeacherId,h.buildStudentId,h.buildTime,ifnull(stu.joinStudents,0) as joinStudents " +
         "  from habit h inner join circle c on h.circleId=c.circleId  " +
@@ -113,10 +113,10 @@ public interface HabitMapper {
 
     @Insert("<script>" +
             "  insert into habit (habitId,circleId,habitClassId,subHabitClassId,icon,color,habitName,memo,picUrl,pirTime," +
-            " timeUnit,mode,timeModeNum,countModeNum,valueModeNum,unitName,guoduCoin,score,habitExamId,buildTime," +
+            " timeUnit,mode,timeModeNum,timeCompare,countModeNum,valueModeNum,unitName,guoduCoin,score,habitExamId,buildTime," +
             " buildTeacherId,buildStudentId,putcardBeginDate,putcardEndDate) values(" +
             " #{habitId},#{circleId},#{habitClassId},#{subHabitClassId},#{icon},#{color},#{habitName},#{memo},#{picUrl},#{pirTime}," +
-            "  #{timeUnit},#{mode},#{timeModeNum},#{countModeNum},#{valueModeNum},#{unitName},#{guoduCoin},#{score},#{habitExamId},now()," +
+            "  #{timeUnit},#{mode},#{timeModeNum},#{timeCompare},#{countModeNum},#{valueModeNum},#{unitName},#{guoduCoin},#{score},#{habitExamId},now()," +
             "  #{buildTeacherId},#{buildStudentId},#{putCardBeginDate},#{putCardEndDate})" +
             " </script> ")
     public int insertHabit(Habit habit);
@@ -160,7 +160,10 @@ public interface HabitMapper {
     public int setCanGetScore(@Param("habitExamId") String habitExamId,@Param("canGetScore") float canGetScore);
 
 
-   @Update("")
+
+   @Update("<script>" +
+           "  update  haveGuodubi,upperLimitGuodubi,haveScore,putCardTime,putCardMemo,putCardPicUrls,putCardaudioUrls,putCardvideoUrls,haveFinish " +
+           "</script>")
     public int studentPutCard(@Param("habitId") String habitId , @Param("studentId") String studentId);
 
 }

@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class StudentPutCard {
+    private int id;
     private String         habitId ;
     private String studentId ;
     private Date         shouldPutCardDateBegin ;
@@ -30,6 +31,7 @@ public class StudentPutCard {
     private String        shouldFinish;
     private String haveFinish;
     private boolean        finished;
+    private  String finishCompare;
     private String remark;
 
 }

@@ -22,6 +22,7 @@ public class HabitTemplate {
     private String timeUnit;
     private int  mode;
     private String  timeModeNum;
+    private String  timeCompare ;
     private int  countModeNum;
     private float valueModeNum;
     private String  unitName;

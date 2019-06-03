@@ -16,6 +16,7 @@ public class School {
 
     private String schoolId; // 学校编号
     private String schoolName; // 学校名称
+    private String provinceId;
     private String cityId; // 市州id
     private String districtId; // 区县id
     private float longitude; // 经度坐标

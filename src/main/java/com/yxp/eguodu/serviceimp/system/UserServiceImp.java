@@ -33,6 +33,11 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
+    public List<Map<String, Object>> findUserAccount(String account,String userId) {
+        return mapper.findUserAccount(account,userId);
+    }
+
+    @Override
     public int insertUser(User user) {
         return mapper.insertUser(user);
     }

@@ -19,11 +19,11 @@ public class SchoolCtrl {
     private SchoolService svr;
 
      @GetMapping(value="/schoolList")
-     public List<Map<String,Object>> schoolList(  String schoolId, String schoolName, String cityId,String districtId,
+     public List<Map<String,Object>> schoolList(  String schoolId, String schoolName,String provinceId, String cityId,String districtId,
                                                   String schoolStyle,@DateTimeFormat(pattern="yyyy-MM-dd") Date regTimeBegin,
                                                   @DateTimeFormat(pattern="yyyy-MM-dd") Date regTimeEnd, boolean train, String saleManId,
                                                   String pageSize,String pageNo,String pageBegin) {
-         SchoolQueryParams params= new SchoolQueryParams(schoolId,  schoolName, cityId, districtId, schoolStyle,
+         SchoolQueryParams params= new SchoolQueryParams(schoolId,  schoolName,provinceId, cityId, districtId, schoolStyle,
                                                        regTimeBegin, regTimeEnd, train, saleManId, pageSize,pageNo,pageBegin);
 
          List<Map<String,Object>> list = svr.schoolList(params);
@@ -31,10 +31,10 @@ public class SchoolCtrl {
      }
 
     @GetMapping(value="/schoolListTotal")
-    public Map<String,Object> schoolListTotal(String schoolId, String schoolName, String cityId, String districtId,
+    public Map<String,Object> schoolListTotal(String schoolId, String schoolName,String provinceId, String cityId, String districtId,
                                String schoolStyle, @DateTimeFormat(pattern="yyyy-MM-dd") Date regTimeBegin,
                                @DateTimeFormat(pattern="yyyy-MM-dd") Date regTimeEnd, boolean train, String saleManId, String pageSize, String pageNo) {
-        SchoolQueryParams params= new SchoolQueryParams(schoolId,  schoolName, cityId, districtId, schoolStyle,
+        SchoolQueryParams params= new SchoolQueryParams(schoolId,  schoolName, provinceId,cityId, districtId, schoolStyle,
                 regTimeBegin, regTimeEnd, train, saleManId, pageSize,pageNo,"");
 
         Map<String,Object> re= new HashMap<String,Object>();

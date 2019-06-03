@@ -36,6 +36,19 @@ public class UserCtrl {
 
     }
 
+   @GetMapping(value="/findUserAccount")
+   public Map<String,Object> findUserAccount(String account,String userId){
+        List<Map<String,Object>> list = svr.findUserAccount(account,userId);
+        if (list == null || list.size()==0){
+            return new HashMap<String,Object>(){{
+               put("result","0");
+            }};
+        }else {
+            return new HashMap<String,Object>(){{
+                put("result","1");
+            }};
+        }
+   }
 
     @PostMapping(value="/validateUser")
     public List<User> validateUser(@RequestBody User user) throws Exception {

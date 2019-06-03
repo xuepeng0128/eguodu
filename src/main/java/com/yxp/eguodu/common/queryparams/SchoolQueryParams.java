@@ -13,6 +13,7 @@ import java.util.Date;
 public class SchoolQueryParams {
        private String schoolId;
        private String schoolName;
+       private String provinceId;
        private String cityId;
        private String districtId;
        private String schoolStyle;

@@ -31,6 +31,7 @@ public class Habit {
     private String  timeUnit;
     private int  mode;
     private String  timeModeNum;
+    private String  timeCompare ;
     private Integer  countModeNum;
     private Float valueModeNum;
     private String unitName;

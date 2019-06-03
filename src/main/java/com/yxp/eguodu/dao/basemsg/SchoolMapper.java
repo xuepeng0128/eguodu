@@ -11,11 +11,12 @@ import java.util.Map;
 public interface SchoolMapper {
 
     @Select("<script>" +
-            "SELECT s.schoolId,s.schoolName , s.cityId,c.nationName as cityName , s.districtId ,d.nationName as districtName," +
+            "SELECT s.schoolId,s.schoolName , s.provinceId,p.nationName as proviceName,s.cityId,c.nationName as cityName , s.districtId ,d.nationName as districtName," +
             " s.longitude,s.latitude,s.address,s.schoolStyle,s.saleManId,e.employeeName as saleManName, s.regTime,s.train,s.tel,s.linkMan," +
             " ifnull(cla.classesNum,0) as classesNum , ifnull(cir.circleNum,0) as circleNum ,ifnull(sut.studentNum,0) as studentNum ," +
             "ifnull(tea.teacherNum,0) as teacherNum " +
-            " from school s inner join dic_nation c on s.cityId=c.nationId " +
+            " from school s inner join dic_nation p on s.provinceId=p.nationId" +
+            " inner join dic_nation c on s.cityId=c.nationId " +
             "inner join dic_nation d on s.districtId=d.nationId " +
             "inner join employee e on s.saleManId =e.employeeId " +
             "left outer join " +
@@ -50,6 +51,9 @@ public interface SchoolMapper {
             "</if>" +
             "<if test='schoolName != null and schoolName !=\"\" '>" +
             "  and s.schoolName like '%${schoolName}%' " +
+            "</if>" +
+            "<if test='provinceId != null and provinceId !=\"\" and provinceId !=\"0\" '>" +
+            "  and s.provinceId= '%${provinceId}%' " +
             "</if>" +
             "<if test='cityId != null and cityId !=\"\" and cityId !=\"0\" '>" +
             "  and s.cityId= '%${cityId}%' " +
@@ -86,7 +90,8 @@ public interface SchoolMapper {
 
     @Select("<script>" +
             "SELECT count(*) as total " +
-            " from school s inner join dic_nation c on s.cityId=c.nationId " +
+            " from school s inner join dic_nation p on s.provinceId=p.nationId" +
+            " inner join dic_nation c on s.cityId=c.nationId " +
             "inner join dic_nation d on s.districtId=d.nationId " +
             "inner join employee e on s.saleManId =e.employeeId " +
             "left outer join " +
@@ -116,29 +121,31 @@ public interface SchoolMapper {
             "   group by schoolId" +
             ")tea on s.schoolId=tea.schoolId" +
             " where 1=1 " +
-            "<if test='schoolId != null and schoolId !=\"\" and schoolId !=\"0\" '>" +
+            "<if test='schoolId != null and schoolId !=\"\" and schoolId !=\"0\"'>" +
             "  and s.schoolId like '%${schoolId}%' " +
             "</if>" +
             "<if test='schoolName != null and schoolName !=\"\" '>" +
             "  and s.schoolName like '%${schoolName}%' " +
             "</if>" +
-            "<if test='cityId != null and cityId !=\"\" and cityId !=\"0\"  '>" +
+            "<if test='provinceId != null and provinceId !=\"\" and provinceId !=\"0\" '>" +
+            "  and s.provinceId= '%${provinceId}%' " +
+            "</if>" +
+            "<if test='cityId != null and cityId !=\"\" and cityId !=\"0\" '>" +
             "  and s.cityId= '%${cityId}%' " +
             "</if>" +
             "<if test='districtId != null and districtId !=\"\" and districtId !=\"0\"  '>" +
             "  and s.districtId= '${districtId}' " +
             "</if>" +
-
             "<if test='schoolStyle != null and schoolStyle !=\"\" and schoolStyle !=\"0\"  '>" +
             "  and s.schoolStyle= ${schoolStyle} " +
             "</if>" +
-            "<if test='regTimeBegin != null  '>" +
+            "<if test='regTimeBegin != null and regTimeBegin !=\"\" '>" +
             "<![CDATA[  and s.regTime >= '${regTimeBegin}'  ]]>" +
             "</if>" +
-            "<if test='regTimeEnd != null  '>" +
+            "<if test='regTimeEnd != null and regTimeEnd !=\"\" '>" +
             "<![CDATA[  and s.regTime <'${regTimeEnd}'  ]]>" +
             "</if>" +
-            "<if test='train != null and train !=\"\" and train !=\"0\"  '>" +
+            "<if test='train != null  and train !=0 '>" +
             "   and s.train=${train} " +
             "</if>" +
             "<if test='saleManId != null and saleManId !=\"\" and saleManId !=\"0\"  '>" +
@@ -157,14 +164,14 @@ public interface SchoolMapper {
     public List<Map<String,Object>> schoolListByAreaAndName(@Param("districtId") String districtId,@Param("schoolName") String schoolName);
 
     @Insert("<script>" +
-            " insert into school(schoolId,schoolName,cityId,districtId,longitude,latitude,tel,linkman,address,schoolStyle,saleManId,regTime,train)" +
-            " values (func_makeBusinessId('school', case when ${train}= false then  '0' else '1' end),#{schoolName},#{cityId}," +
+            " insert into school(schoolId,schoolName,provinceId,cityId,districtId,longitude,latitude,tel,linkman,address,schoolStyle,saleManId,regTime,train)" +
+            " values (func_makeBusinessId('school', case when ${train}= false then  '0' else '1' end),#{schoolName},#{provinceId},#{cityId}," +
             " #{districtId},#{longitude},#{latitude},#{tel},#{linkman},#{address},#{schoolStyle},#{saleManId},now(),#{train})" +
             "</script>")
     public int insertSchool(School school);
 
     @Update("<script>" +
-            " update school set schoolName=#{schoolName}, cityId=#{cityId},districtId=#{districtId}," +
+            " update school set schoolName=#{schoolName},provinceId=#{provinceId}, cityId=#{cityId},districtId=#{districtId}," +
             " longitude=#{longitude},latitude=#{latitude},tel=#{tel},linkman=#{linkMan},address=#{address},schoolStyle=#{schoolStyle}," +
             " saleManId=#{saleManId},train=#{train} where schoolId=#{schoolId}" +
             "</script>")

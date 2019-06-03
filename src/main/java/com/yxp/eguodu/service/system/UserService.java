@@ -11,6 +11,7 @@ public interface UserService {
 
     public List<Map<String,Object>> userList(UserQueryParams queryParams);
     public List<Map<String,Object>> userListTotal(UserQueryParams queryParams);
+    public List<Map<String,Object>> findUserAccount(String account,String userId);
     public int insertUser(User user);
     public int updateUser(User user);
     public int groupInsertUser(List<User> users);

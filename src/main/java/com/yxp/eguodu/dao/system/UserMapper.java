@@ -76,8 +76,13 @@ public interface UserMapper {
             " </script>")
     public List<Map<String,Object>> userListTotal(UserQueryParams queryParams);
 
-
-
+   @Select("<script>" +
+           "   select account from user where account='${account}'" +
+           "   <if test ='userId != null and userId !=\"\"'>" +
+           "       and userId != '${userId}' " +
+           "   </if>" +
+           "</script>")
+   public List<Map<String,Object>> findUserAccount(@Param("account") String account,@Param("userId") String userId);
 
     @Insert("<script>" +
             " insert into user(userId,account,passWord,schoolId,employeeId,teacherId,supperAdmin,schoolAdmin,addTime,kind)" +

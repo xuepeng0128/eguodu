@@ -115,12 +115,20 @@ public class HabitServiceImp implements HabitService {
                      putCard.setShouldPutCardDateEnd(beginPutCardTime);
                      putCard.setCanGetGuodubi(h.getGuoduCoin());
                      putCard.setHabitId(h.getHabitId());
-                     if (h.getValueModeNum() !=null)
-                        putCard.setShouldFinish(h.getTimeModeNum());
-                     else if (h.getCountModeNum() != null)
-                         putCard.setShouldFinish(h.getCountModeNum().toString());
-                     else
+                     if (h.getMode()==1 ){
                          putCard.setShouldFinish(h.getTimeModeNum());
+                         putCard.setFinishCompare(h.getTimeCompare());
+                     }
+                     else if (h.getMode()== 2){
+                         putCard.setShouldFinish(h.getCountModeNum().toString());
+                         putCard.setFinishCompare("gt");
+                     }
+                     else{
+                         putCard.setShouldFinish(h.getValueModeNum().toString());
+                         putCard.setFinishCompare("gt");
+                     }
+
+
                      putCard.setStudentId(studentId);
                      studentPutCardList.add(putCard);
             }while(beginPutCardTime.before(h.getPutCardEndDate()));

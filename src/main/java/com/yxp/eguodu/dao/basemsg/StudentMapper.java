@@ -78,13 +78,13 @@ public interface StudentMapper {
             " </script>")
     public List<Map<String,Object>> studentListTotal(StudentQueryParams queryParams);
 
-    @Select("select id,studentId,studentPaperId,studentName,sex,birthday,tel,address,schoolId,wxCode,headimg,nickName,regTime,endTime" +
+    @Select("select id,studentId,studentPaperId,studentName,sex,birthday,tel,address,schoolId,wxCode,headimg,nickname,regTime,endTime" +
             " from student where studentId ='${studentId}' order by id desc limit 1 ")
     public List<Student> findStudentById(Map<String,Object> paras);
 
-    @Insert("insert into student(studentId,studentPaperId,studentName,tel,address,sex,birthday,schoolId,regTime,inviteCode,wxcode,relationShipId) " +
+    @Insert("insert into student(studentId,studentPaperId,studentName,tel,address,sex,birthday,schoolId,regTime,inviteCode,wxcode,headimg,nickname,relationShipId) " +
             "values(#{studentId},#{studentPaperId},#{studentName},#{tel},#{address},#{sex},#{birthday},#{schoolId}," +
-            " now(),func_makeInviteCode(6,'student'), #{wxcode},#{relationShipId})")
+            " now(),func_makeInviteCode(6,'student'), #{wxcode},#{headimg},#{nickname},#{relationShipId})")
     public int insertStudent(Student student);
 
 
