@@ -160,10 +160,40 @@ public interface HabitMapper {
     public int setCanGetScore(@Param("habitExamId") String habitExamId,@Param("canGetScore") float canGetScore);
 
 
+    // 打卡 ，1.设置是否完成打卡任务
 
    @Update("<script>" +
-           "  update  haveGuodubi,upperLimitGuodubi,haveScore,putCardTime,putCardMemo,putCardPicUrls,putCardaudioUrls,putCardvideoUrls,haveFinish " +
+           "  update studentputcard set haveFinish = '${haveFinish}' ,  " +
+           "                          finished= case when finishCompare ='gt'  then " +
+           "                                           case when haveFinish>= shouldFinish then true else FALSE end  " +
+           "                                    ELSE " +
+           "                                           case when haveFinish<= shouldFinish then true else FALSE end   " +
+           "                                    end " +
+           "  where id=#{id}  " +
            "</script>")
-    public int studentPutCard(@Param("habitId") String habitId , @Param("studentId") String studentId);
+    public int studentPutCardSetFinish(StudentPutCard studentPutCard);
+
+   // 打卡 2.修改其他值
+
+    @Update("<script>" +
+            " update studentputcard set " +
+            "                          haveGuodubi = case when finished =1 THEN " +
+            "                                             case when func_calCanGetGuodubi('${studentId}')+ haveGuodubi  > canGetGuodubi  " +
+            "                                             then canGetGuodubi  " +
+            "                                             else func_calCanGetGuodubi('${studentId}')+ haveGuodubi end  " +
+            "                                        else 0 end " +
+            "                            , " +
+            "                         upperLimitGuodubi =  0  , " +
+            "                         haveScore  = case when finished =1 THEN " +
+            "                                               canGetScore " +
+            "                                        else 0 end    , " +
+            "                         putCardTime =now() , " +
+            "                         putCardMemo ='${putCardMemo}', " +
+            "                      putCardPicUrls ='${putCardPicUrls}', " +
+            "                    putCardaudioUrls ='${putCardaudioUrls}', " +
+            "                    putCardvideoUrls ='${putCardvideoUrls}'   " +
+            "  where id=${id}  " +
+            "</script>")
+    public int studentPutCart(StudentPutCard studentPutCard);
 
 }
