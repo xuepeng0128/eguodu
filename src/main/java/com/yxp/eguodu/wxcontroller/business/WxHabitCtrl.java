@@ -202,13 +202,30 @@ public class WxHabitCtrl {
             "    resultCode : '0 : 成功,1 : 小程序code 无效, 2. openId 获取异常 ,3.openId 无效 " +
             "}")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "pageNo", value = "页码", required = true, dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "pageSize", value = "每页数量", required = true, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "studentPutCard", value = "打卡类", required = true, dataType = "StudentPutCard")
     }
     )
     @PostMapping(value="/studentPutCard")
     public Map<String,Object> studentPutCard(@RequestBody StudentPutCard studentPutCard){
-        return null;
+        int d = svr.studentPutCard(studentPutCard);
+        if (d>=0){
+
+            return new HashMap<String,Object>(){{
+                put("resultMsg","ok") ;
+                put("resultCode","0");
+            }} ;
+
+
+        }
+
+        else{
+            return new HashMap<String,Object>(){{
+                put("resultMsg","fail") ;
+                put("resultCode","9");
+            }} ;
+        }
+
+
     }
 
 
