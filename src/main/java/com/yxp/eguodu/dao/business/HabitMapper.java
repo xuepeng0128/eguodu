@@ -17,7 +17,7 @@ public interface HabitMapper {
         "   select h.habitId,cla.grade, cla.classes ,  h.circleId,c.circleTitle,h.habitClassId ,p.habitClassName,h.subHabitClassId,s.habitClassName " +
         "       as subHabitClassName ,h.icon,h.color,h.habitName,h.memo,h.picUrl,h.pirTime,h.timeUnit,h.`mode`,h.timeModeNum, h.timeCompare," +
         "      h.countModeNum,h.valueModeNum,h.unitName,guoduCoin,h.score,h.habitExamId,e.examTitle , e.totalScore ," +
-        "    h.buildTeacherId,h.buildStudentId,h.buildTime,ifnull(stu.joinStudents,0) as joinStudents " +
+        "    h.buildTeacherId,h.buildStudentId,h.buildTime,h.putCardBeginDate,h.putCardEndDate,ifnull(stu.joinStudents,0) as joinStudents " +
         "  from habit h inner join circle c on h.circleId=c.circleId  " +
         "inner join dic_habitclass p on h.habitClassId=p.habitClassId  inner join dic_habitclass s on h.subHabitClassId " +
         " =s.habitClassId left outer join habitexam e on h.habitExamId=e.habitExamId  left outer join classes cla on c.classesId=cla.classesId" +
@@ -58,6 +58,12 @@ public interface HabitMapper {
         " </if> " +
         " <if test ='examed == \"0\" '>" +
         "      and ifnull(h.habitExamId,'') ='' " +
+        " </if> " +
+        " <if test ='allHabitStudentId != null and allHabitStudentId != \"\" '>" +
+        "   and h.habitId in  (select distinct habitid from habitstudent  where studentId ='${allHabitStudentId}')" +
+        " </if> " +
+        " <if test ='todayStudentId != null and todayStudentId != \"\" '>" +
+        "   and h.habitId in  (select habitid from studentputcard  where now() BETWEEN shouldPutCardDateBegin and shouldPutCardDateEnd and studentId ='${todayStudentId}')" +
         " </if> " +
         " order by h.habitExamId ,h.habitId" +
         "  limit ${pageBegin},${pageSize}" +
@@ -107,6 +113,12 @@ public interface HabitMapper {
             " </if> " +
             " <if test ='examed == \"0\" '>" +
             "      and ifnull(h.habitExamId,'') ='' " +
+            " </if> " +
+            " <if test ='allHabitStudentId != null and allHabitStudentId != \"\" '>" +
+            "   and h.habitId in  (select distinct habitid from habitstudent  where studentId ='${allHabitStudentId}')" +
+            " </if> " +
+            " <if test ='todayStudentId != null and todayStudentId != \"\" '>" +
+            "   and h.habitId in  (select habitid from studentputcard  where now() BETWEEN shouldPutCardDateBegin and shouldPutCardDateEnd and studentId ='${todayStudentId}')" +
             " </if> " +
             "</script>")
     public List<Map<String,Object>> habitListTotal(HabitQueryParams habitQueryParams);
@@ -158,6 +170,30 @@ public interface HabitMapper {
             "  update studentputcard  set canGetScore=#{canGetScore} where habitId in (select habitId from habit where habitExamId=#{habitExamId} )" +
             "</script>")
     public int setCanGetScore(@Param("habitExamId") String habitExamId,@Param("canGetScore") float canGetScore);
+
+
+
+
+
+    //------------------------------------------------微信-----------------------------------------//
+
+   // 学生准备打卡，获取打卡信息
+   @Select("<script>" +
+           " select id,habitId,studentId,shouldPutCardDateBegin,shouldPutCardDateEnd,canGetGuodubi,haveGuodubi,upperLimitGuodubi,canGetScore," +
+           " haveScore,putCardTime,putCardMemo,putCardPicUrls,putCardaudioUrls,putCardvideoUrls,shouldFinish,haveFinish,finished," +
+           " finishCompare,remark  from studentputcard where now() between shouldPutCardDateBegin and shouldPutCardDateEnd " +
+           " and studentId='${studentId}' and habitId='${habitId}' " +
+           "</script>")
+   public List<StudentPutCard>  currentStudentPrepareHabitPutCard(@Param("habitId") String habitId, @Param("studentId") String studentId);
+
+
+
+
+
+
+
+
+
 
 
     // 打卡 ，1.设置是否完成打卡任务

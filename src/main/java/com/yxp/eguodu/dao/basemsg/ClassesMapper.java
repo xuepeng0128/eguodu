@@ -31,7 +31,7 @@ public interface ClassesMapper {
             ") d on c.classesId=d.classesId " +
             "where 1=1 " +
             " " +
-            " <if test='classesId != null and classedId !=\"\" and classesId !=\"0\" '>" +
+            " <if test='classesId != null and classesId !=\"\" and classesId !=\"0\" '>" +
             "    and c.classesId='${classesId}'" +
             " </if>" +
             " <if test='grade != null and grade !=\"\" and grade !=\"0\" '>" +
@@ -69,7 +69,7 @@ public interface ClassesMapper {
             " " +
             ") d on c.classesId=d.classesId " +
             "where 1=1 " +
-            " <if test='classesId != null and classedId !=\"\" and classesId !=\"0\" '>" +
+            " <if test='classesId != null and classesId !=\"\" and classesId !=\"0\" '>" +
             "    and c.classesId='${classesId}'" +
             " </if>" +
             " <if test='grade != null and grade !=\"\" and grade !=\"0\" '>" +
@@ -152,7 +152,7 @@ public interface ClassesMapper {
     public int insertClassesStudent(ClassesStudent classesStudent);
 
    @Update("<script> update classesstudent set endTime=now() " +
-           "where classesId='${classedId}' and studentId='${studentId}' " +
+           "where classesId='${classesId}' and studentId='${studentId}' " +
            "</script>")
     public int classesStudentLeave(Map<String,Object> paras);
 
@@ -164,14 +164,14 @@ public interface ClassesMapper {
             " select cls.classesId,cls.grade,cls.classes,cls.classesName,cls.schoolId,sch.schoolName,cls.headMaster,ifnull(t.teacherName,'') as teacherName " +
             "  from classes cls inner join " +
             "school sch on cls.schoolId=sch.schoolId " +
-            "left outer join teacher t on cls.headMaster=t.teacherId and t.endTime is not null " +
+            "left outer join teacher t on cls.headMaster=t.teacherId and t.endTime is  null " +
             " where cls.schoolId='${schoolId}' and cls.grade='${grade}'" +
             "</script>")
     public List<Classes> gradeClasses(Map<String,Object> paras);
    @Select("<script>" +
            "   select c.classesId,c.grade,c.classes,c.headMaster ,t.teacherName as headMasterName,c.schoolId from " +
            "( " +
-           " select classesId from classesteacher where teacherId='${teacherId}' and endTime is not null " +
+           " select classesId from classesteacher where teacherId='${teacherId}' and endTime is  null " +
            " union " +
            " select classesId from classes where headMaster ='${teacherId}' " +
            ") ac inner join classes c on ac.classesId=c.classesId " +

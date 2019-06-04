@@ -2,10 +2,7 @@ package com.yxp.eguodu.serviceimp.business;
 
 import com.yxp.eguodu.common.queryparams.HabitQueryParams;
 import com.yxp.eguodu.dao.business.HabitMapper;
-import com.yxp.eguodu.entity.Habit;
-import com.yxp.eguodu.entity.HabitExam;
-import com.yxp.eguodu.entity.HabitStudent;
-import com.yxp.eguodu.entity.StudentPutCard;
+import com.yxp.eguodu.entity.*;
 import com.yxp.eguodu.service.business.HabitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -67,17 +64,20 @@ public class HabitServiceImp implements HabitService {
                 add(habit);
             }}));
         }
-
-
-
-
         return 1;
+    }
+    // 学生准备打卡，获取打卡信息
+    @Override
+    public List<StudentPutCard> currentStudentPrepareHabitPutCard(String habitId, String studentId) {
+        return mapper.currentStudentPrepareHabitPutCard(habitId,studentId);
     }
 
 
     @Override
-    public int studentPutCard(String habitId, String studentId) {
-        return 0;
+    public int studentPutCard(StudentPutCard studentPutCard) {
+         mapper.studentPutCardSetFinish(studentPutCard);
+         mapper.studentPutCart(studentPutCard);
+         return 1;
     }
 
 

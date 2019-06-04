@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class InsertExamHabitParams {
-   private  HabitExam habitExam ;
-   private List<Habit> habits;
-   private String[] studentIds;
+   private  HabitExam habitExam ;  // 考核
+   private List<Habit> habits;   // 习惯列表
+   private String[] studentIds; // 参与习惯的学生ids
 }

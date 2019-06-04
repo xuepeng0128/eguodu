@@ -21,8 +21,9 @@ public interface HabitService {
     public int insertNoExamHabit(Habit habit,String[] studentIds);
 
 
+    // 学生准备打卡，获取打卡信息
+    public List<StudentPutCard>  currentStudentPrepareHabitPutCard( String habitId,  String studentId);
 
-
-    public int studentPutCard( String habitId ,  String studentId);
+    public int studentPutCard(StudentPutCard studentPutCard);
 
 }

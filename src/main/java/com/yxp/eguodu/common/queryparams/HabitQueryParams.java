@@ -19,6 +19,8 @@ public class HabitQueryParams {
     private String buildTeacherId;
     private String buildStudentId;
     private String examed;
+    private String allHabitStudentId; // 查询本学生参与的所有习惯
+    private String todayStudentId; // 今日要打卡的学生id
     private String pageSize;
     private String pageNo;
     private String pageBegin;
