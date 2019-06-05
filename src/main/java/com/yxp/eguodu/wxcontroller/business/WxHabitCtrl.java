@@ -14,9 +14,10 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.groupingBy;
 
 
 @Api(value="微信习惯",tags={"微信小程序习惯相关操作webapi接口"})
@@ -109,25 +110,46 @@ public class WxHabitCtrl {
 
     @ApiOperation( value = "根据学生id查询所有参与的打卡习惯 ",notes = " " +
             " 返回字段：{" +
-            "    data :  Habit 对象数组 " +
+            "    data :  " +
+            "        {" +
+            "           'circleInfo': {circleId ,circleTitle}, habits :[]" +
+            "        } " +
             "    resultMsg : 'ok' ：成功 ，否则返回错误信息" +
             "    resultCode : '0 : 成功,1 : 小程序code 无效, 2. openId 获取异常 ,3.openId 无效 " +
             "}")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "studentId", value = "学生id", required = true, dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "pageNo", value = "页码", required = true, dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "pageSize", value = "每页数量", required = true, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "studentId", value = "学生id", required = true, dataType = "String", paramType = "query")
     }
     )
     @GetMapping(value="/studentAllHabits")
-    public Map<String,Object> studentAllHabits(String studentId,String pageSize,String pageNo){
-        String pageBegin= String.valueOf ((Integer.parseInt(pageNo) -1)* Integer.parseInt(pageSize));
+    public Map<String,Object> studentAllHabits(String studentId){
+
         HabitQueryParams habitQueryParams= new HabitQueryParams(  null,  null,  null,  null,  null,  null,
                 null,  null,  null,  null,  null,studentId,null,
-                pageSize,  pageNo,  pageBegin);
+                "1000",  "1",  "0");
         List<Habit> list= svr.habitList(habitQueryParams);
+        List<Map<String,Object>> resultlist=new ArrayList<Map<String,Object>>();
+        String nowCircleId="";
+        for(Habit habit : list.stream().sorted(Comparator.comparing(Habit::getCircleId)).collect(Collectors.toList())){
+            if (!habit.getCircleId().equals(nowCircleId)){
+                resultlist.add(new HashMap<String,Object>() {{
+                    put("circleinfo", new HashMap<String,String>(){{
+                        put("circleId", habit.getCircleId());
+                        put("circleTitle", habit.getCircleTitle());
+                    }});
+                    put("habits",new ArrayList<Habit>());
+                }});
+                nowCircleId=habit.getCircleId();
+            }
+        }
+
+        for(Habit habit : list.stream().sorted(Comparator.comparing(Habit::getCircleId)).collect(Collectors.toList())){
+            ((ArrayList)  resultlist.stream().filter( o->  ((Map)o.get("circleinfo")).get("circleId").toString().equals(habit.getCircleId()))
+                    .findFirst().orElse(new HashMap<String,Object>()).get("habits")).add(habit);
+        }
+
         Map map = new HashMap();
-        map.put("data", list );
+        map.put("data", resultlist );
         map.put("resultMsg", "ok");
         map.put("resultCode", "0");
         return map;
@@ -143,18 +165,17 @@ public class WxHabitCtrl {
             "    resultCode : '0 : 成功,1 : 小程序code 无效, 2. openId 获取异常 ,3.openId 无效 " +
             "}")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "studentId", value = "学生id", required = true, dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "pageNo", value = "页码", required = true, dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "pageSize", value = "每页数量", required = true, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "studentId", value = "学生id", required = true, dataType = "String", paramType = "query")
     }
     )
     @GetMapping(value="/studentTodayHabits")
-    public Map<String,Object> studentTodayHabits(String studentId,String pageSize,String pageNo){
-        String pageBegin= String.valueOf ((Integer.parseInt(pageNo) -1)* Integer.parseInt(pageSize));
+    public Map<String,Object> studentTodayHabits(String studentId){
+
         HabitQueryParams habitQueryParams= new HabitQueryParams(  null,  null,  null,  null,  null,  null,
                 null,  null,  null,  null,  null,null ,studentId,
-                pageSize,  pageNo,  pageBegin);
+               "1000",  "1",  "0");
         List<Habit> list= svr.habitList(habitQueryParams);
+
         Map map = new HashMap();
         map.put("data", list );
         map.put("resultMsg", "ok");

@@ -1,6 +1,5 @@
 package com.yxp.eguodu.wxcontroller.business;
 
-import com.yxp.eguodu.common.queryparams.CircleQueryParams;
 import com.yxp.eguodu.entity.Circle;
 import com.yxp.eguodu.service.business.CircleService;
 import io.swagger.annotations.Api;
@@ -231,18 +230,20 @@ public class WxCircleCtrl {
             "       schoolName: 来源学校," +
             "        joinStudents: 参加人数 ," +
             "       totalputCards: 总打卡次数," +
-            "       information : 最后一次通知 " +
+            "       information : 最后一次通知," +
+            "       haveJoined :  本人是否已加入该圈，0，否，1.是 " +
             "     }" +
             "    resultMsg : 'ok' ：成功 ，否则返回错误信息" +
             "    resultCode : '0 : 成功,1 : 小程序code 无效, 2. openId 获取异常 ,3.openId 无效 " +
             "}")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "circleId", value = "圈子id", required = true, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "studentId", value = "学生id", required = true, dataType = "String", paramType = "query"),
     }
     )
     @GetMapping(value="/circleMsgById")
-    public Map<String,Object> circleMsgById(String circleId){
-       List<Map<String,Object>> list= svr.circleMsgById(circleId);
+    public Map<String,Object> circleMsgById(String circleId,String studentId){
+       List<Map<String,Object>> list= svr.circleMsgById(circleId,studentId);
         Map map = new HashMap();
         map.put("data", list.stream().findFirst().orElse(null) );
         map.put("resultMsg", "ok");

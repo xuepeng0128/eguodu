@@ -220,7 +220,8 @@ public interface CircleMapper {
    // 根据id 查询
    @Select("<script>" +
            " select circleTitle,subTitle,picUrl,c.schoolId, sc.schoolName ,ifnull(cs.joinStudents,0) as joinStudents ," +
-           " ifnull(ssp.totalputCards,0) as totalputCards,ifnull(notice.memo,'') as information  from circle c \n" +
+           " ifnull(ssp.totalputCards,0) as totalputCards,ifnull(notice.memo,'') as information, " +
+           "  case when joinc.circleId is null then 0 else 1 end as haveJoined  from circle c \n" +
            "inner join " +
            "( select circleId, count(*) as joinStudents from  circlestudent group by circleId)  cs on c.circleId =cs.circleId " +
            "left outer JOIN school sc on c.schoolId =sc.schoolId left OUTER join  " +
@@ -232,15 +233,19 @@ public interface CircleMapper {
            ")ssp on c.circleId=ssp.circleId " +
            " left outer join ( " +
            "  select sendCircleIds,memo from teachernotice where sendCircleIds='${circleId}' ORDER BY buildDate desc limit 1 " +
-           ")notice  on c.circleId=notice.sendCircleIds " +
+           ")notice  on c.circleId=notice.sendCircleIds  left outer join (" +
+           "   select circleId,studentId from circlestudent where circleId='${circleid}' and studentId='${studentId}' and leavetime is not null " +
+           ") joinc on c.circleId= joinc.circleId" +
            "where c.circleId='${circleId}' " +
            "</script>")
-    public List<Map<String,Object>> circleMsgById(@Param("circleId") String circleId);
+    public List<Map<String,Object>> circleMsgById(@Param("circleId") String circleId,@Param("studentId") String studentId);
 
 
    // 根据id获取圈子简介
-
-
+   @Select("<script>" +
+           " select memo from circle where circleId='${circleId}'" +
+           "</script>")
+   public List<Map<String,Object>> circleMemo(@Param("circleId") String circleId);
 
 
 

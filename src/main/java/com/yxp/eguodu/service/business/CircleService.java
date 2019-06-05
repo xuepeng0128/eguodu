@@ -58,7 +58,7 @@ public interface CircleService {
 
 
     // 根据id 查询根据圈子ID 获取圈子内容（标题、缩略图、副标题、来源学校、参加人数、总打卡次数、通知、当前主题信息【缩略图、标题、副标题】）
-    public List<Map<String,Object>> circleMsgById(@Param("circleId") String circleId);
+    public List<Map<String,Object>> circleMsgById( String circleId,String studentId );
 
 
 }
