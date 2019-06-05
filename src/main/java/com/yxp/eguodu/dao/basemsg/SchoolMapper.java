@@ -11,7 +11,7 @@ import java.util.Map;
 public interface SchoolMapper {
 
     @Select("<script>" +
-            "SELECT s.schoolId,s.schoolName , s.provinceId,p.nationName as proviceName,s.cityId,c.nationName as cityName , s.districtId ,d.nationName as districtName," +
+            "SELECT s.schoolId,s.schoolName , s.provinceId,p.nationName as provinceName,s.cityId,c.nationName as cityName , s.districtId ,d.nationName as districtName," +
             " s.longitude,s.latitude,s.address,s.schoolStyle,s.saleManId,e.employeeName as saleManName, s.regTime,s.train,s.tel,s.linkMan," +
             " ifnull(cla.classesNum,0) as classesNum , ifnull(cir.circleNum,0) as circleNum ,ifnull(sut.studentNum,0) as studentNum ," +
             "ifnull(tea.teacherNum,0) as teacherNum " +
@@ -166,7 +166,7 @@ public interface SchoolMapper {
     @Insert("<script>" +
             " insert into school(schoolId,schoolName,provinceId,cityId,districtId,longitude,latitude,tel,linkman,address,schoolStyle,saleManId,regTime,train)" +
             " values (func_makeBusinessId('school', case when ${train}= false then  '0' else '1' end),#{schoolName},#{provinceId},#{cityId}," +
-            " #{districtId},#{longitude},#{latitude},#{tel},#{linkman},#{address},#{schoolStyle},#{saleManId},now(),#{train})" +
+            " #{districtId},#{longitude},#{latitude},#{tel},#{linkMan},#{address},#{schoolStyle},#{saleManId},now(),#{train})" +
             "</script>")
     public int insertSchool(School school);
 

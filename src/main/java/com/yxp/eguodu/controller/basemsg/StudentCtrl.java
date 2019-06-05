@@ -30,13 +30,14 @@ public class StudentCtrl {
     @GetMapping(value="/studentList")
     public List<Map<String ,Object>> studentList(String studentId,String studentPaperId, String studentName, String schoolId, String schoolName,
                                                   String pageSize, String pageNo, String pageBegin){
+        String pageBeginc= String.valueOf ((Integer.parseInt(pageNo) -1)* Integer.parseInt(pageSize));
         StudentQueryParams queryParams=new StudentQueryParams( studentId, studentPaperId,
                 studentName,
                 schoolId,
                 schoolName,
                 pageSize,
                 pageNo,
-                pageBegin);
+                pageBeginc);
         return svr.studentList(queryParams);
     }
 

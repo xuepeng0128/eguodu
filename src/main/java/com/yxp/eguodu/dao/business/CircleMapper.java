@@ -217,6 +217,31 @@ public interface CircleMapper {
 
 
 
+   // 根据id 查询
+   @Select("<script>" +
+           " select circleTitle,subTitle,picUrl,c.schoolId, sc.schoolName ,ifnull(cs.joinStudents,0) as joinStudents ," +
+           " ifnull(ssp.totalputCards,0) as totalputCards,ifnull(notice.memo,'') as information  from circle c \n" +
+           "inner join " +
+           "( select circleId, count(*) as joinStudents from  circlestudent group by circleId)  cs on c.circleId =cs.circleId " +
+           "left outer JOIN school sc on c.schoolId =sc.schoolId left OUTER join  " +
+           "( " +
+           "  select '${circleId}' as circleId,  count(*) as totalputCards  from  " +
+           "     ( " +
+           "          select * from studentputcard where putCardTime is not null  " +
+           "     ) sp inner join habit ha on sp.habitId=ha.habitId inner join circle cir on ha.circleId=cir.circleId where cir.circleId='${circleId}' " +
+           ")ssp on c.circleId=ssp.circleId " +
+           " left outer join ( " +
+           "  select sendCircleIds,memo from teachernotice where sendCircleIds='${circleId}' ORDER BY buildDate desc limit 1 " +
+           ")notice  on c.circleId=notice.sendCircleIds " +
+           "where c.circleId='${circleId}' " +
+           "</script>")
+    public List<Map<String,Object>> circleMsgById(@Param("circleId") String circleId);
+
+
+   // 根据id获取圈子简介
+
+
+
 
 
 }

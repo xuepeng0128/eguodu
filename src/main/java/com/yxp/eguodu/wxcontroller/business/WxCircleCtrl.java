@@ -221,4 +221,39 @@ public class WxCircleCtrl {
             return new HashMap<String,Object>(){{put("resultMsg","fail") ;}} ;
 
     }
+
+    @ApiOperation( value = " 根据id 查询根据圈子ID 获取圈子内容（标题、缩略图、副标题、来源学校、参加人数、总打卡次数、通知、当前主题信息【缩略图、标题、副标题】）",notes = " " +
+            " 返回字段：{" +
+            "    data :{" +
+            "       circleTitle: 标题," +
+            "       subTitle; 副标题," +
+            "       picUrl:  缩略图," +
+            "       schoolName: 来源学校," +
+            "        joinStudents: 参加人数 ," +
+            "       totalputCards: 总打卡次数," +
+            "       information : 最后一次通知 " +
+            "     }" +
+            "    resultMsg : 'ok' ：成功 ，否则返回错误信息" +
+            "    resultCode : '0 : 成功,1 : 小程序code 无效, 2. openId 获取异常 ,3.openId 无效 " +
+            "}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "circleId", value = "圈子id", required = true, dataType = "String", paramType = "query"),
+    }
+    )
+    @GetMapping(value="/circleMsgById")
+    public Map<String,Object> circleMsgById(String circleId){
+       List<Map<String,Object>> list= svr.circleMsgById(circleId);
+        Map map = new HashMap();
+        map.put("data", list.stream().findFirst().orElse(null) );
+        map.put("resultMsg", "ok");
+        map.put("resultCode","0");;
+        return map;
+    }
+
+
+
+
+
+
+
 }
