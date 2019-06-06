@@ -1,10 +1,7 @@
 package com.yxp.eguodu.dao.business;
 
 import com.yxp.eguodu.common.queryparams.HabitQueryParams;
-import com.yxp.eguodu.entity.Habit;
-import com.yxp.eguodu.entity.HabitExam;
-import com.yxp.eguodu.entity.HabitStudent;
-import com.yxp.eguodu.entity.StudentPutCard;
+import com.yxp.eguodu.entity.*;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -207,7 +204,7 @@ public interface HabitMapper {
            "                                    end " +
            "  where id=#{id}  " +
            "</script>")
-    public int studentPutCardSetFinish(StudentPutCard studentPutCard);
+    public int studentPutCardSetFinish(WxPutCard wxPutCard);
 
    // 打卡 2.修改其他值
 
@@ -227,9 +224,10 @@ public interface HabitMapper {
             "                         putCardMemo ='${putCardMemo}', " +
             "                      putCardPicUrls ='${putCardPicUrls}', " +
             "                    putCardaudioUrls ='${putCardaudioUrls}', " +
-            "                    putCardvideoUrls ='${putCardvideoUrls}'   " +
+            "                    putCardvideoUrls ='${putCardvideoUrls}',  " +
+            "                    longitude=${longitude},latitude=${latitude} " +
             "  where id=${id}  " +
             "</script>")
-    public int studentPutCart(StudentPutCard studentPutCard);
+    public int studentPutCart(WxPutCard wxPutCard);
 
 }

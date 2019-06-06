@@ -104,4 +104,9 @@ public class CircleServiceImp implements CircleService {
     public List<Map<String, Object>> circleMsgById(String circleId,String studentId) {
         return mapper.circleMsgById(circleId,studentId);
     }
+
+    @Override
+    public List<Map<String, Object>> circleMemo(String circleId) {
+        return mapper.circleMemo(circleId);
+    }
 }

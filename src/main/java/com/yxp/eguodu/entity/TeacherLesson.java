@@ -15,11 +15,15 @@ public class TeacherLesson {
    private String   memo;
    private int   guoduCoin;
    private String makeTeacherId;
-   private String makeTeackerName;
+   private String makeTeacherName;
    private Date makeTime;
    private String schoolId;
    private String schoolName;
    @DateTimeFormat(pattern = "yyyy-MM-dd")
    private Date publishTime;
-   private int habitNum;
+   private String habitId;
+   private String  habitName;
+   private String circleId;
+   private String circleTitle;
+   private String picUrl;
 }

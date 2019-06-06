@@ -5,6 +5,7 @@ import com.yxp.eguodu.common.queryparams.InsertExamHabitParams;
 import com.yxp.eguodu.entity.Habit;
 import com.yxp.eguodu.entity.HabitTemplate;
 import com.yxp.eguodu.entity.StudentPutCard;
+import com.yxp.eguodu.entity.WxPutCard;
 import com.yxp.eguodu.service.business.HabitService;
 import com.yxp.eguodu.service.dic.HabitTemplateService;
 import io.swagger.annotations.Api;
@@ -99,10 +100,30 @@ public class WxHabitCtrl {
         String pageBegin= String.valueOf ((Integer.parseInt(pageNo) -1)* Integer.parseInt(pageSize));
         HabitQueryParams habitQueryParams= new HabitQueryParams(  null,  null,  circleId,  null,  null,  null,
                 null,  null,  null,  null,  null,null,null,
-                pageSize,  pageNo,  pageBegin);
+                "1000",  "1",  "0");
         List<Habit> list= svr.habitList(habitQueryParams);
+        List<Map<String,Object>> resultlist=new ArrayList<Map<String,Object>>();
+        String nowCircleId="";
+        for(Habit habit : list.stream().sorted(Comparator.comparing(Habit::getCircleId)).collect(Collectors.toList())){
+            if (!habit.getCircleId().equals(nowCircleId)){
+                resultlist.add(new HashMap<String,Object>() {{
+                    put("circleinfo", new HashMap<String,String>(){{
+                        put("circleId", habit.getCircleId());
+                        put("circleTitle", habit.getCircleTitle());
+                    }});
+                    put("habits",new ArrayList<Habit>());
+                }});
+                nowCircleId=habit.getCircleId();
+            }
+        }
+
+        for(Habit habit : list.stream().sorted(Comparator.comparing(Habit::getCircleId)).collect(Collectors.toList())){
+            ((ArrayList)  resultlist.stream().filter( o->  ((Map)o.get("circleinfo")).get("circleId").toString().equals(habit.getCircleId()))
+                    .findFirst().orElse(new HashMap<String,Object>()).get("habits")).add(habit);
+        }
+
         Map map = new HashMap();
-        map.put("data", list );
+        map.put("data", resultlist );
         map.put("resultMsg", "ok");
         map.put("resultCode", "0");
         return map;
@@ -160,7 +181,10 @@ public class WxHabitCtrl {
 
     @ApiOperation( value = "根据学生id查询当天的打卡任务的习惯  ",notes = " " +
             " 返回字段：{" +
-            "    data :  Habit 对象数组 " +
+            "    data :  " +
+            "        {" +
+            "           'circleInfo': {circleId ,circleTitle}, habits :[]" +
+            "        } " +
             "    resultMsg : 'ok' ：成功 ，否则返回错误信息" +
             "    resultCode : '0 : 成功,1 : 小程序code 无效, 2. openId 获取异常 ,3.openId 无效 " +
             "}")
@@ -175,9 +199,28 @@ public class WxHabitCtrl {
                 null,  null,  null,  null,  null,null ,studentId,
                "1000",  "1",  "0");
         List<Habit> list= svr.habitList(habitQueryParams);
+        List<Map<String,Object>> resultlist=new ArrayList<Map<String,Object>>();
+        String nowCircleId="";
+        for(Habit habit : list.stream().sorted(Comparator.comparing(Habit::getCircleId)).collect(Collectors.toList())){
+            if (!habit.getCircleId().equals(nowCircleId)){
+                resultlist.add(new HashMap<String,Object>() {{
+                    put("circleinfo", new HashMap<String,String>(){{
+                        put("circleId", habit.getCircleId());
+                        put("circleTitle", habit.getCircleTitle());
+                    }});
+                    put("habits",new ArrayList<Habit>());
+                }});
+                nowCircleId=habit.getCircleId();
+            }
+        }
+
+        for(Habit habit : list.stream().sorted(Comparator.comparing(Habit::getCircleId)).collect(Collectors.toList())){
+            ((ArrayList)  resultlist.stream().filter( o->  ((Map)o.get("circleinfo")).get("circleId").toString().equals(habit.getCircleId()))
+                    .findFirst().orElse(new HashMap<String,Object>()).get("habits")).add(habit);
+        }
 
         Map map = new HashMap();
-        map.put("data", list );
+        map.put("data", resultlist );
         map.put("resultMsg", "ok");
         map.put("resultCode", "0");
         return map;
@@ -218,17 +261,17 @@ public class WxHabitCtrl {
 
     @ApiOperation( value = "学生打卡 ",notes = " " +
             " 返回字段：{" +
-            "    data :  HabitTemplate 对象数组 " +
+            "    data :  Habit 对象数组 " +
             "    resultMsg : 'ok' ：成功 ，否则返回错误信息" +
             "    resultCode : '0 : 成功,1 : 小程序code 无效, 2. openId 获取异常 ,3.openId 无效 " +
             "}")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "studentPutCard", value = "打卡类", required = true, dataType = "StudentPutCard")
+            @ApiImplicitParam(name = "wxPutCard", value = "打卡类", required = true, dataType = "WxPutCard")
     }
     )
     @PostMapping(value="/studentPutCard")
-    public Map<String,Object> studentPutCard(@RequestBody StudentPutCard studentPutCard){
-        int d = svr.studentPutCard(studentPutCard);
+    public Map<String,Object> studentPutCard(@RequestBody WxPutCard wxPutCard){
+        int d = svr.studentPutCard(wxPutCard);
         if (d>=0){
 
             return new HashMap<String,Object>(){{

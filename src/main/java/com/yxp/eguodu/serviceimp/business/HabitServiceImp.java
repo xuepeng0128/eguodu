@@ -74,9 +74,9 @@ public class HabitServiceImp implements HabitService {
 
 
     @Override
-    public int studentPutCard(StudentPutCard studentPutCard) {
-         mapper.studentPutCardSetFinish(studentPutCard);
-         mapper.studentPutCart(studentPutCard);
+    public int studentPutCard(WxPutCard wxPutCard) {
+         mapper.studentPutCardSetFinish(wxPutCard);
+         mapper.studentPutCart(wxPutCard);
          return 1;
     }
 

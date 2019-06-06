@@ -61,4 +61,6 @@ public interface CircleService {
     public List<Map<String,Object>> circleMsgById( String circleId,String studentId );
 
 
+    // 根据id获取圈子简介
+    public List<Map<String,Object>> circleMemo( String circleId);
 }

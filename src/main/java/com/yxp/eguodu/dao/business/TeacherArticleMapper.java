@@ -104,4 +104,5 @@ public interface TeacherArticleMapper {
             "  insert into teacherarticelhabit(articleId,habitId) values(#{articleId},#{habitId})" +
             "</script>")
     public int publishToHabit(@Param("articleId") String articleId, @Param("habitId") String habitId);
+
 }

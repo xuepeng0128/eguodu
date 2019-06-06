@@ -34,5 +34,6 @@ public class StudentPutCard {
     private boolean        finished;//本次任务是否完成
     private  String finishCompare;//应完成，实际完成关系 'gt' 大于等于, 'lt' 小于等于
     private String remark;//备注
-
+    private float longitude; // 经度
+    private float latitude; //纬度
 }

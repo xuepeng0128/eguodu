@@ -247,14 +247,30 @@ public class WxCircleCtrl {
         Map map = new HashMap();
         map.put("data", list.stream().findFirst().orElse(null) );
         map.put("resultMsg", "ok");
-        map.put("resultCode","0");;
+        map.put("resultCode","0");
         return map;
     }
 
-
-
-
-
-
+    @ApiOperation( value = " 根据id 查询根据圈子简介",notes = " " +
+            " 返回字段：{" +
+            "    data :{" +
+            "      memo :  简介 " +
+            "     }" +
+            "    resultMsg : 'ok' ：成功 ，否则返回错误信息" +
+            "    resultCode : '0 : 成功,1 : 小程序code 无效, 2. openId 获取异常 ,3.openId 无效 " +
+            "}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "circleId", value = "圈子id", required = true, dataType = "String", paramType = "query"),
+    }
+    )
+    @GetMapping(value="/circleMemo")
+    public Map<String,Object> circleMemo(String circleId){
+        List<Map<String,Object>> list= svr.circleMemo(circleId);
+        Map map = new HashMap();
+        map.put("data", list.stream().findFirst().orElse(null) );
+        map.put("resultMsg", "ok");
+        map.put("resultCode","0");
+        return map;
+    }
 
 }

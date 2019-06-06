@@ -72,6 +72,12 @@ public class TeacherLessonServiceImp implements TeacherLessonService {
 
     @Override
     public int publishToHabit(String lessonId, String habitId) {
+        mapper.setPublishTime(lessonId);
         return mapper.publishToHabit(lessonId,habitId);
+    }
+
+    @Override
+    public List<Map<String, Object>> teacherLessonByCircleId(String circleId, String pageSize, String pageBegin) {
+        return mapper.teacherLessonByCircleId(circleId,pageSize,pageBegin);
     }
 }

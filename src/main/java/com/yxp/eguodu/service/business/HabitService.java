@@ -1,10 +1,8 @@
 package com.yxp.eguodu.service.business;
 
 import com.yxp.eguodu.common.queryparams.HabitQueryParams;
-import com.yxp.eguodu.entity.Habit;
-import com.yxp.eguodu.entity.HabitExam;
-import com.yxp.eguodu.entity.HabitStudent;
-import com.yxp.eguodu.entity.StudentPutCard;
+import com.yxp.eguodu.entity.*;
+
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +22,6 @@ public interface HabitService {
     // 学生准备打卡，获取打卡信息
     public List<StudentPutCard>  currentStudentPrepareHabitPutCard( String habitId,  String studentId);
 
-    public int studentPutCard(StudentPutCard studentPutCard);
+    public int studentPutCard(WxPutCard wxPutCard);
 
 }

@@ -28,4 +28,9 @@ public interface TeacherLessonService {
     public int deleteTeacherLesson(Map<String,Object> paras);
     public int deleteSubTeacherLesson(String lessonId,int lessonNo);
     public int publishToHabit( String lessonId,  String habitId);
+
+
+
+    // 根据circleid 获取课程
+    public List<Map<String,Object>> teacherLessonByCircleId( String circleId , String pageSize,  String pageBegin);
 }
