@@ -233,9 +233,9 @@ public interface CircleMapper {
            ")ssp on c.circleId=ssp.circleId " +
            " left outer join ( " +
            "  select sendCircleIds,memo from teachernotice where sendCircleIds='${circleId}' ORDER BY buildDate desc limit 1 " +
-           ")notice  on c.circleId=notice.sendCircleIds  left outer join (" +
-           "   select circleId,studentId from circlestudent where circleId='${circleid}' and studentId='${studentId}' and leavetime is not null " +
-           ") joinc on c.circleId= joinc.circleId" +
+           ")notice  on c.circleId=notice.sendCircleIds  left outer join ( " +
+           "   select circleId,studentId from circlestudent where circleId='${circleId}' and studentId='${studentId}' and leavetime is  null " +
+           ") joinc on c.circleId= joinc.circleId " +
            "where c.circleId='${circleId}' " +
            "</script>")
     public List<Map<String,Object>> circleMsgById(@Param("circleId") String circleId,@Param("studentId") String studentId);

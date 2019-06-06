@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class WxPutCard {
     private int id;
+    private String studentId; //打卡学生id
     private String putCardMemo; //打卡文字描述
     private String putCardPicUrls;//打卡图片url，逗号分隔
     private String putCardaudioUrls;//打卡音频url，逗号分隔
