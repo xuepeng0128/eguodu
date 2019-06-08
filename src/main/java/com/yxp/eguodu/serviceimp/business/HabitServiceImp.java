@@ -80,9 +80,15 @@ public class HabitServiceImp implements HabitService {
          return 1;
     }
 
+    @Override
+    public List<WxPutCardDiary> putCardDiaryList(String circleId, String pageBegin, String pageSize) {
+        return mapper.putCardDiaryList(circleId,pageBegin,pageSize);
+    }
 
-
-
+    @Override
+    public int agreePutCard(String putCardId, String studentId) {
+        return mapper.agreePutCard(putCardId,studentId);
+    }
 
 
     private List<StudentPutCard> calStudentPutCardPlan(String studentId,HabitExam habitExam, List<Habit> habits){

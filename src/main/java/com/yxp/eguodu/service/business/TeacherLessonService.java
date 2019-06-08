@@ -17,7 +17,7 @@ public interface TeacherLessonService {
     public List<Map<String,Object>> getTeacherLessonByLessonId(String lessonId);
     public List<Map<String,Object>> lessonHabitList(Map<String,Object> paras);
 
-    public List<SubTeacherLesson> subTeacherLessonList(String lessonId);
+    public List<SubTeacherLesson> subTeacherLessonList(String lessonId,String pageBegin,String pageSize);
 
     public int insertTeacherLesson(TeacherLesson teacherLesson);
 
@@ -32,5 +32,15 @@ public interface TeacherLessonService {
 
 
     // 根据circleid 获取课程
-    public List<Map<String,Object>> teacherLessonByCircleId( String circleId , String pageSize,  String pageBegin);
+    public List<Map<String,Object>> teacherLessonByCircleId( String circleId ,String studentId, String pageSize,  String pageBegin);
+
+
+    // 购买课程
+    public int studentBuyLesson( String lessonId, String studentId,  String guoduCoin);
+
+
+
+
+
+
 }

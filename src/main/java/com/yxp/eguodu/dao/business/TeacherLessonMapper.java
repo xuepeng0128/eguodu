@@ -70,8 +70,9 @@ public interface TeacherLessonMapper {
 
     @Select("<script> " +
             " select lessonId,lessonNo,memo,videoUrl,audioUrl,noPay from subteacherlesson where lessonId ='${lessonId}' " +
+            " limit ${pageBegin} , ${pageSize} " +
             "</script>")
-    public List<SubTeacherLesson> subTeacherLessonList(@Param("lessonId") String lessonId);
+    public List<SubTeacherLesson> subTeacherLessonList(@Param("lessonId") String lessonId,@Param("pageBegin") String pageBegin , @Param("pageSize") String pageSize);
 
 
 
@@ -112,14 +113,25 @@ public interface TeacherLessonMapper {
  // 根据circleid 获取课程
 
  @Select("<script>" +
-         " select l.lessonId,lessonTitle,l.memo, l.guoduCoin, makeTeacherId, t.teacherName as makeTeacherName,l.picUrl,l.publishTime from teacherlesson l " +
+         " select l.lessonId,lessonTitle,l.memo, l.guoduCoin, makeTeacherId, t.teacherName as makeTeacherName," +
+         " l.picUrl,l.publishTime , case when sbl.studentId is null then false else true end as haveBuy from teacherlesson l " +
          "inner join teacher t on l.makeTeacherId=t.teacherId and l.schoolId=t.schoolId " +
          "inner join teacherlessonhabit h on l.lessonId=h.lessonId  INNER JOIN " +
-         "habit ha on h.habitId=ha.habitId  " +
+         "habit ha on h.habitId=ha.habitId  left outer join studentbuylesson sbl on l.lessonId=sbl.lessonId and sbl.studentId='${studentId}' " +
          "where ha.circleId='${circleId}' order by l.publishTime desc " +
          " limit ${pageBegin},${pageSize}  " +
          "</script>")
-  public List<Map<String,Object>> teacherLessonByCircleId(@Param("circleId") String circleId ,@Param("pageSize") String pageSize, @Param("pageBegin") String pageBegin);
+  public List<Map<String,Object>> teacherLessonByCircleId(@Param("circleId") String circleId ,@Param("studentId") String studentId,@Param("pageSize") String pageSize, @Param("pageBegin") String pageBegin);
+
+
+// 购买课程
+ @Insert("<script>" +
+         " insert into studentbuylesson(lessonId,studentId,spendGuoduCoin,buyTime) " +
+         " values( '${lessonId}','${studentId}',${spendGuoduCoin},now())" +
+         "</script>")
+ public int studentBuyLesson(@Param("lessonId") String lessonId,@Param("studentId") String studentId, @Param("guoduCoin") String guoduCoin);
+
+
 
 
 

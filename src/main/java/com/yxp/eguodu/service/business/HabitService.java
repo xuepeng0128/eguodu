@@ -24,4 +24,10 @@ public interface HabitService {
 
     public int studentPutCard(WxPutCard wxPutCard);
 
+
+    // 圈子日记
+    public List<WxPutCardDiary> putCardDiaryList(String circleId, String pageBegin,String pageSize);
+
+    // 打卡点赞
+    public int agreePutCard( String putCardId , String studentId);
 }

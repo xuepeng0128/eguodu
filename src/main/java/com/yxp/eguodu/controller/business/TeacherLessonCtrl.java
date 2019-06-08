@@ -39,7 +39,7 @@ public class TeacherLessonCtrl {
 
     @GetMapping(value="/subTeacherLessonList")
     public List<SubTeacherLesson> subTeacherLessonList(String lessonId){
-        List<SubTeacherLesson> slist =svr.subTeacherLessonList(lessonId);
+        List<SubTeacherLesson> slist =svr.subTeacherLessonList(lessonId,"0","1000");
         return slist;
     }
     @PostMapping(value="/saveTeacherLesson")

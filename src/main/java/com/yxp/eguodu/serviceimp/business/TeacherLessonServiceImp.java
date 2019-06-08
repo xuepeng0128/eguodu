@@ -36,8 +36,8 @@ public class TeacherLessonServiceImp implements TeacherLessonService {
     }
 
     @Override
-    public List<SubTeacherLesson> subTeacherLessonList(String lessonId) {
-        return mapper.subTeacherLessonList(lessonId);
+    public List<SubTeacherLesson> subTeacherLessonList(String lessonId,String pageBegin,String pageSize) {
+        return mapper.subTeacherLessonList(lessonId,pageBegin,pageSize);
     }
 
     @Override
@@ -77,7 +77,12 @@ public class TeacherLessonServiceImp implements TeacherLessonService {
     }
 
     @Override
-    public List<Map<String, Object>> teacherLessonByCircleId(String circleId, String pageSize, String pageBegin) {
-        return mapper.teacherLessonByCircleId(circleId,pageSize,pageBegin);
+    public List<Map<String, Object>> teacherLessonByCircleId(String circleId,String studentId, String pageSize, String pageBegin) {
+        return mapper.teacherLessonByCircleId(circleId,studentId,pageSize,pageBegin);
+    }
+
+    @Override
+    public int studentBuyLesson(String lessonId, String studentId, String guoduCoin) {
+        return mapper.studentBuyLesson(lessonId,studentId,guoduCoin);
     }
 }

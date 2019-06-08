@@ -103,7 +103,9 @@ public interface StudentMapper {
 
 
     @Update("update student set studentPaperId='${studentPaperId}',studentName='${studentName}',tel='${tel}'," +
-            " address='${address}', sex=#{sex},birthday=#{birthday},schoolId='${schoolId}',wxcode='${wxcode}' where id= ${id}")
+            " address='${address}', sex=${sex},birthday='${birthday}',schoolId='${schoolId}',wxcode='${wxcode}' ,headimg= '${headimg}'," +
+            " nickname='${nickname}', relationshipId='${relationShipId}' " +
+            " where studentId= '${studentId}'")
     public int updateStudent(Student student);
 
 
@@ -112,4 +114,18 @@ public interface StudentMapper {
 
     @Delete("delete from student where id =${id}")
     public int deleteStudent(@Param("id") String id);
+
+
+    // 学生解绑微信
+    @Update("<script>" +
+            " update student set wxcode=replace( replace(wxcode,'${openId},','') , '${openId}','') where studentId='${studentId}' " +
+            "</script>")
+    public int studentUnbindWx(@Param("openId") String openId,@Param("studentId") String studentId);
+
+    // 根据学生id 获取邀请码
+    @Select("<script>" +
+            " select inviteCode from student where studentId='${studentId}' order by id desc" +
+            "</script>")
+    public List<Map<String,Object>> studentInviteCodeById(@Param("studentId") String studentId);
+
 }

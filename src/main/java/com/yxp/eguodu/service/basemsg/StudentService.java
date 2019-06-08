@@ -16,4 +16,7 @@ public interface StudentService {
     public int insertStudent(Student student);
     public int updateStudent(Student student);
     public int deleteStudent(String id);
+
+    // 学生解绑微信
+    public String  studentUnbindWx( String openId, String studentId);
 }

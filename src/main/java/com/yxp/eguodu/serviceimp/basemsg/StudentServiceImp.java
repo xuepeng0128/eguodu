@@ -63,4 +63,18 @@ public class StudentServiceImp implements StudentService {
     public int deleteStudent(String id) {
         return mapper.deleteStudent(id);
     }
+
+    @Override
+    public String studentUnbindWx(String openId, String studentId) {
+        mapper.studentUnbindWx(openId,studentId);
+        List<Map<String,Object>> list = mapper.studentInviteCodeById(studentId);
+        if(list != null && list.size()>0)
+        {
+            return  list.get(0).get("inviteCode").toString();
+        }else{
+            return "";
+        }
+    }
+
+
 }

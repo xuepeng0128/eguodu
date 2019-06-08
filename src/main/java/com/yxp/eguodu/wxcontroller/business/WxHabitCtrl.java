@@ -2,10 +2,7 @@ package com.yxp.eguodu.wxcontroller.business;
 
 import com.yxp.eguodu.common.queryparams.HabitQueryParams;
 import com.yxp.eguodu.common.queryparams.InsertExamHabitParams;
-import com.yxp.eguodu.entity.Habit;
-import com.yxp.eguodu.entity.HabitTemplate;
-import com.yxp.eguodu.entity.StudentPutCard;
-import com.yxp.eguodu.entity.WxPutCard;
+import com.yxp.eguodu.entity.*;
 import com.yxp.eguodu.service.business.HabitService;
 import com.yxp.eguodu.service.dic.HabitTemplateService;
 import io.swagger.annotations.Api;
@@ -252,16 +249,8 @@ public class WxHabitCtrl {
     }
 
 
-
-
-
-
-
-
-
     @ApiOperation( value = "学生打卡 ",notes = " " +
             " 返回字段：{" +
-            "    data :  Habit 对象数组 " +
             "    resultMsg : 'ok' ：成功 ，否则返回错误信息" +
             "    resultCode : '0 : 成功,1 : 小程序code 无效, 2. openId 获取异常 ,3.openId 无效 " +
             "}")
@@ -295,6 +284,74 @@ public class WxHabitCtrl {
 
 
 
+    @ApiOperation( value = "圈子日记 ",notes = " " +
+            " 返回字段：{" +
+            "    data :  WxPutCardDiary 对象数组 " +
+            "    resultMsg : 'ok' ：成功 ，否则返回错误信息" +
+            "    resultCode : '0 : 成功,1 : 小程序code 无效, 2. openId 获取异常 ,3.openId 无效 " +
+            "}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "circleId", value = "圈子id", required = true, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "pageSize", value = "每页数", required = true, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "pageNo", value = "页码", required = true, dataType = "String", paramType = "query"),
+    }
+    )
+    @GetMapping(value="/putCardDiaryList")
+    public Map<String,Object> putCardDiaryList(String circleId,String pageSize,String pageNo){
+        String pageBegin= String.valueOf ((Integer.parseInt(pageNo) -1)* Integer.parseInt(pageSize));
+        List<WxPutCardDiary> list = svr.putCardDiaryList(circleId,pageBegin,pageSize);
+
+        if(list != null && list.size()>0){
+            for(WxPutCardDiary d : list){
+                if (!d.getAgrees().equals(""))
+                   d.setZans(d.getAgrees().split(","));
+                 d.setAgrees("");
+            }
+        }
+
+
+        Map map = new HashMap();
+        map.put("data", list );
+        map.put("resultMsg", "ok");
+        map.put("resultCode", "0");
+        return map;
+
+    }
+
+
+
+    @ApiOperation( value = "学生点赞  ",notes = " " +
+            " 返回字段：{" +
+            "    resultMsg : 'ok' ：成功 ，否则返回错误信息" +
+            "    resultCode : '0 : 成功,1 : 小程序code 无效, 2. openId 获取异常 ,3.openId 无效 " +
+            "}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "putCardId", value = "打卡 的 id （打卡表的 id）", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "studentId", value = "点赞学生id", required = true, dataType = "String"),
+    }
+    )
+    @GetMapping(value="/agreePutCard")
+    public Map<String,Object> agreePutCard(String putCardId , String studentId){
+        int d = svr.agreePutCard(putCardId,studentId);
+        if (d>=0){
+
+            return new HashMap<String,Object>(){{
+                put("resultMsg","ok") ;
+                put("resultCode","0");
+            }} ;
+
+
+        }
+
+        else{
+            return new HashMap<String,Object>(){{
+                put("resultMsg","fail") ;
+                put("resultCode","9");
+            }} ;
+        }
+
+
+    }
 
 
 
