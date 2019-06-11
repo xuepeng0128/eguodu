@@ -25,7 +25,7 @@ public class StudentServiceImp implements StudentService {
     }
 
     @Override
-    public Student bindStudentInviteCode(String inviteCode, String openId) {
+    public Student bindStudentInviteCode(String inviteCode, String openId,String nickname,String headimg) {
         List<Student> students= mapper.studentListByInviteCode(inviteCode);
         if(students == null || students.size()==0){
             return null;
@@ -33,7 +33,7 @@ public class StudentServiceImp implements StudentService {
 
         else {
             Student student= students.get(0);
-            mapper.addStudentOpenId(student.getId(),openId);
+            mapper.addStudentOpenId(student.getId(),openId,headimg,nickname);
             return student;
         }
     }

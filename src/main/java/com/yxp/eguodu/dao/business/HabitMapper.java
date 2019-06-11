@@ -237,45 +237,75 @@ public interface HabitMapper {
     // 圈子日记
 
     @Select("<script>" +
-            "     select pc.id, stu.nickname, stu.headimg,stu.sex, putCardaudioUrls,putCardMemo,putCardPicUrls,putCardvideoUrls,putCardTime ,\n" +
-            "         case when mm.maxPutCardTime is null then 0 else \n" +
-            "             TimeStampDiff(DAY,mm.minPutCardTime,mm.maxPutCardTime) +1\n" +
-            "         end  as holdDays ,\n" +
-            "         ifnull(l.lessonTitle,'') as lessonTitle ,\n" +
-            "         ifnull(pag.agrees,'') as agrees \n" +
-            "         from (\n" +
-            "                 select pi.* from  \n" +
-            "                   (SELECT * from  studentputcard  where putCardTime is not null)  pi inner join \n" +
-            "                   (\n" +
-            "                      SELECT habitid,studentId, max(putCardTime) as maxPutCardTime from studentputcard GROUP BY habitId ,studentId \n" +
-            "                  <![CDATA[     having  DATEDIFF(now(),max(putCardTime))>=0 ]]> " +
-            "                    )px on pi.habitid =px.habitid and pi.studentid =px.studentId and pi.putcardTime=px.maxPutCardTime\n" +
-            "              ) pc\n" +
-            "\n" +
-            " \n" +
-            "           inner join student stu on pc.studentId =stu.studentId and stu.endTime is null \n" +
-            "           inner join habit h on pc.habitId=h.habitId \n" +
-            "         left outer join  (\n" +
-            "                 select studentId , habitId, max(putCardTime) as maxPutCardTime ,\n" +
-            "                                             min(putCardTime) as minPutCardTime \n" +
-            "                  from studentputcard group by studentId,habitId\n" +
-            "                  )mm on pc.habitId=mm.habitId and pc.studentId=mm.studentId \n" +
-            "         left outer join (  \n" +
-            "               select tlh.habitid, tl.lessonTitle from  teacherlessonhabit tlh  inner join teacherlesson tl on tlh.lessonId=tl.lessonId\n" +
-            "              )l on pc.habitId=l.habitid \n" +
-            "         left outer join \n" +
-            "            (\n" +
-            "             select putcardId, GROUP_CONCAT( DISTINCT s.nickname) as agrees from \n" +
-            "\n" +
-            "              putcardagree pa inner join  student s on pa.studentId=s.studentId\n" +
-            "              group by putcardId     \n" +
-            "             )pag on pc.id=pag.putcardId \n" +
-            "                                \n" +
-            "         where h.circleId='${circleId}'\n" +
+            "     select pc.id, stu.nickname, stu.headimg,stu.sex, putCardaudioUrls,putCardMemo,putCardPicUrls,putCardvideoUrls,putCardTime ," +
+            "         case when mm.maxPutCardTime is null then 0 else " +
+            "             TimeStampDiff(DAY,mm.minPutCardTime,mm.maxPutCardTime) +1" +
+            "         end  as holdDays ," +
+            "         ifnull(l.lessonTitle,'') as lessonTitle ," +
+            "         ifnull(pag.agrees,'') as agrees " +
+            "         from (" +
+            "                 select pi.* from  " +
+            "                   (SELECT * from  studentputcard  where putCardTime is not null)  pi " +
+//            "                    inner join " +
+//            "                   (" +
+//            "                      SELECT habitid,studentId, max(putCardTime) as maxPutCardTime from studentputcard GROUP BY habitId ,studentId " +
+//            "                  <![CDATA[     having  DATEDIFF(now(),max(putCardTime))>=0 ]]> " +
+//            "                    )px on pi.habitid =px.habitid and pi.studentid =px.studentId and pi.putcardTime=px.maxPutCardTime" +
+            "              ) pc" +
+            "" +
+            " " +
+            "           inner join student stu on pc.studentId =stu.studentId and stu.endTime is null " +
+            "           inner join habit h on pc.habitId=h.habitId " +
+            "         left outer join  (" +
+            "                 select studentId , habitId, max(putCardTime) as maxPutCardTime ," +
+            "                                             min(putCardTime) as minPutCardTime " +
+            "                  from studentputcard group by studentId,habitId" +
+            "                  )mm on pc.habitId=mm.habitId and pc.studentId=mm.studentId " +
+            "         left outer join (  " +
+            "               select tlh.habitid, tl.lessonTitle from  teacherlessonhabit tlh  inner join teacherlesson tl on tlh.lessonId=tl.lessonId" +
+            "              )l on pc.habitId=l.habitid " +
+            "         left outer join " +
+            "            (" +
+            "             select putcardId, GROUP_CONCAT( DISTINCT s.nickname) as agrees from " +
+            "" +
+            "              putcardagree pa inner join  student s on pa.studentId=s.studentId" +
+            "              group by putcardId     " +
+            "             )pag on pc.id=pag.putcardId " +
+            "                                " +
+            "         where 1=1" +
+            " <if test='circleId != null and circleId !=\"\"'>" +
+            "    and h.circleId='${circleId}'" +
+            " </if >" +
+            " <if test='longitude != null and longitude !=\"\" and latitude != null and latitude !=\"\"'>" +
+            " and  longitude is not null and  latitude is not null  " +
+            " and    ROUND(" +
+            "        6378.138 * 2 * ASIN(" +
+            "            SQRT(" +
+            "                POW(" +
+            "                    SIN(" +
+            "                        (" +
+            "                            ${latitude} * PI() / 180 - latitude * PI() / 180" +
+            "                        ) / 2" +
+            "                    )," +
+            "                    2" +
+            "                ) + COS(${latitude} * PI() / 180) * COS(latitude * PI() / 180) * POW(" +
+            "                    SIN(" +
+            "                        (" +
+            "                            ${longitude} * PI() / 180 - longitude * PI() / 180" +
+            "                        ) / 2" +
+            "                    )," +
+            "                    2" +
+            "                )" +
+            "            )" +
+            "        ) * 1000" +
+            " <![CDATA[   ) <=8000  ]]>" +
+            " </if>" +
             "         order by mm.maxPutCardTime desc   " +
             "         limit ${pageBegin},${pageSize} " +
             "</script>")
-    public List<WxPutCardDiary> putCardDiaryList(@Param("circleId") String circleId, @Param("pageBegin") String pageBegin,@Param("pageSize") String pageSize);
+    public List<WxPutCardDiary> putCardDiaryList(@Param("circleId") String circleId,@Param("longitude") String longitude ,
+                                                 @Param("latitude") String latitude, @Param("pageBegin") String pageBegin,
+                                                 @Param("pageSize") String pageSize);
 
 
     // 打卡点赞
@@ -283,4 +313,12 @@ public interface HabitMapper {
             "  insert into putcardagree(putCardId,studentId) values(${putCardId},'${studentId}')" +
             "</script>")
     public int agreePutCard(@Param("putCardId") String putCardId ,@Param("studentId") String studentId);
+
+
+
+
+
+
+
+
 }

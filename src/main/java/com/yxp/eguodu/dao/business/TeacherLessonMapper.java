@@ -127,7 +127,7 @@ public interface TeacherLessonMapper {
 // 购买课程
  @Insert("<script>" +
          " insert into studentbuylesson(lessonId,studentId,spendGuoduCoin,buyTime) " +
-         " values( '${lessonId}','${studentId}',${spendGuoduCoin},now())" +
+         " values( '${lessonId}','${studentId}',${guoduCoin},now())" +
          "</script>")
  public int studentBuyLesson(@Param("lessonId") String lessonId,@Param("studentId") String studentId, @Param("guoduCoin") String guoduCoin);
 

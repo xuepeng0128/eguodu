@@ -9,7 +9,7 @@ import java.util.Map;
 public interface StudentService {
     public List<Map<String,Object>> studentList(StudentQueryParams paras);
     public List<Student>  studentListByOpenId( String openId);
-    public Student bindStudentInviteCode( String inviteCode,String openId);
+    public Student bindStudentInviteCode( String inviteCode,String openId,String nickname,String headimg);
     public List<Map<String,Object>> studentListTotal(StudentQueryParams paras);
 
     public int groupInsertStudents(List<Student> students);

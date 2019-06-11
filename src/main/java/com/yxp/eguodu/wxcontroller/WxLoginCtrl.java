@@ -161,7 +161,7 @@ public class WxLoginCtrl {
     }
     )
     @GetMapping(value="/studentInviteCodeBind")
-    public Map<String,Object> studentInviteCodeBind( String openId,String inviteCode){
+    public Map<String,Object> studentInviteCodeBind( String openId,String inviteCode,String nickname ,String headimg){
         Map map = new HashMap();
         //登录凭证不能为空
         if (openId == null || openId.length() == 0) {
@@ -169,7 +169,7 @@ public class WxLoginCtrl {
             map.put("resultCode","3");
             return map;
         }
-        Student student= ssvr.bindStudentInviteCode(inviteCode,openId);
+        Student student= ssvr.bindStudentInviteCode(inviteCode,openId,nickname,headimg);
         map.put("data", student );
         map.put("resultMsg", student == null ? "fail" :"ok");
         map.put("resultCode","0");

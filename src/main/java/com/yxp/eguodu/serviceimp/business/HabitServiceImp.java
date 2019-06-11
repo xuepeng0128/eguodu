@@ -81,8 +81,10 @@ public class HabitServiceImp implements HabitService {
     }
 
     @Override
-    public List<WxPutCardDiary> putCardDiaryList(String circleId, String pageBegin, String pageSize) {
-        return mapper.putCardDiaryList(circleId,pageBegin,pageSize);
+    public List<WxPutCardDiary> putCardDiaryList(String circleId,String longitude ,
+                                                 String latitude , String pageBegin, String pageSize) {
+        return mapper.putCardDiaryList(circleId,longitude ,
+               latitude ,pageBegin,pageSize);
     }
 
     @Override

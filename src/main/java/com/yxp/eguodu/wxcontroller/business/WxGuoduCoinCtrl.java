@@ -48,4 +48,31 @@ public class WxGuoduCoinCtrl {
         return map;
     }
 
+
+
+
+
+    @ApiOperation( value = "查询该学生果度总数 ",notes = "" +
+            " 返回字段：{" +
+            "    data : total , " +
+            "    resultMsg : 'ok' ：成功 ，否则返回错误信息" +
+            "}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "studentId", value = "学生id", required = false, dataType = "String", paramType = "query"),
+     }
+    )
+    @GetMapping(value="/totalGuoduCoin")
+    public Map<String ,Object> totalGuoduCoin(String studentId){
+        List<GuoduBill> list =svr.guoduBillList( studentId, "0", "20000" );
+        Map map = new HashMap();
+        double total= list.stream().mapToDouble(o->o.getGuoduCoin()).sum();
+        map.put("data", total );
+        map.put("resultMsg", "ok");
+        return map;
+    }
+
+
+
+
+
 }

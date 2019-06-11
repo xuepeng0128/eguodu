@@ -299,7 +299,7 @@ public class WxHabitCtrl {
     @GetMapping(value="/putCardDiaryList")
     public Map<String,Object> putCardDiaryList(String circleId,String pageSize,String pageNo){
         String pageBegin= String.valueOf ((Integer.parseInt(pageNo) -1)* Integer.parseInt(pageSize));
-        List<WxPutCardDiary> list = svr.putCardDiaryList(circleId,pageBegin,pageSize);
+        List<WxPutCardDiary> list = svr.putCardDiaryList(circleId,null,null,pageBegin,pageSize);
 
         if(list != null && list.size()>0){
             for(WxPutCardDiary d : list){
@@ -353,6 +353,42 @@ public class WxHabitCtrl {
 
     }
 
+
+
+
+
+    @ApiOperation( value = "根据经纬度查询8公里内打卡习惯 ",notes = " " +
+            " 返回字段：{" +
+            "    data :  " +
+            "         WxPutCardDiary 对象数组" +
+            "    resultMsg : 'ok' ：成功 ，否则返回错误信息" +
+            "    resultCode : '0 : 成功,1 : 小程序code 无效, 2. openId 获取异常 ,3.openId 无效 " +
+            "}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "longitude", value = "经度", required = true, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "latitude", value = "纬度", required = true, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "pageSize", value = "每页数", required = true, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "pageNo", value = "页码", required = true, dataType = "String", paramType = "query"),
+    }
+    )
+    @GetMapping(value="/nearlyHabits")
+    public Map<String,Object> nearlyHabits(String longitude,String latitude,String pageSize,String pageNo){
+        String pageBegin= String.valueOf ((Integer.parseInt(pageNo) -1)* Integer.parseInt(pageSize));
+        List<WxPutCardDiary> list = svr.putCardDiaryList(null,longitude,latitude,pageBegin,pageSize);
+
+        if(list != null && list.size()>0){
+            for(WxPutCardDiary d : list){
+                if (!d.getAgrees().equals(""))
+                    d.setZans(d.getAgrees().split(","));
+                d.setAgrees("");
+            }
+        }
+        Map map = new HashMap();
+        map.put("data", list );
+        map.put("resultMsg", "ok");
+        map.put("resultCode", "0");
+        return map;
+    }
 
 
 

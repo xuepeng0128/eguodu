@@ -19,8 +19,8 @@ public interface ExamMapper {
             "      on ex.studySubjectId=ss.studySubjectId inner join teacher t on ex.teachedTeacherId=t.teacherId " +
             "      INNER JOIN dic_examkind ek on ex.examKindId=ek.examKindid inner join classes cl on ex.classesId=cl.classesId " +
             " where 1=1  " +
-            " <if test='classesId != null and classesIds !=\"\"'>" +
-            "   and ex.classesId in '(${classesId}') " +
+            " <if test='classesIds != null and classesIds !=\"\"'>" +
+            "   and ex.classesId in (${classesIds}) " +
             " </if> " +
             "   and ex.schoolId ='${schoolId}'" +
             "  limit ${pageBegin}, ${pageSize} " +
@@ -32,8 +32,8 @@ public interface ExamMapper {
             "      on ex.studySubjectId=ss.studySubjectId inner join teacher t on ex.teachedTeacherId=t.teacherId " +
             "      INNER JOIN dic_examkind ek on ex.examKindId=ek.examKindid inner join classes cl on ex.classesId=cl.classesId " +
             " where 1=1  " +
-            " <if test='classesId != null and classesIds !=\"\"'>" +
-            "   and ex.classesId in '(${classesId}') " +
+            " <if test='classesIds != null and classesIds !=\"\"'>" +
+            "   and ex.classesId in( ${classesIds}) " +
             " </if> " +
             "   and ex.schoolId ='${schoolId}'" +
             "</script>")
@@ -41,7 +41,8 @@ public interface ExamMapper {
 
 
     @Select("<script>" +
-            " select e.id, e.examId,e.studentId, stu.studentName , e.subjectExamClassId,ec.subjectExamClassName,e.defficulty,e.score,e.getScore from " +
+            " select e.id, e.examId,e.studentId, stu.studentName , e.subjectExamClassId,ec.subjectExamClassName,e.defficulty," +
+            "  e.score,e.getScore,e.subjects,e.rightSubjects from " +
             "  subexam e inner join exam m on e.examId=m.examId inner join student stu on e.studentId=stu.studentId " +
             " and m.schoolId=stu.schoolId  inner join dic_subjectexamclass ec on e.subjectExamClassId= ec.subjectExamClassId " +
             "  where e.examId='${examId}'" +
@@ -52,7 +53,7 @@ public interface ExamMapper {
 
     @Select("<script>" +
             "SELECT 0 as id,'' as examId, stu.studentId,stu.studentName,sub.subjectExamClassId, " +
-            "       sub.subjectExamClassName,de.defficulty, 0 as score,0 as getScore from  " +
+            "       sub.subjectExamClassName,de.defficulty, 0 as score,0 as getScore,0 as subjects , 0 as rightSubjects from  " +
             "( " +
             "select s.studentId,s.studentName from classesstudent c inner join student s " +
             " on c.studentId=s.studentId and s.schoolId='${schoolId}'  where classesId='${classesId}' " +
@@ -85,9 +86,9 @@ public interface ExamMapper {
     public int deleteExam(@Param("examId") String examId);
 
     @Insert("<script>" +
-            "  insert into subexam(examId,studentId,subjectExamClassId,defficulty,score,getScore) values" +
+            "  insert into subexam(examId,studentId,subjectExamClassId,defficulty,score,getScore,subjects,rightSubjects) values" +
             " <foreach collection =\"list\" item=\"t\" separator =\",\" >" +
-            " ( '{t.examId}','${t.studentId}','${t.subjectExamClassId}',${t.defficulty},${t.score},${t.getScore}) " +
+            " ( '{t.examId}','${t.studentId}','${t.subjectExamClassId}',${t.defficulty},${t.score},${t.getScore},${t.subjects},${t.rightSubjects}) " +
             "</foreach>" +
             "</script>")
     public int insertSubExam(List<SubExam> subExams);
