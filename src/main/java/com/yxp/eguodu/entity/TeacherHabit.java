@@ -21,6 +21,7 @@ public class TeacherHabit {
     private Date buildDate; // 创建时间
     private Habit habit;  // 创建的习惯
     private int guodoubi; // 打卡所得果豆币
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date beginDate; // 习惯开始时间
     private Date endDate; // 习惯结束时间
     private List<Student> joinStudents; // 参加的学生

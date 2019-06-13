@@ -15,7 +15,7 @@ public interface ExamMapper {
             " select ex.examId, ex.studySubjectId, ss.studySubjectName,  ex.examName,ex.teachedTeacherId,  " +
             "       t.teacherName as teachedTeacherName,ex.examTime,ex.examKindId , ek.examKindName, ex.iyear ,  " +
             "       ex.term,ex.classesId , " +
-            "       cl.grade ,cl.classes ,ex.SchoolId  from exam ex inner join dic_studysubject ss  " +
+            "       cl.grade ,cl.classes ,ex.SchoolId ,ex.totalScore from exam ex inner join dic_studysubject ss  " +
             "      on ex.studySubjectId=ss.studySubjectId inner join teacher t on ex.teachedTeacherId=t.teacherId " +
             "      INNER JOIN dic_examkind ek on ex.examKindId=ek.examKindid inner join classes cl on ex.classesId=cl.classesId " +
             " where 1=1  " +
@@ -75,8 +75,8 @@ public interface ExamMapper {
 
     @Insert("<script>" +
             " insert into exam(examId,studySubjectId,examName,teachedTeacherId, " +
-            " examTime,examKindId,iyear,term,classesId,schoolId) values(examId,studySubjectId,examName,teachedTeacherId," +
-            " examTime,examKindId,iyear,term,classesId,schoolId)" +
+            " examTime,examKindId,iyear,term,classesId,schoolId,totalScore) values('${examId}','${studySubjectId}','${examName}','${teachedTeacherId}'," +
+            " '${examTime}','${examKindId}',${iyear},'${term}','${classesId}','${schoolId}',${totalScore})" +
             "</script>")
     public int insertExam(Exam exam);
 
@@ -88,7 +88,7 @@ public interface ExamMapper {
     @Insert("<script>" +
             "  insert into subexam(examId,studentId,subjectExamClassId,defficulty,score,getScore,subjects,rightSubjects) values" +
             " <foreach collection =\"list\" item=\"t\" separator =\",\" >" +
-            " ( '{t.examId}','${t.studentId}','${t.subjectExamClassId}',${t.defficulty},${t.score},${t.getScore},${t.subjects},${t.rightSubjects}) " +
+            " ( '${t.examId}','${t.studentId}','${t.subjectExamClassId}',${t.defficulty},${t.score},${t.getScore},${t.subjects},${t.rightSubjects}) " +
             "</foreach>" +
             "</script>")
     public int insertSubExam(List<SubExam> subExams);
@@ -102,7 +102,29 @@ public interface ExamMapper {
 
 
 
+    //-------------------------------------- 微信-----------------------------------//
+@Select("<script>" +
+        "    select ex.examId, ex.studySubjectId, ss.studySubjectName,  ex.examName,ex.teachedTeacherId,   " +
+        "                   t.teacherName as teachedTeacherName,ex.examTime,ex.examKindId , ek.examKindName, ex.iyear ,   " +
+        "                   ex.term,ex.classesId ,  " +
+        "                   cl.grade ,cl.classes ,ex.SchoolId ,ex.totalScore ,sbx.getScore from exam ex inner join dic_studysubject ss   " +
+        "                  on ex.studySubjectId=ss.studySubjectId inner join teacher t on ex.teachedTeacherId=t.teacherId  " +
+        "                  INNER JOIN dic_examkind ek on ex.examKindId=ek.examKindid inner join classes cl" +
+        "                   on ex.classesId=cl.classesId  " +
+        "                  inner join classesstudent cs on cl.classesId=cs.classesId and studentId='${studentId}'" +
+        "                  inner join " +
+        "                  (" +
+        "                       select examId, studentId ,sum(getScore) as getScore from subexam where studentId='${studentId}' group by examId, studentId" +
+        "                  )sbx on  ex.examId=sbx.examId" +
+        "                   " +
+        "        order by  ex.examTime desc " +
+        "   limit ${pageBegin},${pageSize} " +
+        "</script>")
+public List<Map<String,Object>> currentStudentExamList(@Param("studentId") String studentId);
 
 
+@Select("<script>" +
+        "</script>")
+ public List<Map<String,Object>> classesExamScoreCensus(@Param("studentId") String studentId,@Param("examId") String examId);
 
 }

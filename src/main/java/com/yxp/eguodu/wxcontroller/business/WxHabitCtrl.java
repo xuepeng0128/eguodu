@@ -292,14 +292,21 @@ public class WxHabitCtrl {
             "}")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "circleId", value = "圈子id", required = true, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "mostHoldDays", value = "坚持时间最久, 1 表示按此条件查询", required = false, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "mostAgree", value = "点赞最多, 1 表示按此条件查询", required = false, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "putCardTimeBegin", value = "打卡开始日期, 不填查全部", required = false, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "putCardTimeEnd", value = "打卡截止日期, 不填查全部", required = false, dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "pageSize", value = "每页数", required = true, dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "pageNo", value = "页码", required = true, dataType = "String", paramType = "query"),
     }
     )
     @GetMapping(value="/putCardDiaryList")
-    public Map<String,Object> putCardDiaryList(String circleId,String pageSize,String pageNo){
+    public Map<String,Object> putCardDiaryList(String circleId,   String mostHoldDays,
+                                               String mostAgree,  String putCardTimeBegin ,
+                                               String putCardTimeEnd  ,String pageSize,String pageNo){
         String pageBegin= String.valueOf ((Integer.parseInt(pageNo) -1)* Integer.parseInt(pageSize));
-        List<WxPutCardDiary> list = svr.putCardDiaryList(circleId,null,null,pageBegin,pageSize);
+        List<WxPutCardDiary> list = svr.putCardDiaryList(circleId,null,null,
+                mostHoldDays,mostAgree,putCardTimeBegin,putCardTimeEnd,pageBegin,pageSize);
 
         if(list != null && list.size()>0){
             for(WxPutCardDiary d : list){
@@ -374,7 +381,7 @@ public class WxHabitCtrl {
     @GetMapping(value="/nearlyHabits")
     public Map<String,Object> nearlyHabits(String longitude,String latitude,String pageSize,String pageNo){
         String pageBegin= String.valueOf ((Integer.parseInt(pageNo) -1)* Integer.parseInt(pageSize));
-        List<WxPutCardDiary> list = svr.putCardDiaryList(null,longitude,latitude,pageBegin,pageSize);
+        List<WxPutCardDiary> list = svr.putCardDiaryList(null,longitude,latitude,null,null,null,null,pageBegin,pageSize);
 
         if(list != null && list.size()>0){
             for(WxPutCardDiary d : list){

@@ -2,6 +2,7 @@ package com.yxp.eguodu.service.business;
 
 import com.yxp.eguodu.common.queryparams.HabitQueryParams;
 import com.yxp.eguodu.entity.*;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -27,7 +28,9 @@ public interface HabitService {
 
     // 圈子日记
     public List<WxPutCardDiary> putCardDiaryList(String circleId, String longitude ,
-                                                  String latitude , String pageBegin,String pageSize);
+                                                  String latitude ,    String mostHoldDays,
+                                                  String mostAgree,  String putCardTimeBegin ,
+                                                  String putCardTimeEnd, String pageBegin,String pageSize);
 
     // 打卡点赞
     public int agreePutCard( String putCardId , String studentId);

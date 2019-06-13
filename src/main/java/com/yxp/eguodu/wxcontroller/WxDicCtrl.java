@@ -227,6 +227,60 @@ public class WxDicCtrl {
         return map;
     }
 
+    @Autowired
+    private StudySubjectService studySubjectService;
+    @ApiOperation( value = "学科字典",notes = "" +
+            " 返回字段：{" +
+            "    data : StudySubject 数组,   " +
+            "    resultMsg : 'ok' ：成功 ，否则返回错误信息" +
+            "}")
+    @ApiImplicitParams({
+    }
+    )
+    @GetMapping(value="/studySubjectList")
+    public Map<String, Object> studySubjectList(){
+        List<StudySubject> list = studySubjectService.studySubjectList();
+        Map map = new HashMap();
+        map.put("data", list );
+        map.put("resultMsg", "ok");
+        return map;
+    }
 
-
+    @Autowired
+    private ExamKindService examKindService;
+    @ApiOperation( value = "考试类型字典",notes = "" +
+            " 返回字段：{" +
+            "    data : ExamKind 数组,   " +
+            "    resultMsg : 'ok' ：成功 ，否则返回错误信息" +
+            "}")
+    @ApiImplicitParams({
+    }
+    )
+    @GetMapping(value="/examKindList")
+    public Map<String, Object> examKindList(){
+        List<ExamKind> list = examKindService.examKindList();
+        Map map = new HashMap();
+        map.put("data", list );
+        map.put("resultMsg", "ok");
+        return map;
+    }
+    @Autowired
+    private SubjectExamClassService subjectExamClassService;
+    @ApiOperation( value = "题型字典",notes = "" +
+            " 返回字段：{" +
+            "    data : SubjectExamClass 数组,   " +
+            "    resultMsg : 'ok' ：成功 ，否则返回错误信息" +
+            "}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "studySubjectId", value = "学科id", required = true, dataType = "String", paramType = "query"),
+    }
+    )
+    @GetMapping(value="/subjectExamClassList")
+    public Map<String, Object> subjectExamClassList(String studySubjectId){
+        List<SubjectExamClass> list = subjectExamClassService.subjectExamClassList().stream().filter(o -> o.getStudySubjectId().equals(studySubjectId)).collect(Collectors.toList());
+        Map map = new HashMap();
+        map.put("data", list );
+        map.put("resultMsg", "ok");
+        return map;
+    }
 }

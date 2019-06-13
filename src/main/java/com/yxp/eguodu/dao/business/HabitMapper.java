@@ -299,12 +299,35 @@ public interface HabitMapper {
             "            )" +
             "        ) * 1000" +
             " <![CDATA[   ) <=8000  ]]>" +
+            " </if> " +
+            " <if test='putCardTimeBegin != null and putCardTimeBegin !=\"\" '>" +
+            "   <![CDATA[   and putCardTime >= '${putCardTimeBegin}'  ]]>" +
+            " </if> " +
+            " <if test='putCardTimeEnd != null and putCardTimeEnd !=\"\" '>" +
+            "   <![CDATA[   and putCardTime <= '${putCardTimeEnd}'  ]]>" +
+            " </if> " +
+            " order by " +
+            " <if test='mostAgree ==\"1\"'> " +
+            "   LENGTH(ifnull(pag.agrees, '')) desc, " +
+            " </if>  " +
+            " <if test='mostHoldDays ==\"1\"'> " +
+            "   case  " +
+            " WHEN mm.maxPutCardTime IS NULL THEN " +
+            " 0 " +
+            " ELSE " +
+            " TimeStampDiff( " +
+            " DAY, " +
+            " mm.minPutCardTime, " +
+            " mm.maxPutCardTime " +
+            " ) + 1  END desc ," +
             " </if>" +
-            "         order by mm.maxPutCardTime desc   " +
+            "         mm.maxPutCardTime desc   " +
             "         limit ${pageBegin},${pageSize} " +
             "</script>")
     public List<WxPutCardDiary> putCardDiaryList(@Param("circleId") String circleId,@Param("longitude") String longitude ,
-                                                 @Param("latitude") String latitude, @Param("pageBegin") String pageBegin,
+                                                 @Param("latitude") String latitude, @Param("mostHoldDays") String mostHoldDays,
+                                                 @Param("mostAgree") String mostAgree,@Param("putCardTimeBegin") String putCardTimeBegin ,
+                                                 @Param("putCardTimeEnd") String putCardTimeEnd, @Param("pageBegin") String pageBegin,
                                                  @Param("pageSize") String pageSize);
 
 

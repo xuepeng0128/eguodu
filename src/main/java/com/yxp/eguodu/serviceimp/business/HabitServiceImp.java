@@ -82,9 +82,14 @@ public class HabitServiceImp implements HabitService {
 
     @Override
     public List<WxPutCardDiary> putCardDiaryList(String circleId,String longitude ,
-                                                 String latitude , String pageBegin, String pageSize) {
+                                                 String latitude , String mostHoldDays,
+                                                  String mostAgree, String putCardTimeBegin ,
+                                                  String putCardTimeEnd ,String pageBegin, String pageSize) {
+        if (putCardTimeEnd != null && !putCardTimeEnd.equals("")){
+            putCardTimeEnd = putCardTimeEnd + " 23:59:59 ";
+        }
         return mapper.putCardDiaryList(circleId,longitude ,
-               latitude ,pageBegin,pageSize);
+               latitude ,mostHoldDays,mostAgree, putCardTimeBegin, putCardTimeEnd,pageBegin,pageSize);
     }
 
     @Override

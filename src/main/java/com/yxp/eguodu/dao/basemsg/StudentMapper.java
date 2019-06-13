@@ -51,7 +51,7 @@ public interface StudentMapper {
 
 
     // 根据绑定成功的邀请码 ，填入openid,headimg,nickname
-    @Update("update student set wxcode= concat(ifnull(wxcode,''),'${openId}'), headming='${headimg}' , nickname='${nickname}' where id= #{id}")
+    @Update("update student set wxcode= concat(ifnull(wxcode,''),'${openId}'), headimg='${headimg}' , nickname='${nickname}' where id= #{id}")
     public int addStudentOpenId(@Param("id") int id,@Param("openId") String openId,@Param("headimg") String headimg,@Param("nickname") String nickname );
 
 

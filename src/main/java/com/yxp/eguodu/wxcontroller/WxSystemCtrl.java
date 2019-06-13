@@ -35,16 +35,18 @@ public class WxSystemCtrl {
     )
     @GetMapping(value="/getSysInformation")
     public Map<String,Object> getSysInformation(){
-        Map map = new HashMap();
+        Map<String,Object> map = new HashMap<String,Object>();
         List<SysInformation> list =svr.sysInformationList("0","1");
         try{
-
-            map.put("data",list.stream().findFirst().orElse(null));
+           if(list != null && list.size()>0 )
+            map.put("data",list.get(0));
+           else
+               map.put("data",null);
             map.put("resultMsg","ok");
             map.put("resultCode","0");
         }catch (Exception ex){
-            map.put("data","openId 获取异常");
-            map.put("resultMsg","ok");
+            map.put("data",ex.toString());
+            map.put("resultMsg","fail");
             map.put("resultCode","2");
         }
         return  map;

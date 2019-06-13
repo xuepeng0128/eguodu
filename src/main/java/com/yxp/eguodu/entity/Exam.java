@@ -26,5 +26,6 @@ public class Exam {
    private int   grade ; // 学籍
    private int   classes ; // 班级
    private String SchoolId ; // 学校id
+   private int totalScore; //总分
     List<SubExam> subExams;
 }
