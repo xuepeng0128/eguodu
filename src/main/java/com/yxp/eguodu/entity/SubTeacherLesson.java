@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 public class SubTeacherLesson {
     private String lessonId;
     private int lessonNo;
+    private String lessonNoTitle;
     private int mode;
     private String memo;
     private String videoUrl;

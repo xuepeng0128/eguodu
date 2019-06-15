@@ -133,7 +133,16 @@ public interface CircleMapper {
     public int insertCurrentStudentToCircle(@Param("circleId") String circleId,@Param("studentId") String studentId);
 
 
-    // 某学生退出圈子
+    // 后加入的学生自动加入班级圈子
+    @Insert("<script>" +
+            " insert into circlestudent(circleId,studentId , regTime) " +
+            " select circleId,'${studentId}',now() from circle where classesId='${classesId}' " +
+            "</script>")
+    public int autoJoinCircle(@Param("classesId") String classesId,@Param("studentId") String studentId) ;
+
+
+
+
     // 学生退出圈子
     @Update("<script>" +
             "  update circlestudent set leaveTime= now() where circleId='${circleId}' and studentId='${studentId}' and leaveTime is null  " +
@@ -248,5 +257,20 @@ public interface CircleMapper {
    public List<Map<String,Object>> circleMemo(@Param("circleId") String circleId);
 
 
+
+    // 根据id获取圈子通知
+    @Select("<script>" +
+            " select memo from teachernotice where sendCircleIds like '%${circleId}%' order by buildDate desc limit 1 " +
+            "</script>")
+    public List<Map<String,Object>> circleNotice(@Param("circleId") String circleId);
+    //圈子打卡果度币排名
+    @Select("<script>" +
+            " SELECT 0 as no, s.studentId,s.nickname,s.headimg ,sum(haveGuodubi) as haveGuodubi " +
+            " from studentputcard  p inner join habit h on p.habitId =h.habitId  " +
+            "inner join student s on p.studentId=s.studentId where circleId='${circleId}' " +
+            "GROUP BY s.studentId,s.nickname,s.headimg " +
+            "order by sum(haveGuodubi) desc  " +
+            "</script>")
+    public List<Map<String,Object>> circlePutCardOrder(@Param("circleId") String circleId);
 
 }

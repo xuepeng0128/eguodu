@@ -209,6 +209,43 @@ public class WxLoginCtrl {
         }} ;
     }
 
+
+    @ApiOperation( value = "非验证码学生解绑后再次绑定 ",notes = "" +
+            " 返回字段：{" +
+            "    resultMsg : 'ok' ：成功 ，否则返回失败信息 " +
+            "    resultCode : '0 : 成功,1 : 小程序code 无效, 2. openId 获取异常 ,3.openId 无效,9.写数据库错误 " +
+            "}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "student", value = "学生类", required = true, dataType = "Student"),
+    }
+    )
+
+    @PostMapping(value="/noInviteCodeStudentBindAgain")
+    public Map<String,Object> noInviteCodeStudentBindAgain(@RequestBody Student student){
+        Map map = new HashMap();
+        //登录凭证不能为空
+        if (student.getWxcode() == null || student.getWxcode().length() == 0) {
+            map.put("resultMsg", "openId 不能为空");
+            map.put("resultCode","3");
+            return map;
+        }
+        int d = ssvr.updateStudent(student);
+        if (d>=0)
+            return new HashMap<String,Object>(){{
+                put("resultMsg","ok") ;
+                map.put("resultCode","0");
+            }} ;
+        else
+            return new HashMap<String,Object>(){{
+                put("resultMsg","fail") ;
+                map.put("resultCode","9");
+            }} ;
+    }
+
+
+
+
+
     @ApiOperation( value = "学生解绑微信 ",notes = "" +
             "" +
             " 返回字段：{" +

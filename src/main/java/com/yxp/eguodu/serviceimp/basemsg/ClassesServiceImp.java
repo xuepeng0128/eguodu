@@ -3,6 +3,7 @@ package com.yxp.eguodu.serviceimp.basemsg;
 import com.yxp.eguodu.common.queryparams.ClassesQueryParams;
 import com.yxp.eguodu.dao.basemsg.ClassesMapper;
 import com.yxp.eguodu.dao.basemsg.StudentMapper;
+import com.yxp.eguodu.dao.business.CircleMapper;
 import com.yxp.eguodu.entity.Classes;
 import com.yxp.eguodu.entity.ClassesStudent;
 import com.yxp.eguodu.entity.ClassesTeacher;
@@ -19,7 +20,8 @@ public class ClassesServiceImp implements ClassesService {
     private ClassesMapper classesMapper;
     @Autowired
     private StudentMapper studentMapper;
-
+    @Autowired
+    private CircleMapper circleMapper;
 
 
     @Override
@@ -110,11 +112,12 @@ public class ClassesServiceImp implements ClassesService {
     }
 
 
-
+//插入班级学生
 
     @Override
     public int insertClassesStudent(ClassesStudent classesStudent) {
-        classesMapper.insertClassesStudent(classesStudent);
+        classesMapper.insertClassesStudent(classesStudent); //加入班级学生
+        circleMapper.autoJoinCircle(classesStudent.getClassesId(),classesStudent.getStudentId());
         studentMapper.insertStudent(new Student( 0,classesStudent.getStudentPaperId(),classesStudent.getStudentId(),
                                                      classesStudent.getStudentName(),
                                                      classesStudent.getSex(), classesStudent.getBirthday(),classesStudent.getSchoolId(),null,

@@ -16,6 +16,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.mapping;
 
 
 @Api(value="微信习惯",tags={"微信小程序习惯相关操作webapi接口"})
@@ -398,6 +399,31 @@ public class WxHabitCtrl {
     }
 
 
+    @ApiOperation( value = "根据主题id获取习惯 ",notes = " " +
+            " 返回字段：{" +
+            "    data :  " +
+            "         Habit 对象" +
+            "    resultMsg : 'ok' ：成功 ，否则返回错误信息" +
+            "    resultCode : '0 : 成功,1 : 小程序code 无效, 2. openId 获取异常 ,3.openId 无效 " +
+            "}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "lessonId", value = "主题id", required = true, dataType = "String", paramType = "query"),
+     }
+    )
+    @GetMapping(value = "/habitByLessonId")
+    public Map<String,Object> habitByLessonId(String lessonId){
+        List<Habit> list = svr.lessonTohabitList(lessonId);
+        Map map = new HashMap();
+        if(list != null && list.size()>0){
+            map.put("data", list.get(0) );
+        }else {
+            map.put("data", null );
+        }
+        map.put("resultMsg", "ok");
+        map.put("resultCode", "0");
+        return map;
+
+    }
 
 
 }

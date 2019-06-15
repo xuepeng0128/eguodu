@@ -52,10 +52,30 @@ public class ExamServiceImp implements ExamService {
         return 1;
     }
 
+    @Override
+    public List<Map<String, Object>> currentStudentExamList(String studentId, String pageBegin, String pageSize) {
+        return mapper.currentStudentExamList(studentId,pageBegin,pageSize);
+    }
 
+    @Override
+    public List<Map<String, Object>> classesExamScoreCensus(String examId) {
+        return mapper.classesExamScoreCensus(examId);
+    }
 
+    @Override
+    public List<Map<String, Object>> studentExamScoreList(String examId) {
+        return mapper.studentExamScoreList(examId);
+    }
 
+    @Override
+    public List<Map<String, Object>> studentExamSubjectRate(String studentId, String examId) {
+        return mapper.studentExamSubjectRate(studentId,examId);
+    }
 
+    @Override
+    public List<Map<String, Object>> studentExamRada(String examId, String studentId) {
+        return mapper.studentExamRada(examId,studentId);
+    }
 
 
 }

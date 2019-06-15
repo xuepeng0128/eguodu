@@ -26,5 +26,9 @@ public interface ExamService {
 
     public int deleteExam(String examId);
 
-
+    public List<Map<String,Object>> currentStudentExamList( String studentId,String pageBegin,String pageSize);
+    public List<Map<String,Object>> classesExamScoreCensus( String examId);
+    public List<Map<String,Object>> studentExamScoreList( String examId);
+    public List<Map<String,Object>> studentExamSubjectRate( String studentId ,  String examId);
+    public List<Map<String,Object>> studentExamRada( String examId , String studentId);
 }

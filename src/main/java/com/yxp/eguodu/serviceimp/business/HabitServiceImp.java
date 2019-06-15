@@ -97,6 +97,11 @@ public class HabitServiceImp implements HabitService {
         return mapper.agreePutCard(putCardId,studentId);
     }
 
+    @Override
+    public List<Habit> lessonTohabitList(String lessonId) {
+        return mapper.lessonTohabitList(lessonId);
+    }
+
 
     private List<StudentPutCard> calStudentPutCardPlan(String studentId,HabitExam habitExam, List<Habit> habits){
         Date beginPutCardTime =null;

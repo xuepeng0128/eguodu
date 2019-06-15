@@ -273,4 +273,57 @@ public class WxCircleCtrl {
         return map;
     }
 
+    @ApiOperation( value = " 根据id 查询根据圈子通知",notes = " " +
+            " 返回字段：{" +
+            "    data :{" +
+            "      memo :  简介 " +
+            "     }" +
+            "    resultMsg : 'ok' ：成功 ，否则返回错误信息" +
+            "    resultCode : '0 : 成功,1 : 小程序code 无效, 2. openId 获取异常 ,3.openId 无效 " +
+            "}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "circleId", value = "圈子id", required = true, dataType = "String", paramType = "query"),
+    }
+    )
+    @GetMapping(value="/circleNotice")
+    public Map<String,Object> circleNotice(String circleId){
+        List<Map<String,Object>> list= svr.circleNotice(circleId);
+        Map map = new HashMap();
+        map.put("data", list.stream().findFirst().orElse(null) );
+        map.put("resultMsg", "ok");
+        map.put("resultCode","0");
+        return map;
+    }
+
+
+    @ApiOperation( value = " 根据id 查询根据圈子打卡果度币排名",notes = " " +
+            " 返回字段：{" +
+            "    data :{" +
+            "  " +
+            "     }" +
+            "    resultMsg : 'ok' ：成功 ，否则返回错误信息" +
+            "    resultCode : '0 : 成功,1 : 小程序code 无效, 2. openId 获取异常 ,3.openId 无效 " +
+            "}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "circleId", value = "圈子id", required = true, dataType = "String", paramType = "query"),
+    }
+    )
+    @GetMapping(value="/circlePutCardOrder")
+    public Map<String,Object> circlePutCardOrder(String circleId){
+        List<Map<String,Object>> list= svr.circlePutCardOrder(circleId);
+        int i=1;
+        if(list != null){
+            for (Map<String,Object> item : list){
+                 item.put("no",i++ );
+            }
+        }
+
+        Map map = new HashMap();
+        map.put("data", list );
+        map.put("resultMsg", "ok");
+        map.put("resultCode","0");
+        return map;
+    }
+
+
 }

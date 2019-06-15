@@ -34,4 +34,8 @@ public interface HabitService {
 
     // 打卡点赞
     public int agreePutCard( String putCardId , String studentId);
+
+    // 课程id关联习惯
+    public List<Habit> lessonTohabitList(String lessonId);
+
 }

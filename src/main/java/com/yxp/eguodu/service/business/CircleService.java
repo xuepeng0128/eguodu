@@ -63,4 +63,9 @@ public interface CircleService {
 
     // 根据id获取圈子简介
     public List<Map<String,Object>> circleMemo( String circleId);
+
+    // 根据id获取圈子通知
+    public List<Map<String,Object>> circleNotice( String circleId);
+    //圈子打卡果度币排名
+    public List<Map<String,Object>> circlePutCardOrder(@Param("circleId") String circleId);
 }

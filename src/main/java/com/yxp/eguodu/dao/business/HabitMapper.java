@@ -321,7 +321,7 @@ public interface HabitMapper {
             " mm.maxPutCardTime " +
             " ) + 1  END desc ," +
             " </if>" +
-            "         mm.maxPutCardTime desc   " +
+            "         putCardTime desc   " +
             "         limit ${pageBegin},${pageSize} " +
             "</script>")
     public List<WxPutCardDiary> putCardDiaryList(@Param("circleId") String circleId,@Param("longitude") String longitude ,
@@ -338,9 +338,20 @@ public interface HabitMapper {
     public int agreePutCard(@Param("putCardId") String putCardId ,@Param("studentId") String studentId);
 
 
+  // 课程id关联习惯
 
-
-
+    @Select("<script>" +
+            "   select h.habitId,cla.grade, cla.classes ,  h.circleId,c.circleTitle,h.habitClassId ,p.habitClassName,h.subHabitClassId,s.habitClassName " +
+            "       as subHabitClassName ,h.icon,h.color,h.habitName,h.memo,h.picUrl,h.pirTime,h.timeUnit,h.`mode`,h.timeModeNum, h.timeCompare," +
+            "      h.countModeNum,h.valueModeNum,h.unitName,guoduCoin,h.score,h.habitExamId,e.examTitle , e.totalScore ," +
+            "    h.buildTeacherId,h.buildStudentId,h.buildTime,h.putCardBeginDate,h.putCardEndDate,ifnull(stu.joinStudents,0) as joinStudents " +
+            "  from habit h inner join circle c on h.circleId=c.circleId  " +
+            "inner join dic_habitclass p on h.habitClassId=p.habitClassId  inner join dic_habitclass s on h.subHabitClassId " +
+            " =s.habitClassId left outer join habitexam e on h.habitExamId=e.habitExamId  left outer join classes cla on c.classesId=cla.classesId" +
+            " left outer join (select habitId , count(studentId) as joinStudents from habitstudent group by habitId  )stu on h.habitId=stu.habitId " +
+            "where h.habitId in (select habitId from teacherlessonhabit where lessonId='${lessonId}') " +
+            "</script>")
+    public List<Habit> lessonTohabitList(@Param("lessonId") String lessonId);
 
 
 

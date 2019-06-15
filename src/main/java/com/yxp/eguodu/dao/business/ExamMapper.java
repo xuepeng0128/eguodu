@@ -86,9 +86,9 @@ public interface ExamMapper {
     public int deleteExam(@Param("examId") String examId);
 
     @Insert("<script>" +
-            "  insert into subexam(examId,studentId,subjectExamClassId,defficulty,score,getScore,subjects,rightSubjects) values" +
+            "  insert into subexam(examId,studentId,subjectExamClassId,subjectExamNos,defficulty,score,getScore,subjects,rightSubjects,partSubjects) values" +
             " <foreach collection =\"list\" item=\"t\" separator =\",\" >" +
-            " ( '${t.examId}','${t.studentId}','${t.subjectExamClassId}',${t.defficulty},${t.score},${t.getScore},${t.subjects},${t.rightSubjects}) " +
+            " ( '${t.examId}','${t.studentId}','${t.subjectExamClassId}','${subjectExamNos}',${t.defficulty},${t.score},${t.getScore},${t.subjects},${t.rightSubjects},${t.partSubjects}) " +
             "</foreach>" +
             "</script>")
     public int insertSubExam(List<SubExam> subExams);
@@ -120,11 +120,77 @@ public interface ExamMapper {
         "        order by  ex.examTime desc " +
         "   limit ${pageBegin},${pageSize} " +
         "</script>")
-public List<Map<String,Object>> currentStudentExamList(@Param("studentId") String studentId);
+public List<Map<String,Object>> currentStudentExamList(@Param("studentId") String studentId, @Param("pageBegin") String pageBegin , @Param("pageSize") String pageSize);
 
 
 @Select("<script>" +
+        " select exStus.examStudents , case when exStus.examStudents=0 then 0 else exAllScore.allScore/exStus.examStudents end as avgScore, " +
+        "exMax.maxScore from   " +
+        "( " +
+        "select  examId , COUNT(DISTINCT studentid) as examStudents  from subexam where examid='${examId}' group by examId " +
+        ") exStus inner join  " +
+        "( " +
+        "   select examId, SUM(getScore) as allScore from subexam  where examid='${examId}' group by examId " +
+        ")exAllScore on exStus.examId=exAllScore.examId " +
+        "inner join  " +
+        "( " +
+        "  select a.examId,max(a.scores) as maxScore from ( " +
+        "   select examId , studentId, sum(getScore) as scores from subexam where examid='${examId}' group by examId, studentId " +
+        "    ) a  group by a.examId " +
+        ")exMax on exStus.examId=exMax.examId" +
         "</script>")
- public List<Map<String,Object>> classesExamScoreCensus(@Param("studentId") String studentId,@Param("examId") String examId);
+ public List<Map<String,Object>> classesExamScoreCensus(@Param("examId") String examId);
+
+
+@Select("<script>" +
+        " select  examId, studentId , score ,  getScore from v_studentexamscore where examId='${examId}'" +
+        "</script>")
+public List<Map<String,Object>> studentExamScoreList(@Param("examId") String examId);
+
+@Select("<script>" +
+        " select aa.defficulty,aa.subjects ,aa.rightSubjects ,aa.partSubjects ,aa.subjects-aa.rightSubjects-aa.partSubjects as wrongSubjects ,  " +
+        "       ROUND( case when aa.subjects=0 then 0 else aa.rightSubjects/aa.subjects end ,4) as rightRate   " +
+        " from (  " +
+        " select defficulty, sum(subjects) as subjects , sum(rightSubjects) as rightSubjects,sum(partSubjects )  as partSubjects  from subexam where studentId='${studentId}' and examId='${examId}' and defficulty=1 group by defficulty  " +
+        " union all  " +
+        " select  defficulty, sum(subjects) as subjects , sum(rightSubjects) as rightSubjects ,sum(partSubjects )  as partSubjects   from subexam where studentId='${studentId}' and examId='${examId}' and defficulty=2 group by defficulty  " +
+        " union all  " +
+        " select  defficulty, sum(subjects) as subjects , sum(rightSubjects) as rightSubjects ,sum(partSubjects )  as partSubjects   from subexam where studentId='${studentId}' and examId='${examId}' and defficulty=3 group by defficulty  " +
+        "  " +
+        " )aa " +
+        "</script>")
+public List<Map<String,Object>> studentExamSubjectRate(@Param("studentId") String studentId , @Param("examId") String examId);
+
+
+@Select("<script>" +
+        "   " +
+        "select m.subjectExamClassName,m.subjectExamNos ,m.totalScore,s.selfScore,   " +
+        " case when t.totalstu=0 then 0 else a.avgScore/t.totalstu end as avgScore   " +
+        " from   " +
+        "(  " +
+        "select e.examId, e.subjectExamClassId, e.subjectExamNos,  " +
+        " c.subjectExamClassName, m.totalScore from subexam e   " +
+        "inner join dic_subjectexamclass c on e.subjectExamClassId=c.subjectExamClassId  " +
+        "inner join exam m on e.examId=m.examId   " +
+        " where e.examId='${examId}'  " +
+        ") m inner join (  " +
+        "    SELECT examId , subjectExamClassId, sum(getScore) as selfScore from  subexam   " +
+        "    where examId='${examId}' and  studentId='${studentId}'  " +
+        "    group by examId , subjectExamClassId  " +
+        ")s on m.examId=s.examId  and m.subjectExamClassId= s.subjectExamClassId inner join (  " +
+        "  " +
+        "  " +
+        "      SELECT examId , subjectExamClassId, sum(getScore) as avgScore from  subexam   " +
+        "      where examId='${examId}'   " +
+        "      group by examId , subjectExamClassId  " +
+        "  " +
+        "  " +
+        "  " +
+        ")a on m.examId=a.examId  and m.subjectExamClassId= a.subjectExamClassId inner JOIN   " +
+        "(  " +
+        "   select examId, count(1) as totalstu from v_studentexamscore where examId='${examId}'  " +
+        ")t  on m.examId=t.examId  " +
+        "</script>")
+public List<Map<String,Object>> studentExamRada(@Param("examId") String examId ,@Param("studentId") String studentId);
 
 }
