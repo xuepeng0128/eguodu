@@ -17,10 +17,20 @@ public class SysInformationCtrl {
     private SysInformationService svr;
 
     @GetMapping(value="/sysInformationList")
-    public List<SysInformation> sysInformationList(String pageBegin , String pageSize){
+    public List<SysInformation> sysInformationList(String pageNo , String pageSize){
+        String pageBegin= String.valueOf ((Integer.parseInt(pageNo) -1)* Integer.parseInt(pageSize));
         List<SysInformation> list= svr.sysInformationList(pageBegin,pageSize);
         return list;
     }
+
+    @GetMapping(value="/sysInformationListTotal")
+    public Map<String, Object> sysInformationListTotal() {
+        List<Map<String,Object>> list = svr.sysInformationListTotal();
+        Map<String,Object> re= new HashMap<String,Object>();
+        re.put("total",Integer.parseInt( list.get(0).get("total").toString()));
+        return re;
+    }
+
 
     @PostMapping(value = "/insertInformation")
     public Map<String,Object> insertInformation(SysInformation sysInformation){
