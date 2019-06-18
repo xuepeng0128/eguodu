@@ -1,5 +1,6 @@
 package com.yxp.eguodu.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +17,8 @@ public class ClassesStudent {
    private String studentName;
    private String studentPaperId;
    private int sex ;
-   @DateTimeFormat(pattern = "yyyy-MM-dd")
+   @DateTimeFormat(pattern="yyyy-MM-dd")
+   @JSONField(format = "yyyy-MM-dd")
    private Date birthday;
    private String schoolId;
    private String address;

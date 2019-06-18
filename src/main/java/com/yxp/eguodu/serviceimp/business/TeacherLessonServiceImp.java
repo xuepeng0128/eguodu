@@ -66,8 +66,8 @@ public class TeacherLessonServiceImp implements TeacherLessonService {
     }
 
     @Override
-    public int deleteSubTeacherLesson(String lessonId,int lessonNo) {
-        return mapper.deleteSubTeacherLesson(lessonId,lessonNo);
+    public int deleteSubTeacherLesson(String lessonId) {
+        return mapper.deleteSubTeacherLesson(lessonId);
     }
 
     @Override

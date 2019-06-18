@@ -26,7 +26,7 @@ public interface TeacherLessonService {
     public int updateSubTeacherLesson(SubTeacherLesson subTeacherLesson);
 
     public int deleteTeacherLesson(Map<String,Object> paras);
-    public int deleteSubTeacherLesson(String lessonId,int lessonNo);
+    public int deleteSubTeacherLesson(String lessonId);
     public int publishToHabit( String lessonId,  String habitId);
 
 

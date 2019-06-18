@@ -51,8 +51,8 @@ public class TeacherLessonCtrl {
         }else {
             svr.insertTeacherLesson(teacherLesson);
         }
+        svr.deleteSubTeacherLesson(teacherLesson.getLessonId());
         for(SubTeacherLesson s : subTeacherLessons){
-            svr.deleteSubTeacherLesson(s.getLessonId(),s.getLessonNo());
             svr.insertSubTeacherLesson(s);
         }
         return new HashMap<String,Object>(){{put("result","ok") ;}} ;

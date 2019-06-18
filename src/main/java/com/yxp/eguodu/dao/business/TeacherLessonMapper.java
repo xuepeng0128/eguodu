@@ -92,8 +92,8 @@ public interface TeacherLessonMapper {
     @Delete("delete from teacherlesson where lessonId=#{lessonId}")
     public int deleteTeacherLesson(Map<String,Object> paras);
 
-    @Delete("delete from  subteacherlesson where lessonId=#{lessonId} and lessonNo=#{lessonNo}")
-    public int deleteSubTeacherLesson(@Param("lessonId") String lessonId, @Param("lessonNo") int lessonNo);
+    @Delete("delete from  subteacherlesson where lessonId=#{lessonId}")
+    public int deleteSubTeacherLesson(@Param("lessonId") String lessonId);
 
 
     @Insert("<script>" +

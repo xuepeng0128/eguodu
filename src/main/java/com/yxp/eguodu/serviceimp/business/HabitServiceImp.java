@@ -66,6 +66,18 @@ public class HabitServiceImp implements HabitService {
         }
         return 1;
     }
+
+    @Override
+    public List<HabitExam> habitExamByHabitId(String habitId) {
+        return mapper.habitExamByHabitId(habitId);
+    }
+
+    @Override
+    public List<Habit> examHabits(String habitExamId) {
+        return mapper.examHabits(habitExamId);
+    }
+
+
     // 学生准备打卡，获取打卡信息
     @Override
     public List<StudentPutCard> currentStudentPrepareHabitPutCard(String habitId, String studentId) {
@@ -73,11 +85,30 @@ public class HabitServiceImp implements HabitService {
     }
 
 
+
+
+
+
     @Override
     public int studentPutCard(WxPutCard wxPutCard) {
          mapper.studentPutCardSetFinish(wxPutCard);
          mapper.studentPutCart(wxPutCard);
          return 1;
+    }
+
+    @Override
+    public List<Map<String, Object>> habitStudentPutCards(String habitId,String pageBegin,String pageSize) {
+        return mapper.habitStudentPutCards(habitId,pageBegin,pageSize);
+    }
+
+    @Override
+    public List<Map<String, Object>> currentStudentPutCardList(String habitId, String studentId,String pageBegin,String pageSize) {
+        return mapper.currentStudentPutCardList(habitId,studentId,pageBegin,pageSize);
+    }
+
+    @Override
+    public List<Student> habitStudents(String habitId, String schoolId) {
+        return mapper.habitStudents(habitId,schoolId);
     }
 
     @Override

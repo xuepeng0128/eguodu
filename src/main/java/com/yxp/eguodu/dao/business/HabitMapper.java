@@ -130,16 +130,71 @@ public interface HabitMapper {
             " </script> ")
     public int insertHabit(Habit habit);
 
+    @Delete("delete from habit where habitId='${habitId}'")
+    public int deleteHabit(@Param("habitId") String habitId);
+
     @Insert("<script> " +
             "  insert into habitexam(habitExamId,teacherId,publishedDate,examTitle,examMemo,examBeginDate,examEndDate,totalScore) values(" +
             " #{habitExamId},#{teacherId},now(),#{examTitle},#{examMemo},#{examBeginDate},#{examEndDate},#{totalScore})" +
             " </script> ")
     public int insertHabitExam(HabitExam habitExam);
 
+    // 根据习惯id获取考核
+    @Select("<script>" +
+            " select habitExamId,teacherId,publishedDate,examTitle,examMemo,examBeginDate,examEndDate,totalScore " +
+            " from habitexam where habitExamId in (SELECT habitExamId from habit where habitId='${habitId}')" +
+            "</script>")
+    public List<HabitExam> habitExamByHabitId(@Param("habitId") String habitId);
+
+    //查询考核下的习惯
+    @Select("<script>" +
+            "  SELECT habitId,circleId,habitClassId,subHabitClassId,icon,color,habitName, " +
+            "       memo,picUrl,pirTime,timeUnit,`mode`,timeModeNum,timeCompare,countModeNum, " +
+            "       valueModeNum,unitName,guoduCoin,score,habitExamId,buildTime,buildTeacherId, " +
+            "       buildStudentId,putCardBeginDate,putCardEndDate " +
+            "  from habit where habitExamId='${habitExamId}' " +
+            "</script>")
+    public List<Habit> examHabits(@Param("habitExamId") String habitExamId);
+
+
+
+    @Delete("delete from habitexam where habitExamId='${habitExamId}'")
+    public int deleteHabitExam(@Param("habitExamId") String habitExamId);
+
+
+    // 查询习惯下学生打卡情况
+    @Select("<script>" +
+            " SELECT al.studentId,al.studentName ,al.shouldputCards ,ifnull(puted.havePutCards,0) as havePutCards , " +
+            "       ifnull(puted.haveGuodubi,0) as haveGuodubi, ifnull(puted.haveScore,0) as haveScore ," +
+            "       ifnull(puted.finished,0) as finished  from  " +
+            "( " +
+            " select s.studentId, t.studentName, count(1) as shouldPutCards   from studentputcard s inner join student t on s.studentId=t.studentId " +
+            " where s.habitid='${habitId}'  group by  s.studentId, t.studentName " +
+            " ) al left outer join ( " +
+            " select s.studentId, t.studentName, count(1) as havePutCards ,sum(haveGuodubi) as haveGuodubi ,sum(haveScore) as haveScore ," +
+            " sum(finished) as finished from studentputcard s inner join student t on s.studentId=t.studentId " +
+            "  where habitid='${habitId}' and putCardTime is not null " +
+            "group by  s.studentId, t.studentName " +
+            ")puted on al.studentId=puted.studentId " +
+            "   limit ${pageBegin},${pageSize} " +
+            "</script>")
+    public List<Map<String,Object>> habitStudentPutCards(@Param("habitId") String habitId ,@Param("pageBegin") String pageBegin , @Param("pageSize") String pageSize);
+
+    @Select("<script>" +
+            " SELECT p.*,a.agrees from studentputcard p left outer join ( select putCardId, count(1) as agrees from  putcardagree group by putCardId )a on p.id=a.putCardId\n" +
+            " where habitId='${habitId}' and studentId='${studentId}' " +
+            " limit ${pageBegin},${pageSize}" +
+            "</script>")
+    public List<Map<String,Object>> currentStudentPutCardList(@Param("habitId") String habitId, @Param("studentId") String studentId,@Param("pageBegin") String pageBegin , @Param("pageSize") String pageSize);
+
     @Insert("<script> insert into habitstudent(habitId,studentId,joinTime) values(" +
             " #{habitId},#{studentId},now())" +
             " </script>")
     public int insertHabitStudent(HabitStudent habitStudent);
+
+    @Delete("delete from habitexam where habitExamId='${habitExamId}'")
+    public int deleteHabitStudent(@Param("habitId") String habitId);
+
 
 
     @Insert("<script> " +
@@ -169,6 +224,15 @@ public interface HabitMapper {
     public int setCanGetScore(@Param("habitExamId") String habitExamId,@Param("canGetScore") float canGetScore);
 
 
+
+    // 获取习惯参加学生
+
+    @Select("<script>" +
+            " select stu.* from habitstudent h inner join student stu on h.studentId=stu.studentId  " +
+            "and stu.schoolId='${schoolId}' " +
+            "where h.habitId='${habitId}' " +
+            "</script>")
+    public List<Student> habitStudents(@Param("habitId") String habitId ,@Param("schoolId") String schoolId);
 
 
 

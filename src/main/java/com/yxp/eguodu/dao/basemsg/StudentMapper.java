@@ -103,7 +103,7 @@ public interface StudentMapper {
 
 
     @Update("update student set studentPaperId='${studentPaperId}',studentName='${studentName}',tel='${tel}'," +
-            " address='${address}', sex=${sex},birthday='${birthday}',schoolId='${schoolId}',wxcode='${wxcode}' ,headimg= '${headimg}'," +
+            " address='${address}', sex=${sex},birthday=#{birthday},schoolId='${schoolId}',wxcode='${wxcode}' ,headimg= '${headimg}'," +
             " nickname='${nickname}', relationshipId='${relationShipId}' " +
             " where studentId= '${studentId}'")
     public int updateStudent(Student student);
