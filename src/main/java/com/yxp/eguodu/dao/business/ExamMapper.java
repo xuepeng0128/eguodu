@@ -76,7 +76,7 @@ public interface ExamMapper {
     @Insert("<script>" +
             " insert into exam(examId,studySubjectId,examName,teachedTeacherId, " +
             " examTime,examKindId,iyear,term,classesId,schoolId,totalScore) values('${examId}','${studySubjectId}','${examName}','${teachedTeacherId}'," +
-            " '${examTime}','${examKindId}',${iyear},'${term}','${classesId}','${schoolId}',${totalScore})" +
+            " #{examTime},'${examKindId}',${iyear},'${term}','${classesId}','${schoolId}',${totalScore})" +
             "</script>")
     public int insertExam(Exam exam);
 
