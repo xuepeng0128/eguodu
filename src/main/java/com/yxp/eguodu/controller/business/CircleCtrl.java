@@ -85,8 +85,9 @@ public class CircleCtrl {
             return new HashMap<String,Object>(){{put("result","fail") ;}} ;
     }
     @GetMapping(value="/closeCircle")
-    public Map<String,Object> closeCircle(String closeMan,String closeReason){
-        int d =svr.deleteCircle(new HashMap<String,Object>(){{
+    public Map<String,Object> closeCircle(String circleId, String closeMan,String closeReason){
+        int d =svr.closeCircle(new HashMap<String,Object>(){{
+            put("circleId",circleId) ;
             put("closeMan",closeMan);
             put("closeReason",closeReason);
         }});
@@ -95,9 +96,4 @@ public class CircleCtrl {
         else
             return new HashMap<String,Object>(){{put("result","fail") ;}} ;
     }
-
-
-
-
-
 }

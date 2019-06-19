@@ -11,10 +11,12 @@ import java.util.Map;
 @Mapper
 public interface StudentMapper {
     @Select("<script>" +
-            " select id,studentId, studentPaperId,studentName,s.tel,s.address,s.sex,s.birthday,s.schoolId,c.schoolName," +
+            " select id,s.studentId, studentPaperId,studentName,s.tel,s.address,s.sex,s.birthday,s.schoolId,c.schoolName," +
             "  l.grade,l.classes,l.classesName ,c.schoolStyle,c.train " +
             " from student s inner join " +
-            " school c on s.schoolId=c.schoolId inner JOIN classes l on s.schoolId=l.schoolId" +
+            " school c on s.schoolId=c.schoolId inner JOIN ( select  c.*, s.studentId from  \n" +
+            "classes c inner join classesstudent s  on c.classesId = s.classesId \n" +
+            ")   l ON s.schoolId = l.schoolId and l.studentId= s.studentId " +
             " where  1=1 " +
             " <if test ='studentPaperId != null and studentPaperId !=\"\"'>" +
             "   and paperId like '%${studentPaperId}%'" +
@@ -61,7 +63,9 @@ public interface StudentMapper {
     @Select("<script>" +
             " select count(*) as total " +
             " from student s inner join " +
-            " school c on s.schoolId=c.schoolId inner JOIN classes l on s.schoolId=l.schoolId" +
+            " school c on s.schoolId=c.schoolId inner JOIN ( select  c.*, s.studentId from   " +
+            "classes c inner join classesstudent s  on c.classesId = s.classesId  " +
+            ")   l ON s.schoolId = l.schoolId and l.studentId= s.studentId " +
             " where  1=1 " +
             " <if test ='studentPaperId != null and studentPaperId !=\"\"'>" +
             "   and studentPaperId like '%${studentPaperId}%'" +
