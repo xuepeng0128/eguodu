@@ -17,6 +17,7 @@ public class User {
      private String  passWord;
      private String  schoolId;
      private String  employeeId;
+     private String employeeName;
      private String   teacherId;
      private boolean supperAdmin;
      private boolean schoolAdmin;
