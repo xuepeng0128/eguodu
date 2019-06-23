@@ -53,10 +53,10 @@ public interface SchoolMapper {
             "  and s.schoolName like '%${schoolName}%' " +
             "</if>" +
             "<if test='provinceId != null and provinceId !=\"\" and provinceId !=\"0\" '>" +
-            "  and s.provinceId= '%${provinceId}%' " +
+            "  and s.provinceId= '${provinceId}' " +
             "</if>" +
             "<if test='cityId != null and cityId !=\"\" and cityId !=\"0\" '>" +
-            "  and s.cityId= '%${cityId}%' " +
+            "  and s.cityId= '${cityId}' " +
             "</if>" +
             "<if test='districtId != null and districtId !=\"\" and districtId !=\"0\"  '>" +
             "  and s.districtId= '${districtId}' " +
@@ -128,10 +128,10 @@ public interface SchoolMapper {
             "  and s.schoolName like '%${schoolName}%' " +
             "</if>" +
             "<if test='provinceId != null and provinceId !=\"\" and provinceId !=\"0\" '>" +
-            "  and s.provinceId= '%${provinceId}%' " +
+            "  and s.provinceId= '${provinceId}' " +
             "</if>" +
             "<if test='cityId != null and cityId !=\"\" and cityId !=\"0\" '>" +
-            "  and s.cityId= '%${cityId}%' " +
+            "  and s.cityId= '${cityId}' " +
             "</if>" +
             "<if test='districtId != null and districtId !=\"\" and districtId !=\"0\"  '>" +
             "  and s.districtId= '${districtId}' " +
