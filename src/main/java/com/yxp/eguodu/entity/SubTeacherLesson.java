@@ -13,6 +13,7 @@ public class SubTeacherLesson {
     private String lessonNoTitle;
     private int mode;
     private String memo;
+    private String picUrl;
     private String videoUrl;
     private String  audioUrl;
     private boolean noPay;

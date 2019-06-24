@@ -47,7 +47,7 @@ public class TeacherServiceImp implements TeacherService {
         for (Teacher t : tlist)
         {
             User user = new User( "",t.getTel(),DesUtil.encrypt("123456"),t.getSchoolId(),
-                    null,t.getTeacherId(),false,false,null,2);
+                    null,null,t.getTeacherId(),false,false,null,2);
             userMapper.insertUser(user);
         }
         return 1;
@@ -62,8 +62,10 @@ public class TeacherServiceImp implements TeacherService {
         }});
         for (Teacher t : tlist)
         {
+
+
             User user = new User( "",t.getTel(),DesUtil.encrypt("123456"),t.getSchoolId(),
-                    null,t.getTeacherId(),false,false,null,2);
+                    null,null,t.getTeacherId(),false,false,null,2);
             userMapper.insertUser(user);
         }
         return 1;

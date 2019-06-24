@@ -69,7 +69,7 @@ public interface TeacherLessonMapper {
     public List<Map<String,Object>> lessonHabitList(Map<String,Object> paras);
 
     @Select("<script> " +
-            " select lessonId,lessonNo,lessonNoTitle,mode,memo,videoUrl,audioUrl,noPay from subteacherlesson where lessonId ='${lessonId}' " +
+            " select lessonId,lessonNo,lessonNoTitle,mode,memo,picUrl,videoUrl,audioUrl,noPay from subteacherlesson where lessonId ='${lessonId}' " +
             " limit ${pageBegin} , ${pageSize} " +
             "</script>")
     public List<SubTeacherLesson> subTeacherLessonList(@Param("lessonId") String lessonId,@Param("pageBegin") String pageBegin , @Param("pageSize") String pageSize);
@@ -80,13 +80,13 @@ public interface TeacherLessonMapper {
             " (#{lessonId},#{lessonTitle},#{memo},#{guoduCoin},#{makeTeacherId},now(),#{schoolId} ,#{picUrl})")
    public int insertTeacherLesson(TeacherLesson teacherLesson);
 
-    @Insert("insert into subteacherlesson(lessonId,lessonNo,lessonNoTitle,memo,videoUrl,audioUrl,noPay,mode) values(" +
-            " #{lessonId},#{lessonNo},#{lessonNoTitle},#{memo},#{videoUrl},#{audioUrl},#{noPay} ,#{mode})")
+    @Insert("insert into subteacherlesson(lessonId,lessonNo,lessonNoTitle,memo,picUrl,videoUrl,audioUrl,noPay,mode) values(" +
+            " #{lessonId},#{lessonNo},#{lessonNoTitle},#{memo},#{picUrl},#{videoUrl},#{audioUrl},#{noPay} ,#{mode})")
     public int insertSubTeacherLesson(SubTeacherLesson subTeacherLesson);
     @Update("update teacherlesson set lessonTitle=#{lessonTitle},memo=#{memo},guoduCoin=#{guoduCoin},picUrl=#{picUrl} where lessonId=#{lessonId}")
     public int updateTeacherLesson(TeacherLesson teacherLesson);
 
-    @Update("update subteacherlesson set lessonNoTitle=#{lessonNoTitle},memo= #{memo},videoUrl=#{videoUrl},audioUrl=#{audioUrl},noPay=#{noPay}")
+    @Update("update subteacherlesson set lessonNoTitle=#{lessonNoTitle},memo= #{memo},picUrl=#{picUrl},videoUrl=#{videoUrl},audioUrl=#{audioUrl},noPay=#{noPay}")
     public int updateSubTeacherLesson(SubTeacherLesson subTeacherLesson);
 
     @Delete("delete from teacherlesson where lessonId=#{lessonId}")
