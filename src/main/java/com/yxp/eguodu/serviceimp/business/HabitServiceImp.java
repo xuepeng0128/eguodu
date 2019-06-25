@@ -77,6 +77,11 @@ public class HabitServiceImp implements HabitService {
         return mapper.examHabits(habitExamId);
     }
 
+    @Override
+    public List<Habit> thisStudenthabitList(HabitQueryParams habitQueryParams) {
+        return mapper.thisStudenthabitList(habitQueryParams);
+    }
+
 
     // 学生准备打卡，获取打卡信息
     @Override

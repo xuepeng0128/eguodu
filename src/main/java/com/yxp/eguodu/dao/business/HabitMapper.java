@@ -237,8 +237,35 @@ public interface HabitMapper {
 
 
     //------------------------------------------------微信-----------------------------------------//
+    // 该学生参与打卡的所有习惯
+    @Select("<script>" +
+            "   select h.habitId,cla.grade, cla.classes ,  h.circleId,c.circleTitle,h.habitClassId ,p.habitClassName,h.subHabitClassId,s.habitClassName " +
+            "       as subHabitClassName ,h.icon,h.color,h.habitName,h.memo,h.picUrl,h.pirTime,h.timeUnit,h.`mode`,h.timeModeNum, h.timeCompare," +
+            "      h.countModeNum,h.valueModeNum,h.unitName,guoduCoin,h.score,h.habitExamId,e.examTitle , e.totalScore ," +
+            "    h.buildTeacherId,h.buildStudentId,h.buildTime,h.putCardBeginDate,h.putCardEndDate,ifnull(stu.joinStudents,0) as joinStudents " +
+            "  from habit h left outer join  circle c on h.circleId=c.circleId  " +
+            "inner join dic_habitclass p on h.habitClassId=p.habitClassId  inner join dic_habitclass s on h.subHabitClassId " +
+            " =s.habitClassId left outer join habitexam e on h.habitExamId=e.habitExamId  left outer join classes cla on c.classesId=cla.classesId" +
+            " left outer join (select habitId , count(studentId) as joinStudents from habitstudent group by habitId  )stu on h.habitId=stu.habitId " +
+            "where 1=1 " +
+            " <if test ='buildStudentId != null and buildStudentId != \"\" and buildStudentId != \"0\"'>" +
+            "     and h.buildStudentId='${buildStudentId}'" +
+            " </if> " +
+            " <if test ='habitName != null and habitName != \"\" '>" +
+            "     and h.habitName like '%${habitName}%'" +
+            " </if> " +
+            " <if test ='todayStudentId != null and todayStudentId != \"\" '>" +
+            "   and h.habitId in  (select habitid from studentputcard  where now() BETWEEN shouldPutCardDateBegin and shouldPutCardDateEnd and studentId ='${todayStudentId}')" +
+            " </if> " +
+            " order by h.habitExamId ,h.habitId" +
+            "  limit ${pageBegin},${pageSize}" +
+            "</script>")
+    public List<Habit> thisStudenthabitList(HabitQueryParams habitQueryParams);
 
-   // 学生准备打卡，获取打卡信息
+
+
+
+    // 学生准备打卡，获取打卡信息
    @Select("<script>" +
            " select id,habitId,studentId,shouldPutCardDateBegin,shouldPutCardDateEnd,canGetGuodubi,haveGuodubi,upperLimitGuodubi,canGetScore," +
            " haveScore,putCardTime,putCardMemo,putCardPicUrls,putCardaudioUrls,putCardvideoUrls,shouldFinish,haveFinish,finished," +
@@ -246,6 +273,8 @@ public interface HabitMapper {
            " and studentId='${studentId}' and habitId='${habitId}' " +
            "</script>")
    public List<StudentPutCard>  currentStudentPrepareHabitPutCard(@Param("habitId") String habitId, @Param("studentId") String studentId);
+
+
 
 
 

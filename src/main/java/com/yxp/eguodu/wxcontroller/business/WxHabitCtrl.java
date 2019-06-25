@@ -196,7 +196,7 @@ public class WxHabitCtrl {
         HabitQueryParams habitQueryParams= new HabitQueryParams(  null,  null,  null,  null,  null,  null,
                 null,  null,  null,  null,  null,null ,studentId,
                "1000",  "1",  "0");
-        List<Habit> list= svr.habitList(habitQueryParams);
+        List<Habit> list= svr.thisStudenthabitList(habitQueryParams);
         List<Map<String,Object>> resultlist=new ArrayList<Map<String,Object>>();
         String nowCircleId="";
         for(Habit habit : list.stream().sorted(Comparator.comparing(Habit::getCircleId)).collect(Collectors.toList())){

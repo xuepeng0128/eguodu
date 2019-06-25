@@ -24,6 +24,12 @@ public interface HabitService {
 
     //查询考核下的习惯
     public List<Habit> examHabits( String habitExamId);
+
+
+    // 该学生参与打卡的所有习惯
+    public List<Habit> thisStudenthabitList(HabitQueryParams habitQueryParams);
+
+
     // 学生准备打卡，获取打卡信息
     public List<StudentPutCard>  currentStudentPrepareHabitPutCard( String habitId,  String studentId);
 
